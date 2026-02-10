@@ -1,0 +1,18 @@
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+out/
+.kotlin/
+
+### Compiled files ###
+*.class
+target/
+build/
+
+### OS files ###
+.DS_Store
+Thumbs.db
+
+### Logs ###
+*.log

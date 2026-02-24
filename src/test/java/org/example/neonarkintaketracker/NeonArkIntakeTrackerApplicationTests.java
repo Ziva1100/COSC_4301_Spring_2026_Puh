@@ -1,4 +1,4 @@
-package orgexample.neonarkintaketracker;
+package org.example.neonarkintaketracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

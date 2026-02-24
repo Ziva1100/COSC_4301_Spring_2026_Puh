@@ -1,4 +1,4 @@
-package orgexample.neonarkintaketracker;
+package org.example.neonarkintaketracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

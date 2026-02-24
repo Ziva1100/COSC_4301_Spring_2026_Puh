@@ -4,7 +4,7 @@
 //
 //  Project #:    Project #2
 //
-//  File Name:    CreatureResponse.java
+//  File Name:    CreatureRequest.java
 //
 //  Course:       COSC 4301 Modern Programming
 //
@@ -12,19 +12,17 @@
 //
 //  Instructor:   Prof. Jon-Mikel Pearson
 //
-//  Description:  The DTO record handling the response for
+//  Description:  The DTO record handling the requests for
 //  creatures table
 //
 //***************************************************************
 
-package orgexample.neonarkintaketracker.dto;
+package org.example.neonarkintaketracker.dto;
 
-public record CreatureResponse(
-    Long id,
+public record CreatureRequest (
     String name,
     String species,
     String dangerLevel,
     String condition,
     java.time.Instant createdAt
-) {
-}
+) {}

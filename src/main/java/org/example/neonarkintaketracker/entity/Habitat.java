@@ -17,7 +17,7 @@
 //
 //***************************************************************
 
-package orgexample.neonarkintaketracker.entity;
+package org.example.neonarkintaketracker.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

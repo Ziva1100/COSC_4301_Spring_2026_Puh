@@ -22,8 +22,29 @@ package org.example.neonarkintaketracker.service;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
+@Service
 public class CreatureService {
+    private final CreatureRepository repository;
 
-    
+    public CreatureService(CreatureRepository repository) {
+        this.repository = repository;
+    }
+
+    //***************************************************************
+    //
+    //  Method:       getAllCreatures
+    //
+    //  Description:  returns all creatures in the database
+    //
+    //  Parameters:   N/A
+    //
+    //  Returns:      List<Creature>
+    //
+    //**************************************************************
+    public List<Creature> getAllCreatures(){
+        return repository.findAll();
+    }
+
 }

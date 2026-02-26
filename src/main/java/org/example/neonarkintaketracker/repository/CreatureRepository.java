@@ -24,6 +24,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 // simple CRUD with many default mathods
+@Repository
 public interface CreatureRepository extends JpaRepository<Creature, Long> {
 
     // basic read functionality is automatic,

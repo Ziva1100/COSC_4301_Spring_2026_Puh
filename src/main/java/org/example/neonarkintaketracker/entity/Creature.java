@@ -19,6 +19,7 @@
 
 package org.example.neonarkintaketracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,6 +54,7 @@ public class Creature {
 
     // Many-to-One Many Creatures -> One Habitat
     @ManyToOne(optional = false)
+    @JsonBackReference
     @JoinColumn(name = "habitat_id", nullable = false)
     private Habitat habitat;
 

@@ -19,6 +19,7 @@
 
 package org.example.neonarkintaketracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -54,6 +55,7 @@ public class Habitat {
 
     // One-To-Many habitat->many creatures
     @OneToMany(mappedBy = "habitat")
+    @JsonManagedReference
     private List<Creature> creatures;
 
 }

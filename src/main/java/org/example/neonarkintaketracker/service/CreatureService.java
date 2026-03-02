@@ -50,13 +50,13 @@ public class CreatureService {
 
     //***************************************************************
     //
-    //  Method:       getAllCreatures
+    //  Method:       getCreatureById
     //
-    //  Description:  returns all creatures in the database
+    //  Description:  returns creature based on ID, uses Optional
     //
     //  Parameters:   N/A
     //
-    //  Returns:      List<Creature>
+    //  Returns:      Creature or Null
     //
     //**************************************************************
     public Optional<Creature> getCreatureById(Long id){

@@ -23,6 +23,7 @@ import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CreatureService {
@@ -45,6 +46,21 @@ public class CreatureService {
     //**************************************************************
     public List<Creature> getAllCreatures(){
         return repository.findAll();
+    }
+
+    //***************************************************************
+    //
+    //  Method:       getAllCreatures
+    //
+    //  Description:  returns all creatures in the database
+    //
+    //  Parameters:   N/A
+    //
+    //  Returns:      List<Creature>
+    //
+    //**************************************************************
+    public Optional<Creature> getCreatureById(Long id){
+        return repository.findById(id);
     }
 
 }

@@ -19,6 +19,7 @@
 
 package org.example.neonarkintaketracker.dto;
 
+// recieves data from the end user and sends it backend
 public record CreatureRequest (
     String name,
     String species,

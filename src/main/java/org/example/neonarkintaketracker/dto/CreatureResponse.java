@@ -19,6 +19,8 @@
 
 package org.example.neonarkintaketracker.dto;
 
+// send data to the client from the backend, includes only what
+// client-front end needs to see
 public record CreatureResponse(
     Long id,
     String name,

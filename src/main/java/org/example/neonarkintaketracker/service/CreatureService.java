@@ -77,7 +77,16 @@ public class CreatureService {
     //
     //**************************************************************
     public CreatureResponse createCreature(CreatureRequest req){
+
+        // what client submits as a new creauture. other fieds
+        // are field automatically
         Creature creature = new Creature();
+
+        // CreatureRequest fields are name, species, danger level, condition
+        creature.setName(req.name());
+        creature.setSpecies(req.species());
+        creature.setDangerLevel(req.dangerLevel());
+        creature.setCondition(req.condition());
 
         Creature saved = repository.save(creature);
 

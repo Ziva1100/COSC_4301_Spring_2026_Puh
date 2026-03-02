@@ -19,6 +19,8 @@
 
 package org.example.neonarkintaketracker.service;
 
+import org.example.neonarkintaketracker.dto.CreatureRequest;
+import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.springframework.stereotype.Service;
@@ -54,13 +56,34 @@ public class CreatureService {
     //
     //  Description:  returns creature based on ID, uses Optional
     //
-    //  Parameters:   N/A
+    //  Parameters:   Long id
     //
     //  Returns:      Creature or Null
     //
     //**************************************************************
     public Optional<Creature> getCreatureById(Long id){
         return repository.findById(id);
+    }
+
+    //***************************************************************
+    //
+    //  Method:       createCreature
+    //
+    //  Description:  handles DTOs for the creatures creation
+    //
+    //  Parameters:   DTO CreatureRequest
+    //
+    //  Returns:      CreatureResponse DTO
+    //
+    //**************************************************************
+    public CreatureResponse createCreature(CreatureRequest req){
+        Creature creature = new Creature();
+
+        Creature saved = repository.save(creature);
+
+        CreatureResponse res = new CreatureResponse();
+
+        return res;
     }
 
 }

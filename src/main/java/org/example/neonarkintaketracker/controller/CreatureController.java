@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/creatures")
@@ -54,5 +55,29 @@ public class CreatureController {
         return ResponseEntity.ok(creatures);
     }
 
+    //***************************************************************
+    //
+    //  Method:       getCreatureById()
+    //
+    //  Description:  map http GET request at /api/creatures/{id}
+    //  to this method
+    //
+    //  Parameters:   N/A
+    //
+    //  Returns:      200 if OK and a JSON file, 404 Not Found
+    //  if fails
+    //
+    //**************************************************************
+    @GetMapping("/{id}")
+    public ResponseEntity<Creature> getCreatureById(@PathVariable Long id){
+
+        Optional<Creature> maybeCreature = service.getCreatureById(id);
+
+        // 404 Not Found
+        if (maybeCreature.isEmpty()) return ResponseEntity.notFound().build();
+
+        // 200 with a JSON
+        return ResponseEntity.ok(maybeCreature.get());
+    }
 
 }

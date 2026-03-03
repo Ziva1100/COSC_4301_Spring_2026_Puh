@@ -101,7 +101,7 @@ public class CreatureService {
                 saved.getSpecies(),
                 saved.getDangerLevel(),
                 saved.getCondition(),
-                // ensure the type missmatch between LocalDateTime and and Instant
+                // ensure the type missmatch between LocalDateTime and Instant
                 saved.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant()
         );
 

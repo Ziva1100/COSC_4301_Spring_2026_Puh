@@ -24,6 +24,7 @@ import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.entity.Habitat;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
+import org.example.neonarkintaketracker.repository.HabitatRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -35,9 +36,12 @@ import java.util.Optional;
 @Service
 public class CreatureService {
     private final CreatureRepository repository;
+    private final HabitatRepository habitatRepository;
 
-    public CreatureService(CreatureRepository repository) {
+    public CreatureService(CreatureRepository repository, HabitatRepository habitatRepository) {
+
         this.repository = repository;
+        this.habitatRepository = habitatRepository;
     }
 
     //***************************************************************
@@ -94,8 +98,8 @@ public class CreatureService {
         creature.setCondition(req.condition());
 
         // find the correct habitatId and map it to the creauture creation
-        Habitat habitat = habitatRepository.findById(req.habitatId)
-                .orElseThrow(() -> new RuntimeExcception("Habitat ID not found: "
+        Habitat habitat = habitatRepository.findById(req.habitatId())
+                .orElseThrow(() -> new RuntimeException("Habitat ID not found: "
                 + req.habitatId()));
 
         creature.setHabitat(habitat);

@@ -24,6 +24,8 @@ import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,9 +90,20 @@ public class CreatureService {
         creature.setDangerLevel(req.dangerLevel());
         creature.setCondition(req.condition());
 
+        // save the creature to the database
         Creature saved = repository.save(creature);
 
-        CreatureResponse res = new CreatureResponse();
+        // CreatureResponse fields: id, name, spieces, dangerLevel,
+        // condition, createdAt
+        CreatureResponse res = new CreatureResponse(
+                saved.getId(),
+                saved.getName(),
+                saved.getSpecies(),
+                saved.getDangerLevel(),
+                saved.getCondition(),
+                // ensure the type missmatch between LocalDateTime and and Instant
+                saved.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant()
+        );
 
         return res;
     }

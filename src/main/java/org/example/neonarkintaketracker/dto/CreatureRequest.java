@@ -25,5 +25,6 @@ public record CreatureRequest (
     String species,
     String dangerLevel,
     String condition,
+    Long habitatId,
     java.time.Instant createdAt
 ) {}

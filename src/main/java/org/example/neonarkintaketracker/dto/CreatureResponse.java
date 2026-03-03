@@ -27,6 +27,7 @@ public record CreatureResponse(
     String species,
     String dangerLevel,
     String condition,
+    Long habitatId,
     java.time.Instant createdAt
 ) {
 }

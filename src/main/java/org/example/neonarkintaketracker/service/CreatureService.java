@@ -22,9 +22,12 @@ package org.example.neonarkintaketracker.service;
 import org.example.neonarkintaketracker.dto.CreatureRequest;
 import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.entity.Creature;
+import org.example.neonarkintaketracker.entity.Habitat;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +93,16 @@ public class CreatureService {
         creature.setDangerLevel(req.dangerLevel());
         creature.setCondition(req.condition());
 
+        // find the correct habitatId and map it to the creauture creation
+        Habitat habitat = habitatRepository.findById(req.habitatId)
+                .orElseThrow(() -> new RuntimeExcception("Habitat ID not found: "
+                + req.habitatId()));
+
+        creature.setHabitat(habitat);
+
+        // save the CreatedAt
+        creature.setCreatedAt(LocalDateTime.now());
+
         // save the creature to the database
         Creature saved = repository.save(creature);
 
@@ -101,6 +114,7 @@ public class CreatureService {
                 saved.getSpecies(),
                 saved.getDangerLevel(),
                 saved.getCondition(),
+                saved.getHabitat().getId(),
                 // ensure the type missmatch between LocalDateTime and Instant
                 saved.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant()
         );

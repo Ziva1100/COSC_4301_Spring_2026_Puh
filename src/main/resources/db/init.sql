@@ -53,3 +53,12 @@ CREATE TABLE dimensions (
 
     CONSTRAINT dimension_name_uk UNIQUE (dimension_name)
 );
+
+-- create table certifications
+CREATE TABLE certifications (
+    certification_id INT GENERATED ALWAYS AS IDENTITY,
+    certification_name VARCHAR(30) NOT NULL,
+    certification_desc TEXT,
+
+    CONSTRAINT certification_name_uk UNIQUE (certification_name)
+);

@@ -19,16 +19,19 @@
 
 -- STEP 0: DELETE ANY EXISTING TABLES
 
+DROP TABLE IF EXISTS certification_log CASCADE;
+DROP TABLE IF EXISTS status_log CASCADE;
 DROP TABLE IF EXISTS wardens CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS clearances CASCADE;
-DROP TABLE IF EXISTS dimentions CASCADE;
-DROP TABLE IF EXISTS status_log CASCADE;
-DROP TABLE IF EXISTS certification_log CASCADE;
+DROP TABLE IF EXISTS dimensions CASCADE;
 DROP TABLE IF EXISTS certifications CASCADE;
 
 -- STEP 1: CREATING TABLES
 -- create roles table
+-- keeps track of all the roles that exist in the organization
+-- keeps detailed description of what each role does
+-- roles determine what responsibilities each warden has
 CREATE TABLE roles (
     role_id INT GENERATED ALWAYS AS IDENTITY,
     role_name VARCHAR(30) NOT NULL,
@@ -38,6 +41,9 @@ CREATE TABLE roles (
 );
 
 -- create table clearances
+-- keeps track of all the clearances that the system has
+-- with detailed descriptions
+-- clearances determine the access that each warden has
 CREATE TABLE clearances (
     clearance_id INT GENERATED ALWAYS AS IDENTITY,
     clearance_name VARCHAR(30) NOT NULL,
@@ -47,6 +53,9 @@ CREATE TABLE clearances (
 );
 
 -- create table dimensions
+-- keeps track of the dimensions from where the creatures
+-- and wardens are coming from
+-- this table is used in new creatures as well
 CREATE TABLE dimensions (
     dimension_id INT GENERATED ALWAYS AS IDENTITY,
     dimension_name VARCHAR(30) NOT NULL,
@@ -56,6 +65,9 @@ CREATE TABLE dimensions (
 );
 
 -- create table certifications
+-- keeps track of all certifications possible in the company
+-- certifications determine the skill set that the warden has
+-- to work with astral beings
 CREATE TABLE certifications (
     certification_id INT GENERATED ALWAYS AS IDENTITY,
     certification_name VARCHAR(30) NOT NULL,
@@ -78,7 +90,7 @@ CREATE TABLE wardens (
     full_name VARCHAR(50),
     referred VARCHAR(50),
     email VARCHAR(50),
-    start_date DATE,
+    start_date DATE DEFAULT CURRENT_DATE,
     dimension_id INT NOT NULL,
     role_id INT NOT NULL,
     clearance_id INT NOT NULL ,
@@ -91,3 +103,19 @@ CREATE TABLE wardens (
     CONSTRAINT warden_clearance_id FOREIGN KEY (clearance_id) REFERENCES clearances (clearance_id)
     );
 
+-- create table status_log
+-- status log keeps track of the current status that the
+-- warden holds
+-- active: the warden currently works in the appropriate department
+-- onLeave: the warden is temporary non-active
+-- terminated: the warden does not work for the department anymore
+CREATE TABLE status_log (
+    status_id INT GENERATED ALWAYS AS IDENTITY,
+    warden_id INT NOT NULL,
+    update_date DATE DEFAULT CURRENT_DATE,
+    new_status VARCHAR(20),
+
+    CONSTRAINT status_id_pk PRIMARY KEY (status_id),
+    CONSTRAINT new_status_ck CHECK ( new_status IN ('active','onLeave', 'terminated') ),
+    CONSTRAINT status_warden_id_fk FOREIGN KEY (warden_id) REFERENCES wardens (warden_id)
+);

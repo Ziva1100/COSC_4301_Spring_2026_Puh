@@ -27,7 +27,9 @@ DROP TABLE IF EXISTS clearances CASCADE;
 DROP TABLE IF EXISTS dimensions CASCADE;
 DROP TABLE IF EXISTS certifications CASCADE;
 
+--------------------------------------------------------------
 -- STEP 1: CREATING TABLES
+
 -- create roles table
 -- keeps track of all the roles that exist in the organization
 -- keeps detailed description of what each role does
@@ -143,4 +145,21 @@ CREATE TABLE certification_log (
     CONSTRAINT certifications_log_warden_id_fk FOREIGN KEY (warden_id) REFERENCES wardens (warden_id),
     CONSTRAINT certifications_log_certifications_id_fk FOREIGN KEY (certification_id) REFERENCES certifications (certification_id)
 
-)
+);
+--------------------------------------------------------------
+-- STEP 2: FILL THE TABLES WITH DATA
+
+-- fill role table with roles:
+-- Admin, Field, Rift, Trainer, Astral
+INSERT INTO roles (role_name, role_desc)
+VALUES ('Admin', 'Manages system access and internal operations');
+INSERT INTO roles (role_name, role_desc)
+VALUES ('Field', 'Deployed on active ground-level assignments');
+INSERT INTO roles (role_name, role_desc)
+VALUES ('Rift', 'Specializes in dimensional breach containment');
+INSERT INTO roles (role_name, role_desc)
+VALUES ('Trainer', 'MOversees recruit onboarding and skill development');
+INSERT INTO roles (role_name, role_desc)
+VALUES ('Astral', 'Conducts operations beyond physical dimensions');
+
+SELECT  * FROM roles;

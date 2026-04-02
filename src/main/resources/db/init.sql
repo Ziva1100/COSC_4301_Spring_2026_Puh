@@ -188,3 +188,54 @@ INSERT INTO dimensions (dimension_name, dimension_desc)
 VALUES ('Eryndor', 'A vast dimension of ancient ruins and forgotten civilizations');
 
 SELECT * FROM dimensions;
+
+-- fill certifications with data
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Dimensional Navigation', 'Certified to traverse and navigate unstable dimensional rifts');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Combat Readiness', 'Cleared for active engagement in hostile dimensional zones');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Rift Containment', 'Trained in sealing and stabilizing dimensional breaches');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Astral Mapping', 'Certified to chart and document uncharted dimensional space');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Hazard Exposure', 'Cleared for operations in high radiation dimensional zones');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Psych Evaluation', 'Certified mentally stable for prolonged astral assignments');
+INSERT INTO certifications (certification_name, certification_desc)
+VALUES ('Temporal Awareness', 'Trained to operate in time-distorted dimensional environments');
+
+SELECT * FROM certifications;
+
+-- fill wardens with data
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1001, 'badge',    'Kael Dawnveil',    'Neon Ark HQ',   'kael.dawnveil@neonark.com',    '2024-01-15', 1, 1, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1002, 'passport', 'Lyra Stormfeld',   'Field Division', 'lyra.stormfeld@neonark.com',  '2024-02-20', 2, 2, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1003, 'visa',     'Oryn Ashveil',     'Rift Corps',    'oryn.ashveil@neonark.com',     '2024-03-10', 3, 3, 3);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1004, 'badge',    'Seren Voss',       'Neon Ark HQ',   'seren.voss@neonark.com',       '2024-04-05', 4, 4, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1005, 'passport', 'Thane Mirova',     'Astral Division','thane.mirova@neonark.com',    '2024-05-18', 5, 5, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1006, 'badge',    'Zara Nighthollow', 'Field Division', 'zara.nighthollow@neonark.com','2024-06-22', 1, 2, 3);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1007, 'visa',     'Caden Solmere',    'Rift Corps',    'caden.solmere@neonark.com',    '2024-07-30', 2, 3, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1008, 'badge',    'Isla Eryndor',     'Neon Ark HQ',   'isla.eryndor@neonark.com',     '2024-08-14', 3, 1, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1009, 'passport', 'Riven Duskfall',   'Astral Division','riven.duskfall@neonark.com',  '2024-09-09', 4, 4, 3);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1010, 'visa',     'Nova Veylan',      'Field Division', 'nova.veylan@neonark.com',     '2024-10-01', 5, 5, 1);
+
+SELECT * FROM wardens;

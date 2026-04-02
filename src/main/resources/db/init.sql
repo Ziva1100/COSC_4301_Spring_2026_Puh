@@ -163,3 +163,15 @@ INSERT INTO roles (role_name, role_desc)
 VALUES ('Astral', 'Conducts operations beyond physical dimensions');
 
 SELECT  * FROM roles;
+
+-- fill clearances table with data
+-- Alpha, Omega, Eclipse
+INSERT INTO clearances (clearance_name, clearance_desc)
+VALUES ('Alpha','Entry level clearance for standard operations');
+INSERT INTO clearances (clearance_name, clearance_desc)
+VALUES ('Omega','Highest clearance for classified mission access');
+INSERT INTO clearances (clearance_name, clearance_desc)
+VALUES ('Eclipse','Restricted clearance for off-record operations');
+
+SELECT * FROM clearances;
+

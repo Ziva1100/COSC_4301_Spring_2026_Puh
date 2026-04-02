@@ -62,3 +62,24 @@ CREATE TABLE certifications (
 
     CONSTRAINT certification_name_uk UNIQUE (certification_name)
 );
+
+-- create table wardens
+CREATE TABLE wardens (
+    warden_id INT GENERATED ALWAYS AS IDENTITY,
+    alternate_id INT NOT NULL,
+    id_type VARCHAR(10) NOT NULL,
+    full_name VARCHAR(50),
+    referred VARCHAR(50),
+    email VARCHAR(50),
+    start_date DATE,
+    dimension_id INT NOT NULL,
+    role_id INT NOT NULL,
+    clearance_id INT NOT NULL ,
+
+    CONSTRAINT warden_id_pk PRIMARY KEY (warden_id),
+    CONSTRAINT alternate_id_uk UNIQUE (alternate_id),
+    CONSTRAINT id_type_ck CHECK(id_type IN('badge', 'passport', 'visa')),
+    CONSTRAINT warder_dimension_id_fk FOREIGN KEY (dimension_id) REFERENCES dimensions (dimension_id),
+    CONSTRAINT warden_role_id_fk FOREIGN KEY (role_id) REFERENCES roles (role_id),
+    CONSTRAINT warden_clearance_id FOREIGN KEY (clearance_id) REFERENCES clearances (clearance_id)
+    );

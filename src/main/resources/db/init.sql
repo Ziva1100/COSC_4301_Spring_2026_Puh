@@ -119,3 +119,28 @@ CREATE TABLE status_log (
     CONSTRAINT new_status_ck CHECK ( new_status IN ('active','onLeave', 'terminated') ),
     CONSTRAINT status_warden_id_fk FOREIGN KEY (warden_id) REFERENCES wardens (warden_id)
 );
+
+-- create table certification_log
+-- certification log keeps track of all certifications issued to wardens
+-- it determines when is the expiration date and which warden has
+-- which certification
+-- each warden can hold more than one certification
+-- active: the warden currently holds this certification
+-- expired: the certification has to be renewed
+-- suspended: the warden lost the certification before the expiration date
+-- if suspended, an incident report has to be issued
+-- if expiration date is null, the certification never expires
+CREATE TABLE certification_log (
+    certification_log_id INT GENERATED ALWAYS AS IDENTITY ,
+    certification_id INT NOT NULL ,
+    warden_id INT NOT NULL ,
+    date_created DATE DEFAULT CURRENT_DATE,
+    certification_status varchar(10) NOT NULL ,
+    expiration_date DATE,
+
+    CONSTRAINT certification_log_id_pk PRIMARY KEY (certification_log_id),
+    CONSTRAINT certification_status_ck CHECK ( certification_status IN ('active','expired', 'suspended') ),
+    CONSTRAINT certifications_log_warden_id_fk FOREIGN KEY (warden_id) REFERENCES wardens (warden_id),
+    CONSTRAINT certifications_log_certifications_id_fk FOREIGN KEY (certification_id) REFERENCES certifications (certification_id)
+
+)

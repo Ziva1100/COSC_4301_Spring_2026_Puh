@@ -63,6 +63,12 @@ CREATE TABLE certifications (
     CONSTRAINT certification_name_uk UNIQUE (certification_name)
 );
 
+-- Add missing primary key constraints
+ALTER TABLE roles ADD CONSTRAINT role_id_pk PRIMARY KEY (role_id);
+ALTER TABLE clearances ADD CONSTRAINT clearance_id_pk PRIMARY KEY (clearance_id);
+ALTER TABLE dimensions ADD CONSTRAINT dimension_id_pk PRIMARY KEY (dimension_id);
+ALTER TABLE certifications ADD CONSTRAINT certification_id_pk PRIMARY KEY (certification_id);
+
 -- create table wardens
 CREATE TABLE wardens (
     warden_id INT GENERATED ALWAYS AS IDENTITY,
@@ -83,3 +89,4 @@ CREATE TABLE wardens (
     CONSTRAINT warden_role_id_fk FOREIGN KEY (role_id) REFERENCES roles (role_id),
     CONSTRAINT warden_clearance_id FOREIGN KEY (clearance_id) REFERENCES clearances (clearance_id)
     );
+

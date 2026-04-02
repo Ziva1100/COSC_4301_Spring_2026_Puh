@@ -274,3 +274,47 @@ INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_da
 VALUES (1020, 'visa',     'Zoe Pemberton',    'Field Division', 'zoe.pemberton@neonark.com',    '2024-10-30', 6, 5, 3);
 
 SELECT * FROM wardens;
+
+-- a snapshot of status_log table with data
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (1,  '2024-01-15', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (11, '2024-01-18', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (2,  '2024-02-20', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (12, '2024-02-25', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (3,  '2024-03-10', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (13, '2024-03-22', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (4,  '2024-04-05', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (14, '2024-04-17', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (1,  '2024-04-30', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (5,  '2024-05-18', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (15, '2024-05-29', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (3,  '2024-06-01', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (6,  '2024-06-22', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (16, '2024-06-11', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (1,  '2024-07-01', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (7,  '2024-07-30', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (17, '2024-07-03', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (2,  '2024-07-15', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (8,  '2024-08-14', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (18, '2024-08-25', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (13, '2024-09-01', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (9,  '2024-09-09', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (19, '2024-09-16', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (2,  '2024-09-20', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (15, '2024-09-30', 'terminated');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (10, '2024-10-01', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (20, '2024-10-30', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (6,  '2024-11-05', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (3,  '2024-11-10', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (13, '2024-11-20', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (9,  '2024-12-01', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (7,  '2024-12-15', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (18, '2025-01-05', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (10, '2025-01-15', 'onLeave');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (6,  '2025-01-28', 'terminated');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (9,  '2025-02-10', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (7,  '2025-02-20', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (19, '2025-03-01', 'terminated');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (10, '2025-03-10', 'active');
+INSERT INTO status_log (warden_id, update_date, new_status) VALUES (20, '2025-03-25', 'onLeave');
+
+SELECT * FROM status_log;

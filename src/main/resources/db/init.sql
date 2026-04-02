@@ -239,3 +239,38 @@ INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_da
 VALUES (1010, 'visa',     'Nova Veylan',      'Field Division', 'nova.veylan@neonark.com',     '2024-10-01', 5, 5, 1);
 
 SELECT * FROM wardens;
+
+-- add earth dimension to the dimensions table and create more wardens who are from earth
+INSERT INTO dimensions (dimension_name, dimension_desc) VALUES ('earth', 'earth');
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1011, 'passport', 'Marcus Reid',      'Neon Ark HQ',    'marcus.reid@neonark.com',      '2024-01-08', 6, 1, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1012, 'visa',     'Sofia Navarro',    'Field Division', 'sofia.navarro@neonark.com',    '2024-02-14', 6, 2, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1013, 'passport', 'James Holloway',   'Rift Corps',     'james.holloway@neonark.com',   '2024-03-22', 6, 3, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1014, 'visa',     'Amara Osei',       'Neon Ark HQ',    'amara.osei@neonark.com',       '2024-04-17', 6, 4, 3);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1015, 'passport', 'Daniel Cruz',      'Astral Division','daniel.cruz@neonark.com',      '2024-05-29', 6, 5, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1016, 'visa',     'Priya Sharma',     'Field Division', 'priya.sharma@neonark.com',     '2024-06-11', 6, 2, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1017, 'passport', 'Ethan Blackwood',  'Rift Corps',     'ethan.blackwood@neonark.com',  '2024-07-03', 6, 1, 3);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1018, 'visa',     'Leila Hassan',     'Neon Ark HQ',    'leila.hassan@neonark.com',     '2024-08-25', 6, 3, 2);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1019, 'passport', 'Noah Castellano',  'Astral Division','noah.castellano@neonark.com',  '2024-09-16', 6, 4, 1);
+
+INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1020, 'visa',     'Zoe Pemberton',    'Field Division', 'zoe.pemberton@neonark.com',    '2024-10-30', 6, 5, 3);
+
+SELECT * FROM wardens;

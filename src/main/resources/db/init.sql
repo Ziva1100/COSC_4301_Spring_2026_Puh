@@ -318,3 +318,27 @@ INSERT INTO status_log (warden_id, update_date, new_status) VALUES (10, '2025-03
 INSERT INTO status_log (warden_id, update_date, new_status) VALUES (20, '2025-03-25', 'onLeave');
 
 SELECT * FROM status_log;
+
+-- fill the certification_log table with data
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 1,  '2024-01-15', 'active',    '2025-01-15');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (2, 2,  '2024-02-20', 'active',    '2025-02-20');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (3, 3,  '2024-03-10', 'active',    '2025-03-10');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (4, 4,  '2024-04-05', 'active',    '2025-04-05');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (5, 5,  '2024-05-18', 'active',    '2025-05-18');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 6,  '2024-06-22', 'suspended', '2025-06-22');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (6, 7,  '2024-07-30', 'active',    '2025-07-30');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (2, 8,  '2024-08-14', 'active',    '2025-08-14');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (3, 9,  '2024-09-09', 'active',    '2025-09-09');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (7, 10, '2024-10-01', 'active',    '2025-10-01');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (4, 11, '2024-10-15', 'active',    '2025-10-15');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (5, 12, '2024-11-01', 'expired',   '2024-11-01');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (6, 13, '2024-11-20', 'active',    '2025-11-20');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 14, '2024-12-05', 'active',    '2025-12-05');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (2, 15, '2024-12-20', 'suspended', '2025-12-20');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (3, 16, '2025-01-10', 'active',    '2026-01-10');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (4, 17, '2025-01-25', 'active',    '2026-01-25');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (5, 18, '2025-02-10', 'active',    '2026-02-10');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 19, '2025-02-28', 'expired',   '2025-02-28');
+INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (7, 20, '2025-03-15', 'active',    '2026-03-15');
+
+SELECT * FROM certification_log;

@@ -175,3 +175,16 @@ VALUES ('Eclipse','Restricted clearance for off-record operations');
 
 SELECT * FROM clearances;
 
+-- fill dimensions with data
+INSERT INTO dimensions (dimension_name, dimension_desc)
+VALUES ('Veylan', 'A crystalline dimension of refracted light and fractured time');
+INSERT INTO dimensions (dimension_name, dimension_desc)
+VALUES ('Noctara', 'A shadowed realm existing between sleep and consciousness');
+INSERT INTO dimensions (dimension_name, dimension_desc)
+VALUES ('Solmere', 'A radiant dimension closest to the origin of all energy');
+INSERT INTO dimensions (dimension_name, dimension_desc)
+VALUES ('Duskfall', 'A decaying dimension on the edge of dimensional collapse');
+INSERT INTO dimensions (dimension_name, dimension_desc)
+VALUES ('Eryndor', 'A vast dimension of ancient ruins and forgotten civilizations');
+
+SELECT * FROM dimensions;

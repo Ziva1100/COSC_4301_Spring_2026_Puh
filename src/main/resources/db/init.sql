@@ -18,13 +18,14 @@
 ------------------------------------------
 
 -- STEP 0: DELETE ANY EXISTING TABLES
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS clearances;
-DROP TABLE IF EXISTS wardens;
-DROP TABLE IF EXISTS dimentions;
-DROP TABLE IF EXISTS status_log;
-DROP TABLE IF EXISTS certification_log;
-DROP TABLE IF EXISTS certifications;
+
+DROP TABLE IF EXISTS wardens CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS clearances CASCADE;
+DROP TABLE IF EXISTS dimentions CASCADE;
+DROP TABLE IF EXISTS status_log CASCADE;
+DROP TABLE IF EXISTS certification_log CASCADE;
+DROP TABLE IF EXISTS certifications CASCADE;
 
 -- STEP 1: CREATING TABLES
 -- create roles table

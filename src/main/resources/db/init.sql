@@ -162,7 +162,7 @@ VALUES ('Trainer', 'MOversees recruit onboarding and skill development');
 INSERT INTO roles (role_name, role_desc)
 VALUES ('Astral', 'Conducts operations beyond physical dimensions');
 
-SELECT  * FROM roles;
+-- SELECT  * FROM roles;
 
 -- fill clearances table with data
 -- Alpha, Omega, Eclipse
@@ -173,7 +173,7 @@ VALUES ('Omega','Highest clearance for classified mission access');
 INSERT INTO clearances (clearance_name, clearance_desc)
 VALUES ('Eclipse','Restricted clearance for off-record operations');
 
-SELECT * FROM clearances;
+-- SELECT * FROM clearances;
 
 -- fill dimensions with data
 INSERT INTO dimensions (dimension_name, dimension_desc)
@@ -187,7 +187,7 @@ VALUES ('Duskfall', 'A decaying dimension on the edge of dimensional collapse');
 INSERT INTO dimensions (dimension_name, dimension_desc)
 VALUES ('Eryndor', 'A vast dimension of ancient ruins and forgotten civilizations');
 
-SELECT * FROM dimensions;
+-- SELECT * FROM dimensions;
 
 -- fill certifications with data
 INSERT INTO certifications (certification_name, certification_desc)
@@ -205,7 +205,7 @@ VALUES ('Psych Evaluation', 'Certified mentally stable for prolonged astral assi
 INSERT INTO certifications (certification_name, certification_desc)
 VALUES ('Temporal Awareness', 'Trained to operate in time-distorted dimensional environments');
 
-SELECT * FROM certifications;
+-- SELECT * FROM certifications;
 
 -- fill wardens with data
 INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
@@ -238,7 +238,7 @@ VALUES (1009, 'passport', 'Riven Duskfall',   'Astral Division','riven.duskfall@
 INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
 VALUES (1010, 'visa',     'Nova Veylan',      'Field Division', 'nova.veylan@neonark.com',     '2024-10-01', 5, 5, 1);
 
-SELECT * FROM wardens;
+-- SELECT * FROM wardens;
 
 -- add earth dimension to the dimensions table and create more wardens who are from earth
 INSERT INTO dimensions (dimension_name, dimension_desc) VALUES ('earth', 'earth');
@@ -273,7 +273,7 @@ VALUES (1019, 'passport', 'Noah Castellano',  'Astral Division','noah.castellano
 INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
 VALUES (1020, 'visa',     'Zoe Pemberton',    'Field Division', 'zoe.pemberton@neonark.com',    '2024-10-30', 6, 5, 3);
 
-SELECT * FROM wardens;
+-- SELECT * FROM wardens;
 
 -- a snapshot of status_log table with data
 INSERT INTO status_log (warden_id, update_date, new_status) VALUES (1,  '2024-01-15', 'active');
@@ -317,7 +317,7 @@ INSERT INTO status_log (warden_id, update_date, new_status) VALUES (19, '2025-03
 INSERT INTO status_log (warden_id, update_date, new_status) VALUES (10, '2025-03-10', 'active');
 INSERT INTO status_log (warden_id, update_date, new_status) VALUES (20, '2025-03-25', 'onLeave');
 
-SELECT * FROM status_log;
+-- SELECT * FROM status_log;
 
 -- fill the certification_log table with data
 INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 1,  '2024-01-15', 'active',    '2025-01-15');
@@ -341,7 +341,7 @@ INSERT INTO certification_log (certification_id, warden_id, date_created, certif
 INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (1, 19, '2025-02-28', 'expired',   '2025-02-28');
 INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (7, 20, '2025-03-15', 'active',    '2026-03-15');
 
-SELECT * FROM certification_log;
+-- SELECT * FROM certification_log;
 
 --------------------------------------------------------------------------------------------------------
 -- STEP 4: QUERY THE DATABASE TO FIND THE INFO IN THE MENU
@@ -375,11 +375,18 @@ SELECT DISTINCT ON (sl.warden_id)
     wardens.warden_id, wardens.full_name, wardens.referred, sl.new_status,
     sl.update_date
 FROM wardens JOIN status_log sl on wardens.warden_id = sl.warden_id
-GROUP BY sl.new_status
-;
+WHERE sl.new_status = 'terminated';
 
 
 -- 4. View Wardens by Roles
-SELECT wardens.warden_id, wardens.full_name, wardens.referred, roles.role_name
+SELECT wardens.warden_id, wardens.full_name, wardens.referred, roles.role_name,
+       roles.role_desc
 FROM wardens JOIN roles ON wardens.role_id = roles.role_id;
 
+-- [4] Manage Certifications
+-- 2. View Certifications
+SELECT w.warden_id, w.full_name, cr.certification_name, cr.certification_desc,
+       cl.date_created, cl.certification_status, cl.expiration_date
+FROM wardens w JOIN certification_log cl ON w.warden_id = cl.warden_id
+JOIN certifications cr ON cl.certification_id = cr.certification_id
+ORDER BY cl.date_created DESC ;

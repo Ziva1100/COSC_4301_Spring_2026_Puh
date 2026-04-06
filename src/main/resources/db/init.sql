@@ -348,15 +348,38 @@ SELECT * FROM certification_log;
 
 -- [2] View Wardens
 -- 1. View All Wardens
-SELECT * FROM wardens;
+SELECT DISTINCT ON (warden_id)
+    w.warden_id, w.full_name, w.referred, w.email, r.role_name,
+    c.clearance_name, d.dimension_name, sl.new_status, sl.update_date
+FROM wardens w JOIN roles r ON w.role_id = r.role_id JOIN clearances c
+ON w.clearance_id = c.clearance_id JOIN dimensions d ON w.dimension_id = d.dimension_id
+    JOIN status_log sl ON w.warden_id = sl.warden_id
+ORDER BY w.warden_id, sl.update_date
+DESC;
 
 -- 2. View Warden by Id
-SELECT * FROM wardens WHERE warden_id = 4;
+SELECT
+    w.warden_id, w.alternate_id, w.id_type, w.full_name, w.referred, w.email,
+    w.start_date, r.role_name,
+    c.clearance_name, d.dimension_name, sl.new_status, sl.update_date, cr.certification_name
+FROM wardens w JOIN roles r ON w.role_id = r.role_id
+    JOIN clearances c ON w.clearance_id = c.clearance_id
+    JOIN dimensions d ON w.dimension_id = d.dimension_id
+    JOIN status_log sl ON w.warden_id = sl.warden_id
+    JOIN certification_log cl ON w.warden_id = cl.warden_id
+    JOIN certifications cr ON cl.certification_id = cr.certification_id
+WHERE w.warden_id = 4;
 
 -- 3. View Wardens by employment status
 SELECT DISTINCT ON (sl.warden_id)
     wardens.warden_id, wardens.full_name, wardens.referred, sl.new_status,
     sl.update_date
 FROM wardens JOIN status_log sl on wardens.warden_id = sl.warden_id
-ORDER BY sl.warden_id, sl.update_date
-DESC;
+GROUP BY sl.new_status
+;
+
+
+-- 4. View Wardens by Roles
+SELECT wardens.warden_id, wardens.full_name, wardens.referred, roles.role_name
+FROM wardens JOIN roles ON wardens.role_id = roles.role_id;
+

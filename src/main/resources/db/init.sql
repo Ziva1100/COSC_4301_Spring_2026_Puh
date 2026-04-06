@@ -342,3 +342,21 @@ INSERT INTO certification_log (certification_id, warden_id, date_created, certif
 INSERT INTO certification_log (certification_id, warden_id, date_created, certification_status, expiration_date) VALUES (7, 20, '2025-03-15', 'active',    '2026-03-15');
 
 SELECT * FROM certification_log;
+
+--------------------------------------------------------------------------------------------------------
+-- STEP 4: QUERY THE DATABASE TO FIND THE INFO IN THE MENU
+
+-- [2] View Wardens
+-- 1. View All Wardens
+SELECT * FROM wardens;
+
+-- 2. View Warden by Id
+SELECT * FROM wardens WHERE warden_id = 4;
+
+-- 3. View Wardens by employment status
+SELECT DISTINCT ON (sl.warden_id)
+    wardens.warden_id, wardens.full_name, wardens.referred, sl.new_status,
+    sl.update_date
+FROM wardens JOIN status_log sl on wardens.warden_id = sl.warden_id
+ORDER BY sl.warden_id, sl.update_date
+DESC;

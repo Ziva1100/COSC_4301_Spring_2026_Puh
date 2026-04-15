@@ -348,6 +348,7 @@ INSERT INTO certification_log (certification_id, warden_id, date_created, certif
 
 -- [2] View Wardens
 -- 1. View All Wardens
+CREATE OR REPLACE VIEW all_wardens AS
 SELECT DISTINCT ON (warden_id)
     w.warden_id, w.full_name, w.referred, w.email, r.role_name,
     c.clearance_name, d.dimension_name, sl.new_status, sl.update_date
@@ -356,8 +357,10 @@ ON w.clearance_id = c.clearance_id JOIN dimensions d ON w.dimension_id = d.dimen
     JOIN status_log sl ON w.warden_id = sl.warden_id
 ORDER BY w.warden_id, sl.update_date
 DESC;
+SELECT * FROM all_wardens;
 
 -- 2. View Warden by Id
+CREATE OR REPLACE VIEW each_warden AS
 SELECT
     w.warden_id, w.alternate_id, w.id_type, w.full_name, w.referred, w.email,
     w.start_date, r.role_name,
@@ -369,24 +372,32 @@ FROM wardens w JOIN roles r ON w.role_id = r.role_id
     JOIN certification_log cl ON w.warden_id = cl.warden_id
     JOIN certifications cr ON cl.certification_id = cr.certification_id
 WHERE w.warden_id = 4;
+SELECT * FROM each_warden;
 
 -- 3. View Wardens by employment status
+CREATE OR REPLACE VIEW wardens_by_employment AS
 SELECT DISTINCT ON (sl.warden_id)
     wardens.warden_id, wardens.full_name, wardens.referred, sl.new_status,
     sl.update_date
 FROM wardens JOIN status_log sl on wardens.warden_id = sl.warden_id
 WHERE sl.new_status = 'terminated';
 
+SELECT * FROM wardens_by_employment;
+
 
 -- 4. View Wardens by Roles
+CREATE OR REPLACE VIEW wardens_by_roles AS
 SELECT wardens.warden_id, wardens.full_name, wardens.referred, roles.role_name,
        roles.role_desc
 FROM wardens JOIN roles ON wardens.role_id = roles.role_id;
+SELECT * FROM wardens_by_roles;
 
 -- [4] Manage Certifications
 -- 2. View Certifications
+CREATE OR REPLACE VIEW view_certifications AS
 SELECT w.warden_id, w.full_name, cr.certification_name, cr.certification_desc,
        cl.date_created, cl.certification_status, cl.expiration_date
 FROM wardens w JOIN certification_log cl ON w.warden_id = cl.warden_id
 JOIN certifications cr ON cl.certification_id = cr.certification_id
 ORDER BY cl.date_created DESC ;
+SELECT * FROM view_certifications;

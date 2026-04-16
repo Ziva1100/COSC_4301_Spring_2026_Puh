@@ -239,7 +239,7 @@ INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_
 VALUES (1010, 'visa',     'Nova',   'Veylan',      'nova.veylan@neonark.com',      '2024-10-01', 5, 5, 1);
 
 -- add earth dimension
-INSERT INTO dimensions (dimension_name, dimension_desc) VALUES ('earth', 'earth');
+INSERT INTO dimensions (dimension_name, dimension_desc) VALUES ('Earth', 'Earth');
 
 -- earth wardens (dimension_id = 6) get proper first + last names
 INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
@@ -367,10 +367,11 @@ FROM wardens w JOIN roles r ON w.role_id = r.role_id
     JOIN clearances c ON w.clearance_id = c.clearance_id
     JOIN dimensions d ON w.dimension_id = d.dimension_id
     JOIN status_log sl ON w.warden_id = sl.warden_id
-    JOIN certification_log cl ON w.warden_id = cl.warden_id
-    JOIN certifications cr ON cl.certification_id = cr.certification_id
-WHERE w.warden_id = 4;
-SELECT * FROM each_warden;
+    LEFT JOIN certification_log cl ON w.warden_id = cl.warden_id
+    LEFT JOIN certifications cr ON cl.certification_id = cr.certification_id
+;
+SELECT * FROM each_warden
+WHERE warden_id = 4;
 
 -- 3. View Wardens by employment status
 CREATE OR REPLACE VIEW wardens_by_employment AS
@@ -403,5 +404,91 @@ SELECT * FROM view_certifications;
 ---------------------------------------------------------------------------------------------
 -- STEP 5: UPDATING AND INSERTING  ROWS INTO THE DATABASE AND ENSURE DATA INTEGRITY
 -- [1] Add New Warden
--- create a procedure that adds a new warden and has default value of Earth as his dimention
--- CREATE OR REPLACE PROCEDURE add_new_warden ()
+-- create a procedure that adds a new warden and has default value of Earth as his dimension
+CREATE OR REPLACE PROCEDURE add_new_warden (in_fname VARCHAR, in_id_num INT, in_id_type VARCHAR,
+       in_email VARCHAR, in_role VARCHAR, in_emp_status VARCHAR, in_clearance VARCHAR,
+       in_start_date DATE, in_lname VARCHAR DEFAULT NULL, in_end_date DATE DEFAULT NULL,
+       in_dimension VARCHAR DEFAULT 'Earth')
+       LANGUAGE plpgsql
+       AS $$
+       DECLARE
+        role_id_in INT;
+        clearance_id_in INT;
+        dimension_id_in INT;
+        warden_id_new INT;
+       BEGIN
+        -- find the primary key values for role, clearance, and dimension
+        SELECT role_id INTO role_id_in
+           FROM roles
+               WHERE role_name = in_role;
+        IF role_id_in IS NULL THEN
+            RAISE EXCEPTION 'Role % does not exists.', in_role;
+        END IF;
+
+        SELECT clearance_id INTO clearance_id_in
+            FROM clearances
+                WHERE clearance_name = in_clearance;
+        IF clearance_id_in IS NULL THEN
+            RAISE EXCEPTION 'Clearance % does not exists.', in_clearance;
+        END IF;
+
+        SELECT dimension_id INTO dimension_id_in
+            FROM dimensions
+                WHERE dimension_name = in_dimension;
+        IF dimension_id_in IS NULL THEN
+            RAISE EXCEPTION 'Dimension % does not exists.', in_dimension;
+        END IF;
+
+        -- check if the status is within the check constraint
+        IF in_emp_status NOT IN ('active','onLeave','terminated')
+           THEN RAISE EXCEPTION 'Employment status does not exists';
+        END IF;
+
+        -- insert into table wardens the values
+        INSERT INTO wardens (alternate_id, id_type, first_name,
+                             last_name, email, start_date, dimension_id, role_id, clearance_id)
+            VALUES
+                (in_id_num, in_id_type, in_fname, in_lname,
+                 in_emaIl, in_start_date, dimension_id_in, role_id_in,
+                 clearance_id_in);
+
+        -- get the new warden ID so you can insert it into the status log
+        SELECT warden_id INTO warden_id_new
+            FROM wardens
+                WHERE alternate_id = in_id_num;
+
+
+        -- insert into employment status table
+        INSERT INTO status_log (warden_id, update_date, new_status)
+            VALUES
+                (warden_id_new, in_start_date, LOWER(in_emp_status));
+
+        IF in_end_date IS NOT NULL THEN
+            INSERT INTO status_log (warden_id, update_date, new_status)
+                VALUES
+                (warden_id_new, in_end_date, 'terminated');
+        END IF;
+
+
+       EXCEPTION
+        -- catch all other exceptions
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Unexpected error: %', SQLERRM;
+       END;
+       $$;
+
+-- check if the procedure works correctly
+CALL add_new_warden(
+    in_fname       => 'Zoe',
+    in_id_num      => 1021,
+    in_id_type     => 'passport',
+    in_email       => 'zoe.newwarden@neonark.com',
+    in_role        => 'Field',
+    in_emp_status  => 'active',
+    in_clearance   => 'Alpha',
+    in_start_date  => '2024-11-01',
+    in_lname       => 'Pemberton'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;

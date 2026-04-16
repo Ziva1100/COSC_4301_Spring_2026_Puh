@@ -89,8 +89,8 @@ CREATE TABLE wardens (
     warden_id INT GENERATED ALWAYS AS IDENTITY,
     alternate_id INT NOT NULL,
     id_type VARCHAR(10) NOT NULL,
-    full_name VARCHAR(50),
-    referred VARCHAR(50),
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
     email VARCHAR(50),
     start_date DATE DEFAULT CURRENT_DATE,
     dimension_id INT NOT NULL,
@@ -208,71 +208,69 @@ VALUES ('Temporal Awareness', 'Trained to operate in time-distorted dimensional 
 -- SELECT * FROM certifications;
 
 -- fill wardens with data
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1001, 'badge',    'Kael Dawnveil',    'Neon Ark HQ',   'kael.dawnveil@neonark.com',    '2024-01-15', 1, 1, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1001, 'badge',    'Kael',   'Dawnveil',    'kael.dawnveil@neonark.com',    '2024-01-15', 1, 1, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1002, 'passport', 'Lyra Stormfeld',   'Field Division', 'lyra.stormfeld@neonark.com',  '2024-02-20', 2, 2, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1002, 'passport', 'Lyra',   'Stormfeld',   'lyra.stormfeld@neonark.com',   '2024-02-20', 2, 2, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1003, 'visa',     'Oryn Ashveil',     'Rift Corps',    'oryn.ashveil@neonark.com',     '2024-03-10', 3, 3, 3);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1003, 'visa',     'Oryn',   'Ashveil',     'oryn.ashveil@neonark.com',     '2024-03-10', 3, 3, 3);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1004, 'badge',    'Seren Voss',       'Neon Ark HQ',   'seren.voss@neonark.com',       '2024-04-05', 4, 4, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1004, 'badge',    'Seren',  'Voss',        'seren.voss@neonark.com',       '2024-04-05', 4, 4, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1005, 'passport', 'Thane Mirova',     'Astral Division','thane.mirova@neonark.com',    '2024-05-18', 5, 5, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1005, 'passport', 'Thane',  'Mirova',      'thane.mirova@neonark.com',     '2024-05-18', 5, 5, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1006, 'badge',    'Zara Nighthollow', 'Field Division', 'zara.nighthollow@neonark.com','2024-06-22', 1, 2, 3);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1006, 'badge',    'Zara',   'Nighthollow', 'zara.nighthollow@neonark.com', '2024-06-22', 1, 2, 3);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1007, 'visa',     'Caden Solmere',    'Rift Corps',    'caden.solmere@neonark.com',    '2024-07-30', 2, 3, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1007, 'visa',     'Caden',  'Solmere',     'caden.solmere@neonark.com',    '2024-07-30', 2, 3, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1008, 'badge',    'Isla Eryndor',     'Neon Ark HQ',   'isla.eryndor@neonark.com',     '2024-08-14', 3, 1, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1008, 'badge',    'Isla',   'Eryndor',     'isla.eryndor@neonark.com',     '2024-08-14', 3, 1, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1009, 'passport', 'Riven Duskfall',   'Astral Division','riven.duskfall@neonark.com',  '2024-09-09', 4, 4, 3);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1009, 'passport', 'Riven',  'Duskfall',    'riven.duskfall@neonark.com',   '2024-09-09', 4, 4, 3);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1010, 'visa',     'Nova Veylan',      'Field Division', 'nova.veylan@neonark.com',     '2024-10-01', 5, 5, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1010, 'visa',     'Nova',   'Veylan',      'nova.veylan@neonark.com',      '2024-10-01', 5, 5, 1);
 
--- SELECT * FROM wardens;
-
--- add earth dimension to the dimensions table and create more wardens who are from earth
+-- add earth dimension
 INSERT INTO dimensions (dimension_name, dimension_desc) VALUES ('earth', 'earth');
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1011, 'passport', 'Marcus Reid',      'Neon Ark HQ',    'marcus.reid@neonark.com',      '2024-01-08', 6, 1, 1);
+-- earth wardens (dimension_id = 6) get proper first + last names
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1011, 'passport', 'Marcus',  'Reid',       'marcus.reid@neonark.com',      '2024-01-08', 6, 1, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1012, 'visa',     'Sofia Navarro',    'Field Division', 'sofia.navarro@neonark.com',    '2024-02-14', 6, 2, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1012, 'visa',     'Sofia',   'Navarro',    'sofia.navarro@neonark.com',    '2024-02-14', 6, 2, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1013, 'passport', 'James Holloway',   'Rift Corps',     'james.holloway@neonark.com',   '2024-03-22', 6, 3, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1013, 'passport', 'James',   'Holloway',   'james.holloway@neonark.com',   '2024-03-22', 6, 3, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1014, 'visa',     'Amara Osei',       'Neon Ark HQ',    'amara.osei@neonark.com',       '2024-04-17', 6, 4, 3);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1014, 'visa',     'Amara',   'Osei',       'amara.osei@neonark.com',       '2024-04-17', 6, 4, 3);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1015, 'passport', 'Daniel Cruz',      'Astral Division','daniel.cruz@neonark.com',      '2024-05-29', 6, 5, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1015, 'passport', 'Daniel',  'Cruz',       'daniel.cruz@neonark.com',      '2024-05-29', 6, 5, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1016, 'visa',     'Priya Sharma',     'Field Division', 'priya.sharma@neonark.com',     '2024-06-11', 6, 2, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1016, 'visa',     'Priya',   'Sharma',     'priya.sharma@neonark.com',     '2024-06-11', 6, 2, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1017, 'passport', 'Ethan Blackwood',  'Rift Corps',     'ethan.blackwood@neonark.com',  '2024-07-03', 6, 1, 3);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1017, 'passport', 'Ethan',   'Blackwood',  'ethan.blackwood@neonark.com',  '2024-07-03', 6, 1, 3);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1018, 'visa',     'Leila Hassan',     'Neon Ark HQ',    'leila.hassan@neonark.com',     '2024-08-25', 6, 3, 2);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1018, 'visa',     'Leila',   'Hassan',     'leila.hassan@neonark.com',     '2024-08-25', 6, 3, 2);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1019, 'passport', 'Noah Castellano',  'Astral Division','noah.castellano@neonark.com',  '2024-09-16', 6, 4, 1);
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1019, 'passport', 'Noah',    'Castellano', 'noah.castellano@neonark.com',  '2024-09-16', 6, 4, 1);
 
-INSERT INTO wardens (alternate_id, id_type, full_name, referred, email, start_date, dimension_id, role_id, clearance_id)
-VALUES (1020, 'visa',     'Zoe Pemberton',    'Field Division', 'zoe.pemberton@neonark.com',    '2024-10-30', 6, 5, 3);
-
+INSERT INTO wardens (alternate_id, id_type, first_name, last_name, email, start_date, dimension_id, role_id, clearance_id)
+VALUES (1020, 'visa',     'Zoe',     'Pemberton',  'zoe.pemberton@neonark.com',    '2024-10-30', 6, 5, 3);
 -- SELECT * FROM wardens;
 
 -- a snapshot of status_log table with data
@@ -350,7 +348,7 @@ INSERT INTO certification_log (certification_id, warden_id, date_created, certif
 -- 1. View All Wardens
 CREATE OR REPLACE VIEW all_wardens AS
 SELECT DISTINCT ON (warden_id)
-    w.warden_id, w.full_name, w.referred, w.email, r.role_name,
+    w.warden_id, w.first_name, w.last_name, w.email, r.role_name,
     c.clearance_name, d.dimension_name, sl.new_status, sl.update_date
 FROM wardens w JOIN roles r ON w.role_id = r.role_id JOIN clearances c
 ON w.clearance_id = c.clearance_id JOIN dimensions d ON w.dimension_id = d.dimension_id
@@ -362,7 +360,7 @@ SELECT * FROM all_wardens;
 -- 2. View Warden by Id
 CREATE OR REPLACE VIEW each_warden AS
 SELECT
-    w.warden_id, w.alternate_id, w.id_type, w.full_name, w.referred, w.email,
+    w.warden_id, w.alternate_id, w.id_type, w.first_name, w.last_name, w.email,
     w.start_date, r.role_name,
     c.clearance_name, d.dimension_name, sl.new_status, sl.update_date, cr.certification_name
 FROM wardens w JOIN roles r ON w.role_id = r.role_id
@@ -377,7 +375,7 @@ SELECT * FROM each_warden;
 -- 3. View Wardens by employment status
 CREATE OR REPLACE VIEW wardens_by_employment AS
 SELECT DISTINCT ON (sl.warden_id)
-    wardens.warden_id, wardens.full_name, wardens.referred, sl.new_status,
+    wardens.warden_id, wardens.first_name, wardens.last_name, sl.new_status,
     sl.update_date
 FROM wardens JOIN status_log sl on wardens.warden_id = sl.warden_id
 WHERE sl.new_status = 'terminated';
@@ -387,7 +385,7 @@ SELECT * FROM wardens_by_employment;
 
 -- 4. View Wardens by Roles
 CREATE OR REPLACE VIEW wardens_by_roles AS
-SELECT wardens.warden_id, wardens.full_name, wardens.referred, roles.role_name,
+SELECT wardens.warden_id, wardens.first_name, wardens.last_name, roles.role_name,
        roles.role_desc
 FROM wardens JOIN roles ON wardens.role_id = roles.role_id;
 SELECT * FROM wardens_by_roles;
@@ -395,9 +393,15 @@ SELECT * FROM wardens_by_roles;
 -- [4] Manage Certifications
 -- 2. View Certifications
 CREATE OR REPLACE VIEW view_certifications AS
-SELECT w.warden_id, w.full_name, cr.certification_name, cr.certification_desc,
+SELECT w.warden_id, w.first_name, cr.certification_name, cr.certification_desc,
        cl.date_created, cl.certification_status, cl.expiration_date
 FROM wardens w JOIN certification_log cl ON w.warden_id = cl.warden_id
 JOIN certifications cr ON cl.certification_id = cr.certification_id
 ORDER BY cl.date_created DESC ;
 SELECT * FROM view_certifications;
+
+---------------------------------------------------------------------------------------------
+-- STEP 5: UPDATING AND INSERTING  ROWS INTO THE DATABASE AND ENSURE DATA INTEGRITY
+-- [1] Add New Warden
+-- create a procedure that adds a new warden and has default value of Earth as his dimention
+-- CREATE OR REPLACE PROCEDURE add_new_warden ()

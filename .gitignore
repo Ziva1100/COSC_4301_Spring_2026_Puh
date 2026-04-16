@@ -1,5 +1,48 @@
 ### IntelliJ IDEA ###
+.idea/
 *.iml
+*.ipr
+*.iws
 out/
+.idea_modules/
 
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+!**/src/main/**/build/
+!**/src/test/**/build/
 
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+*.logs
+hs_err_pid*
+
+### Spring Boot ###
+target/
+*.log
+log/
+logs/
+
+### Docker ###
+.dockerignore
+docker-compose.override.yml
+
+### Environment / Secrets ###
+.env
+.env.*
+application-local.properties
+application-local.yml
+**/src/main/resources/application-secret*
+
+### OS ###
+.DS_Store
+Thumbs.db
+desktop.ini
+
+### VS Code (just in case) ###
+.vscode/

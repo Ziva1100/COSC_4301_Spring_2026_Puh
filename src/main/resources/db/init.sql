@@ -422,7 +422,7 @@ SELECT w.warden_id, w.first_name, cr.certification_name, cr.certification_desc,
 FROM wardens w JOIN certification_log cl ON w.warden_id = cl.warden_id
 JOIN certifications cr ON cl.certification_id = cr.certification_id
 ORDER BY cl.date_created DESC ;
-SELECT * FROM view_certifications;
+SELECT * FROM view_certifications where warden_id = 4;
 
 ---------------------------------------------------------------------------------------------
 -- STEP 5: UPDATING AND INSERTING  ROWS INTO THE DATABASE AND ENSURE DATA INTEGRITY
@@ -577,6 +577,7 @@ CREATE OR REPLACE PROCEDURE update_warden.update_emp_status (in_warden_id INT, n
         END;
         $$;
 
+-- [3.4] Update Start Date
 CREATE OR REPLACE PROCEDURE update_warden.update_start_date (in_warden_id INT, new_start_date DATE)
        LANGUAGE plpgsql
        AS $$
@@ -587,6 +588,7 @@ CREATE OR REPLACE PROCEDURE update_warden.update_start_date (in_warden_id INT, n
         END;
         $$;
 
+-- [3.5] Update End Date
 CREATE OR REPLACE PROCEDURE update_warden.update_end_date (in_warden_id INT, new_end_date DATE)
     LANGUAGE plpgsql
     AS $$
@@ -612,6 +614,7 @@ CREATE OR REPLACE PROCEDURE update_warden.update_end_date (in_warden_id INT, new
     END;
     $$;
 
+-- [3.6] Update Email
 CREATE OR REPLACE PROCEDURE update_warden.update_email(in_warden_id INT, new_email VARCHAR)
        LANGUAGE plpgsql
        AS $$
@@ -621,8 +624,6 @@ CREATE OR REPLACE PROCEDURE update_warden.update_email(in_warden_id INT, new_ema
                 WHERE warden_id = in_warden_id;
     END;
     $$;
-
-
 
 
 CALL update_warden.update_role (
@@ -673,3 +674,32 @@ CALL update_warden.update_email (
 
 SELECT * FROM each_warden
 WHERE alternate_id = 1021;
+
+-- [4] Manage Certifications
+-- [4.1] Add Certification
+CREATE OR REPLACE PROCEDURE add_certification (in_warden_id INT, in_certification_name VARCHAR,
+       in_date_created DATE, in_expiration_date DATE)
+       LANGUAGE plpgsql
+       AS $$
+       DECLARE
+        cert_id INT;
+       BEGIN
+        SELECT certification_id INTO cert_id
+            FROM certifications
+                WHERE certification_name = in_certification_name;
+
+        IF cert_id IS NULL THEN
+           RAISE EXCEPTION 'This certification does not exists';
+        END IF;
+
+        INSERT INTO certification_log (certification_id, warden_id, date_created, certificaiton_status,
+           expiration_date)
+           VALUES (cert_id, in_warden_id, in_date_created, 'active', in_expiration_date);
+    END;
+    $$;
+
+-- [4.2] Mark Certification Expired
+
+    UPDATE certification_log
+    SET expiration_date = current_date
+    WHERE certification_log_id = 4;

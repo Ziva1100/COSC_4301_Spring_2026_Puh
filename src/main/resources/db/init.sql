@@ -358,6 +358,11 @@ DESC;
 SELECT * FROM all_wardens;
 
 -- 2. View Warden by Id
+-- resolve the complexity with multiple nested queries
+-- 1- display the latest employment status that is the status currently in effect
+-- 2- display the date of the current status
+-- 3- if the termination date has been determined, display the termination date
+-- 4- display role, dimension, certification (if exists), and clearance
 CREATE OR REPLACE VIEW each_warden AS
 SELECT
     w.warden_id, w.alternate_id, w.id_type, w.first_name, w.last_name, w.email,
@@ -366,13 +371,21 @@ SELECT
     (SELECT sl.new_status
      FROM status_log sl
      WHERE w.warden_id = sl.warden_id
+       AND update_date <= CURRENT_DATE
      ORDER BY update_date DESC
-     LIMIT 1) as new_status,
+     LIMIT 1) as current_status,
     (SELECT sl.update_date
     FROM status_log sl
     WHERE w.warden_id = sl.warden_id
+        AND update_date <= CURRENT_DATE
     ORDER BY update_date DESC
-    LIMIT 1) as update_date,
+    LIMIT 1) as status_since,
+    (SELECT sl.update_date
+    FROM status_log sl
+    WHERE w.warden_id = sl.warden_id
+        AND new_status = 'terminated'
+    ORDER BY update_date DESC
+    LIMIT 1) as termination_date,
     cr.certification_name
 FROM wardens w JOIN roles r ON w.role_id = r.role_id
     JOIN clearances c ON w.clearance_id = c.clearance_id
@@ -574,6 +587,31 @@ CREATE OR REPLACE PROCEDURE update_warden.update_start_date (in_warden_id INT, n
         END;
         $$;
 
+CREATE OR REPLACE PROCEDURE update_warden.update_end_date (in_warden_id INT, new_end_date DATE)
+    LANGUAGE plpgsql
+    AS $$
+    DECLARE
+       status_log_id_update INT;
+    BEGIN
+     SELECT status_id INTO status_log_id_update
+        FROM status_log
+            WHERE warden_id = in_warden_id
+                AND new_status = 'terminated'
+                AND update_date >= current_date
+                    ORDER BY update_date DESC
+                        LIMIT 1;
+
+     IF status_log_id_update IS NOT NULL THEN
+        UPDATE status_log
+            SET update_date = new_end_date
+                WHERE status_id = status_log_id_update;
+    ELSE
+        INSERT INTO status_log (warden_id, update_date, new_status)
+            VALUES (in_warden_id, new_end_date, 'terminated');
+    END IF;
+END;
+$$;
+
 
 
 
@@ -605,6 +643,14 @@ WHERE alternate_id = 1021;
 CALL update_warden.update_start_date (
     in_warden_id => 21,
     new_start_date => '2025-04-17'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+CALL update_warden.update_end_date (
+    in_warden_id => 21,
+    new_end_date => '2027-04-17'
 );
 
 SELECT * FROM each_warden

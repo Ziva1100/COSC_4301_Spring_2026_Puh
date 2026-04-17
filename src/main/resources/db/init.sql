@@ -609,8 +609,18 @@ CREATE OR REPLACE PROCEDURE update_warden.update_end_date (in_warden_id INT, new
         INSERT INTO status_log (warden_id, update_date, new_status)
             VALUES (in_warden_id, new_end_date, 'terminated');
     END IF;
-END;
-$$;
+    END;
+    $$;
+
+CREATE OR REPLACE PROCEDURE update_warden.update_email(in_warden_id INT, new_email VARCHAR)
+       LANGUAGE plpgsql
+       AS $$
+       BEGIN
+        UPDATE wardens
+            SET email = new_email
+                WHERE warden_id = in_warden_id;
+    END;
+    $$;
 
 
 
@@ -651,6 +661,14 @@ WHERE alternate_id = 1021;
 CALL update_warden.update_end_date (
     in_warden_id => 21,
     new_end_date => '2027-04-17'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+CALL update_warden.update_email (
+    in_warden_id => 21,
+    new_email => 'zoe.newemailexample@neonark.com'
 );
 
 SELECT * FROM each_warden

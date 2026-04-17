@@ -564,6 +564,17 @@ CREATE OR REPLACE PROCEDURE update_warden.update_emp_status (in_warden_id INT, n
         END;
         $$;
 
+CREATE OR REPLACE PROCEDURE update_warden.update_start_date (in_warden_id INT, new_start_date DATE)
+       LANGUAGE plpgsql
+       AS $$
+       BEGIN
+        UPDATE wardens
+            SET start_date = new_start_date
+                WHERE warden_id = in_warden_id;
+        END;
+        $$;
+
+
 
 
 CALL update_warden.update_role (
@@ -582,15 +593,18 @@ CALL update_warden.update_clearance (
 SELECT * FROM each_warden
 WHERE alternate_id = 1021;
 
--- test the exception
-CALL update_warden.update_emp_status (
-    in_warden_id => 21,
-    new_status_in => 'suspended'
-);
 
 CALL update_warden.update_emp_status (
     in_warden_id => 21,
     new_status_in => 'onLeave'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+CALL update_warden.update_start_date (
+    in_warden_id => 21,
+    new_start_date => '2025-04-17'
 );
 
 SELECT * FROM each_warden

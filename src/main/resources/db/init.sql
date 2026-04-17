@@ -362,11 +362,21 @@ CREATE OR REPLACE VIEW each_warden AS
 SELECT
     w.warden_id, w.alternate_id, w.id_type, w.first_name, w.last_name, w.email,
     w.start_date, r.role_name,
-    c.clearance_name, d.dimension_name, sl.new_status, sl.update_date, cr.certification_name
+    c.clearance_name, d.dimension_name,
+    (SELECT sl.new_status
+     FROM status_log sl
+     WHERE w.warden_id = sl.warden_id
+     ORDER BY update_date DESC
+     LIMIT 1) as new_status,
+    (SELECT sl.update_date
+    FROM status_log sl
+    WHERE w.warden_id = sl.warden_id
+    ORDER BY update_date DESC
+    LIMIT 1) as update_date,
+    cr.certification_name
 FROM wardens w JOIN roles r ON w.role_id = r.role_id
     JOIN clearances c ON w.clearance_id = c.clearance_id
     JOIN dimensions d ON w.dimension_id = d.dimension_id
-    JOIN status_log sl ON w.warden_id = sl.warden_id
     LEFT JOIN certification_log cl ON w.warden_id = cl.warden_id
     LEFT JOIN certifications cr ON cl.certification_id = cr.certification_id
 ;
@@ -441,7 +451,7 @@ CREATE OR REPLACE PROCEDURE add_new_warden (in_fname VARCHAR, in_id_num INT, in_
 
         -- check if the status is within the check constraint
         IF in_emp_status NOT IN ('active','onLeave','terminated')
-           THEN RAISE EXCEPTION 'Employment status does not exists';
+           THEN RAISE EXCEPTION 'Employment status does not exists. Please enter active, onLeave, or terminated';
         END IF;
 
         -- insert into table wardens the values
@@ -488,6 +498,99 @@ CALL add_new_warden(
     in_clearance   => 'Alpha',
     in_start_date  => '2024-11-01',
     in_lname       => 'Pemberton'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+-- [3] Update Warden
+-- create a schema that will hold all the updates for warden table
+CREATE SCHEMA IF NOT EXISTS update_warden;
+
+-- [3.1] Update Role
+CREATE OR REPLACE PROCEDURE update_warden.update_role(in_warden_id INT, new_role VARCHAR)
+       LANGUAGE plpgsql
+       AS $$
+       DECLARE
+        role_id_new INT;
+       BEGIN
+        SELECT role_id INTO role_id_new
+            FROM roles
+                WHERE role_name = new_role;
+
+        IF role_id_new IS NULL THEN
+           RAISE EXCEPTION 'The role % does not exists', new_role;
+        END IF;
+
+        UPDATE wardens
+            SET role_id = role_id_new
+                WHERE warden_id = in_warden_id;
+
+        END;
+        $$;
+
+-- [3.2] Update Clearance
+CREATE OR REPLACE PROCEDURE update_warden.update_clearance(in_warden_id INT, new_clearance VARCHAR)
+       LANGUAGE plpgsql
+       AS $$
+       DECLARE
+        clearance_id_new INT;
+       BEGIN
+        SELECT clearance_id INTO clearance_id_new
+            FROM clearances
+                WHERE clearance_name = new_clearance;
+
+        IF clearance_id_new IS NULL THEN
+           RAISE EXCEPTION 'The clearance % does not exists', new_clearance;
+        END IF;
+
+        UPDATE wardens
+            SET clearance_id = clearance_id_new
+                WHERE warden_id = in_warden_id;
+
+        END;
+        $$;
+
+-- [3.3] Update Employment Status
+CREATE OR REPLACE PROCEDURE update_warden.update_emp_status (in_warden_id INT, new_status_in VARCHAR)
+       LANGUAGE plpgsql
+       AS $$
+       BEGIN
+        IF new_status_in NOT IN ('active', 'onLeave','terminated') THEN
+           RAISE EXCEPTION 'Status % needs to be active, onLeave, or terminated',new_status_in;
+        END IF;
+        INSERT INTO status_log (warden_id, new_status)
+            VALUES (in_warden_id, new_status_in);
+        END;
+        $$;
+
+
+
+CALL update_warden.update_role (
+    in_warden_id => 21,
+    new_role    => 'Admin'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+CALL update_warden.update_clearance (
+    in_warden_id => 21,
+    new_clearance    => 'Omega'
+);
+
+SELECT * FROM each_warden
+WHERE alternate_id = 1021;
+
+-- test the exception
+CALL update_warden.update_emp_status (
+    in_warden_id => 21,
+    new_status_in => 'suspended'
+);
+
+CALL update_warden.update_emp_status (
+    in_warden_id => 21,
+    new_status_in => 'onLeave'
 );
 
 SELECT * FROM each_warden

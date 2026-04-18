@@ -699,7 +699,12 @@ CREATE OR REPLACE PROCEDURE add_certification (in_warden_id INT, in_certificatio
     $$;
 
 -- [4.2] Mark Certification Expired
+SELECT * FROM certification_log WHERE certification_log_id = 4;
 
     UPDATE certification_log
     SET expiration_date = current_date
     WHERE certification_log_id = 4;
+
+
+SELECT * FROM certification_log WHERE certification_log_id = 4;
+

@@ -35,7 +35,15 @@ public class Main {
     //**************************************************************
     public static void main(String[] args) {
 
+        boolean useMock = true;
 
+        WardenApi api = useMock
+                ? new MockWardenApiClient()
+                : new WardenApiClient("http://localhost:8080");
+
+        WardenService service = new WardenService(api);
+        WardenMenu menu = new WardenMenu(service);
+        menu.run();
 
 
     }

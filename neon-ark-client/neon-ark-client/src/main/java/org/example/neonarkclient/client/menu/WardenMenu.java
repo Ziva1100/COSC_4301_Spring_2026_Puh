@@ -19,6 +19,7 @@
 
 package org.example.neonarkclient.client.menu;
 
+import org.example.neonarkclient.client.model.Warden;
 import org.example.neonarkclient.client.service.WardenService;
 
 import java.util.InputMismatchException;
@@ -77,6 +78,18 @@ public class WardenMenu {
 
     }
 
+    //***************************************************************
+    //
+    //  Method:       addNewWardenMenu()
+    //
+    //  Description:  runs the menu option of adding the warden
+    //  and passes the input to warden service
+    //
+    //  Parameters:   N/A
+    //
+    //  Returns:      N/A
+    //
+    //**************************************************************
     private void addNewWardenMenu(){
         display("[ Add New Warden ]");
         String firstName = promptString("First name: ");
@@ -91,8 +104,9 @@ public class WardenMenu {
         String endDate = promptString("Ending day [yyyy-mm-dd] [optional]: ");
         String dimension = promptString("Dimension: ");
 
+        Warden returnedWarden = null;
         try {
-            service.addNewWarden(
+            returnedWarden = service.addNewWarden(
                     firstName,
                     lastName,
                     idNum,
@@ -105,9 +119,12 @@ public class WardenMenu {
                     endDate,
                     dimension
             );
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalAccessException e) {
             display("There was an issue with one of the fields.");
         }
+
+        display("The warden created is: " +
+                returnedWarden);
     }
 
     private void display(String str){

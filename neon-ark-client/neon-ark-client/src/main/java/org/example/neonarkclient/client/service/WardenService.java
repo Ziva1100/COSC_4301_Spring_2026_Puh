@@ -35,7 +35,19 @@ public class WardenService {
         this.clientApi = clientApi;
     }
 
-    public void addNewWarden(
+    //***************************************************************
+    //
+    //  Method:       addNewWarden()
+    //
+    //  Description:  validates the data inserted from the menu class
+    // and passes it to the API to add a new warden
+    //
+    //  Parameters:   warden record
+    //
+    //  Returns:      N/A
+    //
+    //**************************************************************
+    public Warden addNewWarden(
             String firstName,
             String lastName,
             String idNum,
@@ -142,7 +154,8 @@ public class WardenService {
                 .dimension(dimension)
                 .build();
 
-        clientApi.saveNewWarden(warden);
+
+        return new Warden returnedWarden = clientApi.addNewWarden(warden);
 
     }
 }

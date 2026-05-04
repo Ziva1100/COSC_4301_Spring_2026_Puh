@@ -51,19 +51,6 @@ public class Warden {
     private LocalDate endDate;
     private String dimension;
 
-/*
-    public void addNewWarden(
-            String firstName,
-            String lastName,
-            String idNum,
-            String idType,
-            String email,
-            String role,
-            String status,
-            String clearance,
-            String startDate,
-            String endDate,
-            String dimension)
- */
+
 
 }

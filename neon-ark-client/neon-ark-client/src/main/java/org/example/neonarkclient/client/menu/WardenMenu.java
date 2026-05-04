@@ -19,6 +19,8 @@
 
 package org.example.neonarkclient.client.menu;
 
+import org.example.neonarkclient.client.service.WardenService;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -58,20 +60,60 @@ public class WardenMenu {
             }
 
             switch (userInput) {
-                case 1 -> service.addNewWarden();
+                case 1 -> addNewWardenMenu();
                 case 2 -> viewWardensMenu();
                 case 3 -> updateWardenMenu();
                 case 4 -> manageCertificatesMenu();
                 case 5 -> deactWardenMenu();
+                case 6 ->display("Thank you for using Neon Ark Tracker!");
+                default -> display("The menu choice was incorrect. " +
+                        "Please, try again!");
             }
 
-            service.handleMenuChoice(userInput);
+            scan.nextInt();
+
+
         }
 
     }
 
+    private void addNewWardenMenu(){
+        display("[ Add New Warden ]");
+        String firstName = promptString("First name: ");
+        String lastName = promptString("Last name [optional]: ");
+        String idNum = promptString("ID number: ");
+        String idType = promptString("ID type [BADGE, VISA, PASSPORT]: ");
+        String email = promptString("Email: ");
+        String role = promptString("Role: ");
+        String status = promptString("Status [ACTIVE, ONLEAVE, TERMINATED]: ");
+        String clearance = promptString("Clearance [ALPHA, OMEGA, ECLIPSE]: ");
+        String startDate = promptString("Starting day [yyyy-mm-dd]: ");
+        String endDate = promptString("Ending day [yyyy-mm-dd] [optional]: ");
+        String dimension = promptString("Dimension: ");
+
+        service.addNewWarden(
+                firstName,
+                lastName,
+                idNum,
+                idType,
+                email,
+                role,
+                status,
+                clearance,
+                startDate,
+                endDate,
+                dimension
+                );
+    }
+
     private void display(String str){
         System.out.println(str);
+    }
+
+    private String promptString(String str){
+        System.out.println(str);
+        return scan.nextLine();
+
     }
 
     private void updateWardenMenu(){

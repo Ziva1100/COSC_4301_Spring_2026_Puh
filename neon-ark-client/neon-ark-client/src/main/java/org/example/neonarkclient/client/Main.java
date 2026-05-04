@@ -19,6 +19,8 @@
 package org.example.neonarkclient.client;
 
 
+import org.example.neonarkclient.client.api.WardenClientApi;
+import org.example.neonarkclient.client.api.WardenClientApiMock;
 import org.example.neonarkclient.client.menu.WardenMenu;
 
 public class Main {
@@ -40,8 +42,8 @@ public class Main {
         boolean useMock = true;
 
         WardenApi api = useMock
-                ? new MockWardenApiClient()
-                : new WardenApiClient("http://localhost:8080");
+                ? new WardenClientApiMock()
+                : new WardenClientApi("http://localhost:8080");
 
         WardenService service = new WardenService(api);
         WardenMenu menu = new WardenMenu(service);

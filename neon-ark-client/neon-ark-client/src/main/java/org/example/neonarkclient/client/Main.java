@@ -19,6 +19,8 @@
 package org.example.neonarkclient.client;
 
 
+import org.example.neonarkclient.client.menu.WardenMenu;
+
 public class Main {
 
     //***************************************************************

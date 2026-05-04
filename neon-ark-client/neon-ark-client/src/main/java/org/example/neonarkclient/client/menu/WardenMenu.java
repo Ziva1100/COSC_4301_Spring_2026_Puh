@@ -91,19 +91,23 @@ public class WardenMenu {
         String endDate = promptString("Ending day [yyyy-mm-dd] [optional]: ");
         String dimension = promptString("Dimension: ");
 
-        service.addNewWarden(
-                firstName,
-                lastName,
-                idNum,
-                idType,
-                email,
-                role,
-                status,
-                clearance,
-                startDate,
-                endDate,
-                dimension
-                );
+        try {
+            service.addNewWarden(
+                    firstName,
+                    lastName,
+                    idNum,
+                    idType,
+                    email,
+                    role,
+                    status,
+                    clearance,
+                    startDate,
+                    endDate,
+                    dimension
+            );
+        } catch (IllegalArgumentException e) {
+            display("There was an issue with one of the fields.");
+        }
     }
 
     private void display(String str){

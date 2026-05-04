@@ -20,6 +20,7 @@ package org.example.neonarkclient.client.model;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -38,18 +39,31 @@ public class Warden {
        in_start_date DATE, in_lname VARCHAR DEFAULT NULL, in_end_date DATE DEFAULT NULL,
        in_dimension VARCHAR DEFAULT 'Earth')*/
 
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private int id;
     private IdType idType;
     private String email;
     private String role;
     private Status status;
     private Clearance clearance;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String dimension;
 
-
+/*
+    public void addNewWarden(
+            String firstName,
+            String lastName,
+            String idNum,
+            String idType,
+            String email,
+            String role,
+            String status,
+            String clearance,
+            String startDate,
+            String endDate,
+            String dimension)
+ */
 
 }

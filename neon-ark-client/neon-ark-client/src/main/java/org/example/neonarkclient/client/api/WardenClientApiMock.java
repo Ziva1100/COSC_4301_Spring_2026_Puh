@@ -14,7 +14,8 @@ public class WardenClientApiMock implements WardenApiClientInterface {
         return warden;
     }
     public List<Warden> fetchWardens(){
-
+        return wardens;
     }
 
 }
+

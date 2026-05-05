@@ -63,7 +63,7 @@ public class WardenService {
         // Validate ID Number
         if (idNum.equals(""))
             throw new IllegalAccessException("The ID Number cannot be empty");
-        int idNumber = null;
+        int idNumber = -1;
         try {
             idNumber = Integer.parseInt(idNum);
         } catch (NumberFormatException e) {
@@ -155,7 +155,7 @@ public class WardenService {
                 .build();
 
 
-        return new Warden returnedWarden = clientApi.addNewWarden(warden);
+        return clientApi.addNewWarden(warden);
 
     }
 }

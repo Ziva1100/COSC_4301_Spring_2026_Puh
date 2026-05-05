@@ -27,16 +27,15 @@ import java.util.Scanner;
 
 public class WardenMenu {
 
-    private Scanner scan;
+    private final Scanner scan = new Scanner(System.in);
     private final WardenService service;
-    private int userInput;
 
     public WardenMenu(WardenService service){
         this.service = service;
     }
 
     public void run(){
-        userInput = 0;
+        int userInput = 0;
 
         while(userInput != 6) {
 
@@ -66,7 +65,10 @@ public class WardenMenu {
                 case 3 -> updateWardenMenu();
                 case 4 -> manageCertificatesMenu();
                 case 5 -> deactWardenMenu();
-                case 6 ->display("Thank you for using Neon Ark Tracker!");
+                case 6 -> {
+                    display("Thank you for using Neon Ark Tracker!");
+                    System.exit(0);
+                }
                 default -> display("The menu choice was incorrect. " +
                         "Please, try again!");
             }

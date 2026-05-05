@@ -19,9 +19,14 @@
 
 package org.example.neonarkclient.client.menu;
 
+import org.example.neonarkclient.client.model.Clearance;
+import org.example.neonarkclient.client.model.IdType;
+import org.example.neonarkclient.client.model.Status;
 import org.example.neonarkclient.client.model.Warden;
 import org.example.neonarkclient.client.service.WardenService;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -93,48 +98,215 @@ public class WardenMenu {
     //  Returns:      N/A
     //
     //**************************************************************
-    private void addNewWardenMenu(){
-        display("[ Add New Warden or press -1 to exit ]");
-        String firstName = promptString("First name: ");
-        String lastName = promptString("Last name [optional]: ");
-        String idNum = promptString("ID number: ");
-        String idType = promptString("ID type [BADGE, VISA, PASSPORT]: ");
-        String email = promptString("Email: ");
-        String role = promptString("Role: ");
-        String status = promptString("Status [ACTIVE, ONLEAVE, TERMINATED]: ");
-        String clearance = promptString("Clearance [ALPHA, OMEGA, ECLIPSE]: ");
-        String startDate = promptString("Starting day [yyyy-mm-dd]: ");
-        String endDate = promptString("Ending day [yyyy-mm-dd] [optional]: ");
-        String dimension = promptString("Dimension: ");
+    private void addNewWardenMenu() {
+        display("[ Add New Warden ]");
+        display("Type -1 at any prompt to return to the main menu.");
+        display("---------------------------------------------------------");
 
-        Warden returnedWarden = null;
-        try {
-            returnedWarden = service.addNewWarden(
-                    firstName,
-                    lastName,
-                    idNum,
-                    idType,
-                    email,
-                    role,
-                    status,
-                    clearance,
-                    startDate,
-                    endDate,
-                    dimension
-            );
-        } catch (IllegalArgumentException | IllegalAccessException e) {
-            display("There was an issue with one of the fields.");
+        boolean canceled = false;
+        String firstName = "";
+        String lastName  = "";
+        String idNum     = "";
+        String idType    = "";
+        String email     = "";
+        String role      = "";
+        String status    = "";
+        String clearance = "";
+        String startDate = "";
+        String endDate   = "";
+        String dimension = "";
+
+        // first name
+        while (!canceled) {
+            firstName = promptString("First name: ");
+            if (firstName.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    firstName = service.validateFirstName(firstName);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
         }
 
-        if (returnedWarden == null) {
-            display("No warden was created");
-        } else {
-            display("The warden created is: " +
-                    returnedWarden);
+        // last name — optional, blank is allowed
+        while (!canceled) {
+            lastName = promptString("Last name [optional]: ");
+            if (lastName.equals("-1")) {
+                canceled = true;
+            } else {
+                lastName = service.validateLastName(lastName);
+                break;  // no validation exception possible — always breaks
+            }
         }
 
+        // ID number
+        while (!canceled) {
+            idNum = promptString("ID number: ");
+            if (idNum.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateIdNumber(idNum);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // ID type
+        while (!canceled) {
+            idType = promptString("ID type [BADGE, VISA, PASSPORT]: ");
+            if (idType.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateIdType(idType);
+                    idType = idType.toUpperCase().trim();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // email
+        while (!canceled) {
+            email = promptString("Email: ");
+            if (email.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    email = service.validateEmail(email);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // role
+        while (!canceled) {
+            role = promptString("Role: ");
+            if (role.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateRole(role);
+                    role = role.toUpperCase().trim();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // status
+        while (!canceled) {
+            status = promptString("Status " + Arrays.toString(Status.values()) + ": ");
+            if (status.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateStatus(status);
+                    status = status.toUpperCase().trim();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // clearance
+        while (!canceled) {
+            clearance = promptString("Clearance " + Arrays.toString(Clearance.values()) + ": ");
+            if (clearance.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateClearance(clearance);
+                    clearance = clearance.toUpperCase().trim();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // start date
+        while (!canceled) {
+            startDate = promptString("Starting day [yyyy-MM-dd]: ");
+            if (startDate.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    service.validateStartDate(startDate);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // end date — optional, blank is allowed
+        while (!canceled) {
+            endDate = promptString("Ending day [yyyy-MM-dd] [optional]: ");
+            if (endDate.equals("-1")) {
+                canceled = true;
+            } else {
+                if (endDate.isBlank()) {
+                    break;  // optional — skip validation
+                }
+                try {
+                    service.validateEndDate(endDate, startDate);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // dimension
+        while (!canceled) {
+            dimension = promptString("Dimension: ");
+            if (dimension.equals("-1")) {
+                canceled = true;
+            } else {
+                try {
+                    dimension = service.validateDimension(dimension);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    display(e.getMessage());
+                }
+            }
+        }
+
+        // only build if user didn't cancel
+        if (canceled) {
+            display("Press 1 to return to the main menu.");
+            return;
+        }
+
+        Warden warden = Warden.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .id(Integer.parseInt(idNum))
+                .idType(IdType.valueOf(idType))
+                .email(email)
+                .role(role)
+                .status(Status.valueOf(status))
+                .clearance(Clearance.valueOf(clearance))
+                .startDate(LocalDate.parse(startDate))
+                .endDate(endDate.isBlank() ? null : LocalDate.parse(endDate))
+                .dimension(dimension)
+                .build();
+
+        Warden created = service.addNewWarden(warden);
+        display("Warden created: " + created.getFirstName() + " " + created.getLastName());
         display("Press 1 to return to the main menu.");
-
     }
 
     private void display(String str){
@@ -146,6 +318,7 @@ public class WardenMenu {
         return scan.nextLine();
 
     }
+
 
     private void updateWardenMenu(){
 

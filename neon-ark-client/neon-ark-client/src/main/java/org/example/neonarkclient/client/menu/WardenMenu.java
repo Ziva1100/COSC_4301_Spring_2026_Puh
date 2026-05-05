@@ -54,6 +54,7 @@ public class WardenMenu {
 
             try {
                 userInput = scan.nextInt();
+                scan.nextLine();
             }catch (InputMismatchException e) {
                 display("The answer has to be a number!");
                 scan.nextInt();
@@ -93,7 +94,7 @@ public class WardenMenu {
     //
     //**************************************************************
     private void addNewWardenMenu(){
-        display("[ Add New Warden ]");
+        display("[ Add New Warden or press -1 to exit ]");
         String firstName = promptString("First name: ");
         String lastName = promptString("Last name [optional]: ");
         String idNum = promptString("ID number: ");
@@ -125,8 +126,15 @@ public class WardenMenu {
             display("There was an issue with one of the fields.");
         }
 
-        display("The warden created is: " +
-                returnedWarden);
+        if (returnedWarden == null) {
+            display("No warden was created");
+        } else {
+            display("The warden created is: " +
+                    returnedWarden);
+        }
+
+        display("Press 1 to return to the main menu.");
+
     }
 
     private void display(String str){

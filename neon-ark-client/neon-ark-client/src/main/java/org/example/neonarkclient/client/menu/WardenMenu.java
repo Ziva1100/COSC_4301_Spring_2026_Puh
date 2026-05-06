@@ -311,7 +311,7 @@ public class WardenMenu {
         } catch (IOException e) {
             display("There was an issue looking for a duplicate warden");
         }
-        if (created == null) {
+        if (created.isEmpty()) {
             display("This warden already exists");
         } else {
             display(created);

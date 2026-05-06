@@ -373,6 +373,45 @@ public class WardenMenu {
         }catch(IOException e){
             display("There was an issue retriving all wardens.");
         }
+        if (wardens == null) {
+            display("There was an issue returning the wardens.");
+        } else {
+            display("============================================================\n" +
+                    "ACTION: Fetch All Wardens\n" +
+                    "============================================================\n" +
+                    "SENT: GET /api/wardens\n" +
+                    "Description: Retrieves all warden records from the intake manifest.\n" +
+                    "Result: SUCCESS (simulated)\n" +
+                    "Total Records Returned: " + wardens.size() + "\n" +
+                    "============================================================\n"
+            );
+            System.out.printf("%-6s %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
+                    "ID", "FIRST NAME", "LAST NAME", "ID TYPE", "EMAIL", "ROLE",
+                    "STATUS", "CLEARANCE", "START DATE", "END DATE", "DIMENSION");
+
+            // divider
+            System.out.println("-".repeat(145));
+
+            // rows
+            for (Warden w : wardens) {
+                System.out.printf("%-6d %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
+                        w.getId(),
+                        w.getFirstName(),
+                        w.getLastName(),
+                        w.getIdType(),
+                        w.getEmail(),
+                        w.getRole(),
+                        w.getStatus(),
+                        w.getClearance(),
+                        w.getStartDate(),
+                        w.getEndDate() == null ? "N/A" : w.getEndDate(),
+                        w.getDimension());
+            }
+
+            System.out.println("-".repeat(145));
+            display("Press 1 to return to the main menu.");
+        }
+
 
     }
 

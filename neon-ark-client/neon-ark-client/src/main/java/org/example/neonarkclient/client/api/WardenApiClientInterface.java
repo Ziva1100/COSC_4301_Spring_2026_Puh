@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WardenApiClientInterface {
 
-    String addNewWarden(Warden warden);
+    String addNewWarden(Warden warden) throws IOException;
     List<Warden> fetchWardens();
     String getWardenById(int id) throws IOException;
 

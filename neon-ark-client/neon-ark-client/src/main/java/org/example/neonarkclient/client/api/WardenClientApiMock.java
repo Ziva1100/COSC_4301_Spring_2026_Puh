@@ -19,43 +19,9 @@ public class WardenClientApiMock implements WardenApiClientInterface {
     private final List<Warden> wardens = new ArrayList<>();
     Path path = Path.of("src/main/resources/wardens.csv");
 
-    public String addNewWarden(Warden warden){
+    public Warden addNewWarden(Warden warden){
         wardens.add(warden);
-
-        // Create a fake string with return information of the warden
-            String response =
-                    "============================================================\n" +
-                            "ACTION: Add New Warden\n" +
-                            "============================================================\n" +
-                            "Inputs Requested:  firstName, lastName, id, idType, email, " +
-                            "role, status, clearance, startDate, endDate, dimensions\n" +
-                            "\n" +
-                            "Description\n" +
-                            "Add a new warden with all the needed information. " +
-                            "The backend server takes care of appropriate saving in the " +
-                            "database." +
-                            "\n" +
-                            "WOULD SEND: POST /api/wardens/register\n" +
-                            "Payload:\n" +
-                            "  {\n" +
-                            "    \"id\"          : " + warden.getId() + ",\n" +
-                            "    \"firstName\"   : \"" + warden.getFirstName() + "\",\n" +
-                            "    \"lastName\"    : \"" + warden.getLastName() + "\",\n" +
-                            "    \"idType\"      : \"" + warden.getIdType() + "\",\n" +
-                            "    \"email\"       : \"" + warden.getEmail() + "\",\n" +
-                            "    \"role\"        : \"" + warden.getRole() + "\",\n" +
-                            "    \"status\"      : \"" + warden.getStatus() + "\",\n" +
-                            "    \"clearance\"   : \"" + warden.getClearance() + "\",\n" +
-                            "    \"startDate\"   : \"" + warden.getStartDate() + "\",\n" +
-                            "    \"endDate\"     : \"" + warden.getEndDate() + "\",\n" +
-                            "    \"dimension\"   : \"" + warden.getDimension() + "\"\n" +
-                            "  }\n" +
-                            "\n" +
-                            "Result: SUCCESS (simulated)\n" +
-                            "============================================================";
-
-
-        return response;
+        return warden;
     }
     public List<Warden> fetchWardens() throws IOException{
 
@@ -89,6 +55,7 @@ public class WardenClientApiMock implements WardenApiClientInterface {
                             .endDate(endDate)
                             .dimension(elements[11])
                             .build();
+                    wardens.add(warden);
                 }
                 firstLineCounter++;
             }

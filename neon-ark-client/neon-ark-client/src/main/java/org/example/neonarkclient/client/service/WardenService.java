@@ -28,7 +28,9 @@ import javax.management.relation.Role;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class WardenService {
 
@@ -152,11 +154,18 @@ public class WardenService {
         return input.trim();
     }
 
-    public String addNewWarden(Warden warden) throws IOException {
+    public Warden addNewWarden(Warden warden) throws IOException {
 
         String duplicate = clientApi.getWardenById(warden.getId());
 
 
-        return duplicate.isEmpty() ? clientApi.addNewWarden(warden) : "";
+        return duplicate.isEmpty() ? clientApi.addNewWarden(warden) : null;
+    }
+
+    public List<Warden> viewAllWardens() throws IOException{
+        List<Warden> wardens = new ArrayList<>();
+        wardens = clientApi.fetchWardens();
+        return wardens;
     }
 }
+

@@ -27,9 +27,7 @@ import org.example.neonarkclient.client.service.WardenService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class WardenMenu {
 
@@ -305,16 +303,49 @@ public class WardenMenu {
                 .dimension(dimension)
                 .build();
 
-        String created = null;
+        Warden created = null;
         try {
             created = service.addNewWarden(warden);
         } catch (IOException e) {
             display("There was an issue looking for a duplicate warden");
         }
-        if (created.isEmpty()) {
+        if (created == null) {
             display("This warden already exists");
         } else {
-            display(created);
+            display(
+
+                    "============================================================\n" +
+                            "ACTION: Add New Warden\n" +
+                            "============================================================\n" +
+                            "Inputs Requested:  firstName, lastName, id, idType, email, " +
+                            "role, status, clearance, startDate, endDate, dimensions\n" +
+                            "\n" +
+                            "Description\n" +
+                            "Add a new warden with all the needed information. " +
+                            "The backend server takes care of appropriate saving in the " +
+                            "database." +
+                            "\n" +
+                            "WOULD SEND: POST /api/wardens/register\n" +
+                            "Payload:\n" +
+                            "  {\n" +
+                            "    \"id\"          : " + warden.getId() + ",\n" +
+                            "    \"firstName\"   : \"" + warden.getFirstName() + "\",\n" +
+                            "    \"lastName\"    : \"" + warden.getLastName() + "\",\n" +
+                            "    \"idType\"      : \"" + warden.getIdType() + "\",\n" +
+                            "    \"email\"       : \"" + warden.getEmail() + "\",\n" +
+                            "    \"role\"        : \"" + warden.getRole() + "\",\n" +
+                            "    \"status\"      : \"" + warden.getStatus() + "\",\n" +
+                            "    \"clearance\"   : \"" + warden.getClearance() + "\",\n" +
+                            "    \"startDate\"   : \"" + warden.getStartDate() + "\",\n" +
+                            "    \"endDate\"     : \"" + warden.getEndDate() + "\",\n" +
+                            "    \"dimension\"   : \"" + warden.getDimension() + "\"\n" +
+                            "  }\n" +
+                            "\n" +
+                            "Result: SUCCESS (simulated)\n" +
+                            "============================================================"
+
+
+            );
         }
         display("Press 1 to return to the main menu.");
     }
@@ -335,7 +366,13 @@ public class WardenMenu {
     }
 
     private void viewWardensMenu(){
+        List<Warden> wardens = new ArrayList<>();
+        try{
 
+            wardens = service.viewAllWardens();
+        }catch(IOException e){
+            display("There was an issue retriving all wardens.");
+        }
 
     }
 

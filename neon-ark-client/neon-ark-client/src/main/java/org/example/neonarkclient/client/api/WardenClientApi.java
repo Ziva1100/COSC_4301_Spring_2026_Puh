@@ -12,7 +12,7 @@ public class WardenClientApi implements WardenApiClientInterface {
     public WardenClientApi(String URL){
         this.URL = URL;
     }
-    public Warden addNewWarden(Warden warden){
+    public String addNewWarden(Warden warden){
         return null;
     }
     public List<Warden> fetchWardens(){

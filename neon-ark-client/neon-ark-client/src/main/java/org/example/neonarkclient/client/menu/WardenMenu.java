@@ -305,7 +305,7 @@ public class WardenMenu {
                 .dimension(dimension)
                 .build();
 
-        Warden created = null;
+        String created = null;
         try {
             created = service.addNewWarden(warden);
         } catch (IOException e) {
@@ -314,7 +314,7 @@ public class WardenMenu {
         if (created == null) {
             display("This warden already exists");
         } else {
-            display("Warden created: " + created.getFirstName() + " " + created.getLastName());
+            display(created);
         }
         display("Press 1 to return to the main menu.");
     }

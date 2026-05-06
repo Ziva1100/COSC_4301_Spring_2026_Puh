@@ -157,6 +157,6 @@ public class WardenService {
         String duplicate = clientApi.getWardenById(warden.getId());
 
 
-        return duplicate.isEmpty() ? System.out.println(clientApi.addNewWarden(warden)) : "";
+        return duplicate.isEmpty() ? clientApi.addNewWarden(warden) : "";
     }
 }

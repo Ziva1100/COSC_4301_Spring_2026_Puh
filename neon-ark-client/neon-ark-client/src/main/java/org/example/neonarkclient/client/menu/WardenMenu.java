@@ -439,6 +439,137 @@ public class WardenMenu {
 
         }
     }
+    private void updateRoleMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden Role\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newRole\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newRole must be a non-empty string\n" +
+                        "  - newRole must match an existing role in the system\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/role\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden role updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void updateClearanceMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden Clearance Level\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newClearance\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newClearance must match a valid enum value\n" +
+                        "  - accepted values: ALPHA, ECLIPSE, OMEGA\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/clearance\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden clearance level updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void updateEmploymentStatusMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden Employment Status\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newStatus\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newStatus must match a valid enum value\n" +
+                        "  - accepted values: ACTIVE, TERMINATED, ON_LEAVE\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/status\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden employment status updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void updateStartDateMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden Start Date\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newStartDate\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newStartDate must be in format YYYY-MM-DD\n" +
+                        "  - newStartDate must not be after end date if end date exists\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/startDate\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden start date updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void updateEndDateMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden End Date (Termination Date)\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newEndDate\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newEndDate must be in format YYYY-MM-DD\n" +
+                        "  - newEndDate must not be before start date\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/endDate\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden termination date updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void updateEmailMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Update Warden Email\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, newEmail\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - newEmail must be a valid email format\n" +
+                        "  - newEmail must not already exist in the system\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/email\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden email updated successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
     private void viewWardenByIdMenu(){
         String response =
                 "============================================================\n" +
@@ -551,7 +682,128 @@ public class WardenMenu {
     }
 
     private void manageCertificatesMenu(){
+        int userInput = 0;
+        display("---------------------------------------------------------\n" +
+                "[ 4 ] Manage Certifications\n" +
+                "---------------------------------------------------------\n" +
+                "Required:\n" +
+                "• Enter warden ID\n" +
+                "\n" +
+                "1. Add Certification\n" +
+                "2. View Certifications\n" +
+                "3. Mark Certification Expired\n" +
+                "4. Remove Certification\n" +
+                "5. Return to MAIN MENU\n");
 
+        try {
+            userInput = scan.nextInt();
+            scan.nextLine();
+        }catch (InputMismatchException e) {
+            display("The answer has to be a number!");
+            scan.nextInt();
+        }
+
+        switch (userInput) {
+            case 1 -> addCertificationMenu();
+            case 2 -> viewCertificationsMenu();
+            case 3 -> markCertificationExpiredMenu();
+            case 4 -> removeCertificationMenu();
+            case 5 -> {
+                return;
+            }
+            default -> display("The menu choice was incorrect. " +
+                    "Please, try again!");
+        }
+
+
+    }
+
+    private void addCertificationMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Add Certification\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, certificationName, issueDate, expirationDate\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - certificationName must be a non-empty string\n" +
+                        "  - issueDate must be in format YYYY-MM-DD\n" +
+                        "  - expirationDate must be after issueDate\n" +
+                        "\n" +
+                        "WOULD SEND: POST /api/wardens/{id}/certifications\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Certification added to warden record successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void viewCertificationsMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: View Certifications\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "\n" +
+                        "WOULD SEND: GET /api/wardens/{id}/certifications\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> All certifications for warden returned.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void markCertificationExpiredMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Mark Certification Expired\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, certificationId\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - certificationId must be a valid integer\n" +
+                        "  - certificationId must belong to the specified warden\n" +
+                        "  - certification must not already be marked expired\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/certifications/{certId}/expire\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Certification marked as expired successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void removeCertificationMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Remove Certification\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, certificationId\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - certificationId must be a valid integer\n" +
+                        "  - certificationId must belong to the specified warden\n" +
+                        "\n" +
+                        "WOULD SEND: DELETE /api/wardens/{id}/certifications/{certId}\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Certification removed from warden record successfully.\n" +
+                        "============================================================";
+
+        display(response);
     }
 
     private void deactWardenMenu(){

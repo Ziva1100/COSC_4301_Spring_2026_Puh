@@ -362,10 +362,145 @@ public class WardenMenu {
 
 
     private void updateWardenMenu(){
+        int userInput = 0;
 
+        display("---------------------------------------------------------\n" +
+                        "[ 3 ] Update Warden\n" +
+                        "---------------------------------------------------------\n" +
+                        "Required:\n" +
+                        "• Enter warden ID\n" +
+                        "\n" +
+                        "1. Update Role\n" +
+                        "2. Update Clearance Level\n" +
+                        "3. Update Employment Status\n" +
+                        "4. Update Start Date\n" +
+                        "5. Update End Date (Termination Date)\n" +
+                        "6. Update Email\n" +
+                        "7. Cancel\n");
+
+        try {
+            userInput = scan.nextInt();
+            scan.nextLine();
+        }catch (InputMismatchException e) {
+            display("The answer has to be a number!");
+            scan.nextInt();
+        }
+
+        switch (userInput) {
+            case 1 -> updateRoleMenu();
+            case 2 -> updateClearanceMenu();
+            case 3 -> updateEmploymentStatusMenu();
+            case 4 -> updateStartDateMenu();
+            case 5 -> updateEndDateMenu();
+            case 6 -> updateEmailMenu();
+            case 7 -> {
+                return;
+            }
+            default -> display("The menu choice was incorrect. " +
+                    "Please, try again!");
+        }
+
+        scan.nextInt();
+    }
+    private void viewWardensMenu(){
+        int userInput = 0;
+        while(userInput != 5 ) {
+
+            display("---------------------------------------------------------\n" +
+                    "[ 2 ] View Wardens\n" +
+                    "---------------------------------------------------------\n" +
+                    "1. View All Wardens\n" +
+                    "2. View Warden by ID\n" +
+                    "3. View Wardens by Employment Status\n" +
+                    "4. View Wardens by Role\n" +
+                    "5. Return to MAIN MENU\n");
+
+            try {
+                userInput = scan.nextInt();
+                scan.nextLine();
+            }catch (InputMismatchException e) {
+                display("The answer has to be a number!");
+                scan.nextInt();
+            }
+
+            switch (userInput) {
+                case 1 -> viewAllWardensMenu();
+                case 2 -> viewWardenByIdMenu();
+                case 3 -> viewWardenByEmpMenu();
+                case 4 -> viewWardenByRoleMenu();
+                case 5 -> {
+                    return;
+                }
+                default -> display("The menu choice was incorrect. " +
+                        "Please, try again!");
+            }
+
+            scan.nextInt();
+
+        }
+    }
+    private void viewWardenByIdMenu(){
+        String response =
+                "============================================================\n" +
+                        "ACTION: View Warden by ID\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "\n" +
+                        "WOULD SEND: GET /api/wardens/{id}\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden record located and returned.\n" +
+                        "============================================================";
+
+        display(response);
     }
 
-    private void viewWardensMenu(){
+    private void viewWardenByEmpMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: View Wardens by Employment Status\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : status\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - status must match a valid enum value\n" +
+                        "  - accepted values: ACTIVE, TERMINATED, ONLEAVE\n" +
+                        "\n" +
+                        "WOULD SEND: GET /api/wardens?status={status}\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> All wardens matching status returned.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void viewWardenByRoleMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: View Wardens by Role\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : role\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - role must be a non-empty string\n" +
+                        "  - role must match an existing role in the system\n" +
+                        "\n" +
+                        "WOULD SEND: GET /api/wardens?role={role}\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> All wardens matching role returned.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+
+    private void viewAllWardensMenu(){
         List<Warden> wardens = new ArrayList<>();
         try{
 

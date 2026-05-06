@@ -25,6 +25,7 @@ import org.example.neonarkclient.client.model.Status;
 import org.example.neonarkclient.client.model.Warden;
 
 import javax.management.relation.Role;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -151,7 +152,11 @@ public class WardenService {
         return input.trim();
     }
 
-    public Warden addNewWarden(Warden warden) {
-        return clientApi.addNewWarden(warden);
+    public String addNewWarden(Warden warden) throws IOException {
+
+        String duplicate = clientApi.getWardenById(warden.getId());
+
+
+        return duplicate.isEmpty() ? System.out.println(clientApi.addNewWarden(warden)) : "";
     }
 }

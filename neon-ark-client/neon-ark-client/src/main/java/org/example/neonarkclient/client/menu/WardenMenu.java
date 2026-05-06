@@ -25,6 +25,7 @@ import org.example.neonarkclient.client.model.Status;
 import org.example.neonarkclient.client.model.Warden;
 import org.example.neonarkclient.client.service.WardenService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -304,8 +305,17 @@ public class WardenMenu {
                 .dimension(dimension)
                 .build();
 
-        Warden created = service.addNewWarden(warden);
-        display("Warden created: " + created.getFirstName() + " " + created.getLastName());
+        Warden created = null;
+        try {
+            created = service.addNewWarden(warden);
+        } catch (IOException e) {
+            display("There was an issue looking for a duplicate warden");
+        }
+        if (created == null) {
+            display("This warden already exists");
+        } else {
+            display("Warden created: " + created.getFirstName() + " " + created.getLastName());
+        }
         display("Press 1 to return to the main menu.");
     }
 

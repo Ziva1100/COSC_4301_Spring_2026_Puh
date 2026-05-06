@@ -3,11 +3,13 @@ package org.example.neonarkclient.client.api;
 
 import org.example.neonarkclient.client.model.Warden;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface WardenApiClientInterface {
 
     Warden addNewWarden(Warden warden);
     List<Warden> fetchWardens();
+    String getWardenById(int id) throws IOException;
 
 }

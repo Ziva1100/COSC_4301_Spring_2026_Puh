@@ -78,7 +78,6 @@ public class WardenMenu {
                         "Please, try again!");
             }
 
-            scan.nextInt();
 
 
         }
@@ -363,48 +362,50 @@ public class WardenMenu {
 
     private void updateWardenMenu(){
         int userInput = 0;
+        while (true) {
 
-        display("---------------------------------------------------------\n" +
-                        "[ 3 ] Update Warden\n" +
-                        "---------------------------------------------------------\n" +
-                        "Required:\n" +
-                        "• Enter warden ID\n" +
-                        "\n" +
-                        "1. Update Role\n" +
-                        "2. Update Clearance Level\n" +
-                        "3. Update Employment Status\n" +
-                        "4. Update Start Date\n" +
-                        "5. Update End Date (Termination Date)\n" +
-                        "6. Update Email\n" +
-                        "7. Cancel\n");
 
-        try {
-            userInput = scan.nextInt();
-            scan.nextLine();
-        }catch (InputMismatchException e) {
-            display("The answer has to be a number!");
-            scan.nextInt();
-        }
+            display("---------------------------------------------------------\n" +
+                    "[ 3 ] Update Warden\n" +
+                    "---------------------------------------------------------\n" +
+                    "Required:\n" +
+                    "• Enter warden ID\n" +
+                    "\n" +
+                    "1. Update Role\n" +
+                    "2. Update Clearance Level\n" +
+                    "3. Update Employment Status\n" +
+                    "4. Update Start Date\n" +
+                    "5. Update End Date (Termination Date)\n" +
+                    "6. Update Email\n" +
+                    "7. Cancel\n");
 
-        switch (userInput) {
-            case 1 -> updateRoleMenu();
-            case 2 -> updateClearanceMenu();
-            case 3 -> updateEmploymentStatusMenu();
-            case 4 -> updateStartDateMenu();
-            case 5 -> updateEndDateMenu();
-            case 6 -> updateEmailMenu();
-            case 7 -> {
-                return;
+            try {
+                userInput = scan.nextInt();
+                scan.nextLine();
+            } catch (InputMismatchException e) {
+                display("The answer has to be a number!");
+                scan.nextInt();
             }
-            default -> display("The menu choice was incorrect. " +
-                    "Please, try again!");
+
+            switch (userInput) {
+                case 1 -> updateRoleMenu();
+                case 2 -> updateClearanceMenu();
+                case 3 -> updateEmploymentStatusMenu();
+                case 4 -> updateStartDateMenu();
+                case 5 -> updateEndDateMenu();
+                case 6 -> updateEmailMenu();
+                case 7 -> {
+                    return;
+                }
+                default -> display("The menu choice was incorrect. " +
+                        "Please, try again!");
+            }
         }
 
-        scan.nextInt();
     }
     private void viewWardensMenu(){
         int userInput = 0;
-        while(userInput != 5 ) {
+        while(true) {
 
             display("---------------------------------------------------------\n" +
                     "[ 2 ] View Wardens\n" +
@@ -435,7 +436,6 @@ public class WardenMenu {
                         "Please, try again!");
             }
 
-            scan.nextInt();
 
         }
     }
@@ -459,6 +459,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
 
     private void updateClearanceMenu() {
@@ -481,6 +482,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
 
     private void updateEmploymentStatusMenu() {
@@ -503,6 +505,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
 
     private void updateStartDateMenu() {
@@ -525,6 +528,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
 
     private void updateEndDateMenu() {
@@ -547,6 +551,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
 
     private void updateEmailMenu() {
@@ -569,6 +574,7 @@ public class WardenMenu {
                         "============================================================";
 
         display(response);
+        return;
     }
     private void viewWardenByIdMenu(){
         String response =
@@ -683,36 +689,40 @@ public class WardenMenu {
 
     private void manageCertificatesMenu(){
         int userInput = 0;
-        display("---------------------------------------------------------\n" +
-                "[ 4 ] Manage Certifications\n" +
-                "---------------------------------------------------------\n" +
-                "Required:\n" +
-                "• Enter warden ID\n" +
-                "\n" +
-                "1. Add Certification\n" +
-                "2. View Certifications\n" +
-                "3. Mark Certification Expired\n" +
-                "4. Remove Certification\n" +
-                "5. Return to MAIN MENU\n");
+        while(true) {
 
-        try {
-            userInput = scan.nextInt();
-            scan.nextLine();
-        }catch (InputMismatchException e) {
-            display("The answer has to be a number!");
-            scan.nextInt();
-        }
 
-        switch (userInput) {
-            case 1 -> addCertificationMenu();
-            case 2 -> viewCertificationsMenu();
-            case 3 -> markCertificationExpiredMenu();
-            case 4 -> removeCertificationMenu();
-            case 5 -> {
-                return;
+            display("---------------------------------------------------------\n" +
+                    "[ 4 ] Manage Certifications\n" +
+                    "---------------------------------------------------------\n" +
+                    "Required:\n" +
+                    "• Enter warden ID\n" +
+                    "\n" +
+                    "1. Add Certification\n" +
+                    "2. View Certifications\n" +
+                    "3. Mark Certification Expired\n" +
+                    "4. Remove Certification\n" +
+                    "5. Return to MAIN MENU\n");
+
+            try {
+                userInput = scan.nextInt();
+                scan.nextLine();
+            } catch (InputMismatchException e) {
+                display("The answer has to be a number!");
+                scan.nextInt();
             }
-            default -> display("The menu choice was incorrect. " +
-                    "Please, try again!");
+
+            switch (userInput) {
+                case 1 -> addCertificationMenu();
+                case 2 -> viewCertificationsMenu();
+                case 3 -> markCertificationExpiredMenu();
+                case 4 -> removeCertificationMenu();
+                case 5 -> {
+                    return;
+                }
+                default -> display("The menu choice was incorrect. " +
+                        "Please, try again!");
+            }
         }
 
 
@@ -806,8 +816,88 @@ public class WardenMenu {
         display(response);
     }
 
-    private void deactWardenMenu(){
+    private void deactWardenMenu() {
+        while (true) {
+            display("---------------------------------------------------------\n" +
+                    "[ 5 ] Deactivate / Terminate Warden\n" +
+                    "---------------------------------------------------------\n" +
+                    "Required:\n" +
+                    "• Enter warden ID\n" +
+                    "\n" +
+                    "1. Deactivate (change employment status)\n" +
+                    "2. Terminate (set employment status + set end date)\n" +
+                    "3. Cancel\n");
 
+            int userInput = 0;
+            try {
+                userInput = scan.nextInt();
+                scan.nextLine();
+            } catch (InputMismatchException e) {
+                display("The answer has to be a number!");
+                scan.nextLine();
+                continue;
+            }
+
+            switch (userInput) {
+                case 1 -> deactivateWardenMenu();
+                case 2 -> terminateWardenMenu();
+                case 3 -> { return; }
+                default -> display("The menu choice was incorrect. Please, try again!");
+            }
+        }
+    }
+
+    private void deactivateWardenMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Deactivate Warden\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - warden must not already be deactivated\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/status\n" +
+                        "Payload:\n" +
+                        "  {\n" +
+                        "    \"status\" : \"ONLEAVE\"\n" +
+                        "  }\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden employment status set to ON_LEAVE successfully.\n" +
+                        "============================================================";
+
+        display(response);
+    }
+
+    private void terminateWardenMenu() {
+        String response =
+                "============================================================\n" +
+                        "ACTION: Terminate Warden\n" +
+                        "============================================================\n" +
+                        "Inputs Required  : wardenId, endDate\n" +
+                        "\n" +
+                        "Validation:\n" +
+                        "  - wardenId must be a valid integer\n" +
+                        "  - wardenId must exist in the system\n" +
+                        "  - warden must not already be terminated\n" +
+                        "  - endDate must be in format YYYY-MM-DD\n" +
+                        "  - endDate must not be before start date\n" +
+                        "\n" +
+                        "WOULD SEND: PUT /api/wardens/{id}/terminate\n" +
+                        "Payload:\n" +
+                        "  {\n" +
+                        "    \"status\"  : \"TERMINATED\",\n" +
+                        "    \"endDate\" : \"2025-12-31\"\n" +
+                        "  }\n" +
+                        "\n" +
+                        "Result: SUCCESS (simulated)\n" +
+                        "  >> Warden status set to TERMINATED and end date recorded.\n" +
+                        "============================================================";
+
+        display(response);
     }
 
 }

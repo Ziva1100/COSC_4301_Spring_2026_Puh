@@ -20,6 +20,7 @@ package org.example.neonarkintaketracker.controller;
 
 import org.example.neonarkintaketracker.dto.CreatureRequest;
 import org.example.neonarkintaketracker.dto.CreatureResponse;
+import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.service.CreatureService;
 import org.springframework.http.RequestEntity;
@@ -103,5 +104,12 @@ public class CreatureController {
         // return 201 for success
         return ResponseEntity.status(201).body(created);
     }
+
+    // Capstone -- [ List All Creatures ] Menu Choice
+    @GetMapping("/api/creatures")
+    public ResponseEntity<List<CreaturesSummaryRequest>> getCreatureSummaries(){
+        return ResponseEntity.ok(service.getAllCreatureSummary());
+    }
+
 
 }

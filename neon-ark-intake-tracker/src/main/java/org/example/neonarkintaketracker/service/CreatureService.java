@@ -21,6 +21,7 @@ package org.example.neonarkintaketracker.service;
 
 import org.example.neonarkintaketracker.dto.CreatureRequest;
 import org.example.neonarkintaketracker.dto.CreatureResponse;
+import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.entity.Habitat;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
@@ -124,6 +125,11 @@ public class CreatureService {
         );
 
         return res;
+    }
+
+    // Capstone -- [ List All Creatures ] Menu Choice
+    public List<CreaturesSummaryRequest> getAllCreatureSummary(){
+        return repository.listAllCreatures();
     }
 
 }

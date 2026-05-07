@@ -19,9 +19,13 @@
 
 package org.example.neonarkintaketracker.repository;
 
+import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 // simple CRUD with many default mathods
 @Repository
@@ -37,4 +41,9 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
     // delete(entity)      -> delete by passing the entity itself
 
     // also paging and sorting methods
+
+    // Capstone -- [ List All Creatures ] Menu Choice
+    @Query(value = "SELECT c.id, c.name, c.species, c.danger_level, c.condition, h.biome " +
+            "FROM creatures c JOIN habitats h ON c.habitat_id = h.habitat_id", nativeQuery = true)
+    List<CreaturesSummaryRequest> listAllCreatures();
 }

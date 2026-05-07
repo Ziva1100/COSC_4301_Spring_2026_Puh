@@ -71,8 +71,9 @@ public class CreatureService {
     //  Returns:      Creature or Null
     //
     //**************************************************************
-    public Optional<Creature> getCreatureById(Long id){
-        return repository.findById(id);
+    // Capstone -- [ View Creature By Id ] Menu Choice
+    public Optional<CreaturesSummaryRequest> getCreatureById(Long id){
+        return Optional.ofNullable(repository.getCreatureById(id));
     }
 
     //***************************************************************

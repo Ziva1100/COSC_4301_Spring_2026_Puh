@@ -1,6 +1,7 @@
 package org.example.neonarkclient.client.menu;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.neonarkclient.client.exceptions.NotFoundException;
 import org.example.neonarkclient.client.model.Creature;
 import org.example.neonarkclient.client.service.CapstoneService;
 
@@ -97,7 +98,7 @@ public class CapstoneMenu
 
         }
     }
-
+    // Capstone -- [ List All Creatures ] Menu Choice
     // hanlde the option number one for listing all the creatures
     public void listAllCreaturesMenu(){
         List<Creature> creatures = new ArrayList<>();
@@ -111,7 +112,7 @@ public class CapstoneMenu
             throw new RuntimeException(e);
         }
 
-        String format = "%-5s %-15s %-20s %-18s %-10s %-10s %-8s%n";
+        String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
         display("=".repeat(93));
         display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
         display("=".repeat(93));
@@ -134,7 +135,48 @@ public class CapstoneMenu
     }
 
     public void viewCreatureByIdMenu(){
-        service.viewCreatureByIdSrv();
+        display("Enter the ID of the creature or press -1 to exit: ");
+        int userInput = 0;
+        try {
+            userInput = scan.nextInt();
+            scan.nextLine();
+        }catch (InputMismatchException e) {
+            display("The answer has to be a number!");
+            scan.nextInt();
+        }
+        Creature c = null;
+        if (userInput == -1) return;
+        try {
+            c = service.viewCreatureByIdSrv(userInput);
+        } catch (IOException e) {
+            display("Un error occurred.");
+        } catch (InterruptedException e) {
+            display("An error occurred");
+        } catch (NotFoundException e){
+            display(e.getMessage());
+        }
+
+        // display the cresture if one is found, otherwise display the exception message
+        if ((c != null)) {
+
+
+            String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
+
+            display("=".repeat(93));
+            display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
+            display("=".repeat(93));
+            display(String.format(format,
+                    c.getId(),
+                    c.getName(),
+                    c.getBiome(),
+                    c.getSpecies(),
+                    c.getDangerLevel(),
+                    c.getCondition(),
+                    c.getRemoved()
+            ));
+        } else{
+            display(" ");
+        }
     }
     public void registerNewCreatureMenu(){
         service.registerNewCreatureSrv();

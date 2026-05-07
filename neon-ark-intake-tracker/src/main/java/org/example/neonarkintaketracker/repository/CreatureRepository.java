@@ -23,6 +23,7 @@ import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +47,8 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
     @Query(value = "SELECT c.id, c.name, h.biome , c.species, c.danger_level AS dangerLevel, c.condition, " +
             "c.removed FROM creatures c JOIN habitats h ON c.habitat_id = h.id", nativeQuery = true)
     List<CreaturesSummaryRequest> listAllCreatures();
+
+    @Query(value = "SELECT c.id, c.name, h.biome , c.species, c.danger_level AS dangerLevel, c.condition, " +
+            "c.removed FROM creatures c JOIN habitats h ON c.habitat_id = h.id where c.id = :id", nativeQuery = true)
+    CreaturesSummaryRequest getCreatureById(@Param("id") Long id);
 }

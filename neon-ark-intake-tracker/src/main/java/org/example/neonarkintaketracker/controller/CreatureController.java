@@ -72,10 +72,11 @@ public class CreatureController {
     //  if fails
     //
     //**************************************************************
+    // Capstone -- [ View Creature By Id ] Menu Choice
     @GetMapping("/{id}")
-    public ResponseEntity<Creature> getCreatureById(@PathVariable Long id){
+    public ResponseEntity<CreaturesSummaryRequest> getCreatureById(@PathVariable Long id){
 
-        Optional<Creature> maybeCreature = service.getCreatureById(id);
+        Optional<CreaturesSummaryRequest> maybeCreature = service.getCreatureById(id);
 
         // 404 Not Found
         if (maybeCreature.isEmpty()) return ResponseEntity.notFound().build();
@@ -110,6 +111,8 @@ public class CreatureController {
     public ResponseEntity<List<CreaturesSummaryRequest>> getCreatureSummaries(){
         return ResponseEntity.ok(service.getAllCreatureSummary());
     }
+
+
 
 
 }

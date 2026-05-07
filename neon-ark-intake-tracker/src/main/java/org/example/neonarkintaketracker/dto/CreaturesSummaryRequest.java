@@ -10,5 +10,6 @@ public interface CreaturesSummaryRequest {
     String getSpecies();
     String getDangerLevel();
     String getCondition();
+    Long getRemoved();
 
 }

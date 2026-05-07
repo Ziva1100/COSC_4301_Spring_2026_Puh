@@ -14,9 +14,9 @@ public class CapstoneMenu
         this.service = service;
     }
 
-    public run(){
+    public void run(){
         int userInput = 1;
-        while(userInput != 0) {
+        while(true) {
 
             System.out.println("=========================================================");
             System.out.println("        NEON ARK — CLI");
@@ -46,7 +46,20 @@ public class CapstoneMenu
             }
 
             switch (userInput) {
-                case 1 -> listAllCreatures();
+                case 1 -> listAllCreaturesMenu();
+                case 2 -> viewCreatureByIdMenu();
+                case 3 -> registerNewCreatureMenu();
+                case 4 -> renameCreatureMenu();
+                case 5 -> viewCreatureNotesMenu();
+                case 6 -> creatureFeedingTimeMenu();
+                case 7 -> viewUsersMenu();
+                case 0 -> {
+                    display("Write Y to exit: ");
+                    String exitStr = scan.nextLine();
+                    if (exitStr.equalsIgnoreCase("y"))
+                        System.exit(0);
+
+                }
 
                 default -> display("The menu choice was incorrect. " +
                         "Please, try again!");
@@ -56,9 +69,34 @@ public class CapstoneMenu
 
         }
     }
-    public void listAllCreatures(){
-        service.viewAllCreatures();
+    public void listAllCreaturesMenu(){
+
+        service.listAllCreaturesSrv();
     }
+
+    public void viewCreatureByIdMenu(){
+        service.viewCreatureByIdSrv();
+    }
+    public void registerNewCreatureMenu(){
+        service.registerNewCreatureSrv();
+    }
+
+    public void renameCreatureMenu(){
+        service.renameCreatureSrv();
+    }
+
+    public void viewCreatureNotesMenu(){
+        service.viewCreatureNotesSrv();
+    }
+
+    public void creatureFeedingTimeMenu(){
+        service.creatureFeedingTimeSrv();
+    }
+
+    public void viewUsersMenu(){
+        service.viewUsersSrv();
+    }
+
 
     private void display(String str){
         System.out.println(str);

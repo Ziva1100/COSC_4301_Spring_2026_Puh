@@ -9,7 +9,34 @@ public class CapstoneService {
         this.clientApi = clientApi;
     }
 
-    public void viewAllCreatures(){
+    public void listAllCreaturesSrv(){
 
     }
+
+
+    public void viewCreatureByIdSrv(){
+
+    }
+
+    public void registerNewCreatureSrv(){
+
+    }
+
+    public void renameCreatureSrv(){
+
+    }
+
+    public void viewCreatureNotesSrv(){
+
+    }
+
+    public void creatureFeedingTimeSrv(){
+
+    }
+
+    public void viewUsersSrv(){
+
+    }
+
+
 }

@@ -1,8 +1,12 @@
 package org.example.neonarkclient.client.menu;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.neonarkclient.client.model.Creature;
 import org.example.neonarkclient.client.service.CapstoneService;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class CapstoneMenu
@@ -70,8 +74,35 @@ public class CapstoneMenu
         }
     }
     public void listAllCreaturesMenu(){
+        List<Creature> creatures = new ArrayList<>();
+        try {
+            creatures =  service.listAllCreaturesSrv();
+        }catch(JsonProcessingException e){
+            display("An issue occurred.");
+        }
 
-        service.listAllCreaturesSrv();
+            String format = "%-5s %-15s %-20s %-18s %-10s %-10s%n";
+
+            display("=".repeat(83));
+            display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION"));
+            display("=".repeat(83));
+
+            for (Creature c : creatures) {
+                display(String.format(format,
+                        c.getId(),
+                        c.getName(),
+                        c.getHabitat(),
+                        c.getSpecies(),
+                        c.getDangerLevel(),
+                        c.getCondition()
+                ));
+            }
+
+            display("=".repeat(83));
+            display("Total creatures: " + creatures.size());
+
+
+
     }
 
     public void viewCreatureByIdMenu(){

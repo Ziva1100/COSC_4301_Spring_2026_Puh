@@ -1,4 +1,16 @@
 package org.example.neonarkclient.client.api;
 
-public class MockApiClient implements CapstoneApi{
+public class MockApiClient implements CapstoneApi {
+
+    public String listAllCreaturesApi() {
+        return """
+            [
+              {"id": 1, "name": "Shadowfang", "habitat": "Dark Forest", "species": "Shadow Wolf", "dangerLevel": "HIGH", "condition": "HEALTHY", "removed": 0},
+              {"id": 2, "name": "Blaze", "habitat": "Volcanic Ridge", "species": "Fire Drake", "dangerLevel": "CRITICAL", "condition": "INJURED", "removed": 0},
+              {"id": 3, "name": "Murk", "habitat": "Wetlands", "species": "Swamp Toad", "dangerLevel": "LOW", "condition": "HEALTHY", "removed": 0},
+              {"id": 4, "name": "Frostclaw", "habitat": "Frozen Tundra", "species": "Ice Bear", "dangerLevel": "HIGH", "condition": "STABLE", "removed": 0},
+              {"id": 5, "name": "Venom", "habitat": "Jungle Canopy", "species": "Poison Serpent", "dangerLevel": "CRITICAL", "condition": "HEALTHY", "removed": 0}
+            ]
+            """;
+    }
 }

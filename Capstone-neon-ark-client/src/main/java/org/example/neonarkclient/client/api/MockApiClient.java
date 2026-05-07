@@ -5,6 +5,8 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+// this is a mock api client ment to imitade the actual api call to
+// prepare front end for connection to backend
 public class MockApiClient implements CapstoneApi {
 
     private final Map<Long, String> mockCreatures = new HashMap<>(Map.of(

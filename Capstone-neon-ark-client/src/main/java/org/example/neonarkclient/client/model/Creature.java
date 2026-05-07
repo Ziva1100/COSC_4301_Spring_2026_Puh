@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+// the creature object being passed between menu, api client, and service
+
 
 @Data
 @NoArgsConstructor

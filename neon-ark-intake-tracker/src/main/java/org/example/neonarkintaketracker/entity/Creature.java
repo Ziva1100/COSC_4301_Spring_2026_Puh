@@ -61,6 +61,7 @@ public class Creature {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    // add the soft remove column
     @Column(nullable = false)
     private int removed;
 

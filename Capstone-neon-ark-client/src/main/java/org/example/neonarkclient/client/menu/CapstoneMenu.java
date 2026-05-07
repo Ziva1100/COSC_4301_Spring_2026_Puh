@@ -66,6 +66,7 @@ public class CapstoneMenu
             display("-------------------------------------");
             System.out.print("Select an option: ");
 
+            // hanlde the possible non-int response by the user
             try {
                 userInput = scan.nextInt();
                 scan.nextLine();
@@ -74,6 +75,7 @@ public class CapstoneMenu
                 scan.nextInt();
             }
 
+            // pass the resposne to appropriate method
             switch (userInput) {
                 case 1 -> listAllCreaturesMenu();
                 case 2 -> viewCreatureByIdMenu();
@@ -83,6 +85,7 @@ public class CapstoneMenu
                 case 6 -> creatureFeedingTimeMenu();
                 case 7 -> viewUsersMenu();
                 case 0 -> {
+                    // double check if the user wants to exit
                     display("Write Y to exit: ");
                     String exitStr = scan.nextLine();
                     if (exitStr.equalsIgnoreCase("y"))
@@ -103,6 +106,8 @@ public class CapstoneMenu
     public void listAllCreaturesMenu(){
         List<Creature> creatures = new ArrayList<>();
         try {
+
+            // handle all the exception passed on by the api client and service
             creatures =  service.listAllCreaturesSrv();
         }catch(JsonProcessingException e){
             display("An issue occurred.");
@@ -112,6 +117,7 @@ public class CapstoneMenu
             throw new RuntimeException(e);
         }
 
+        // display the table
         String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
         display("=".repeat(93));
         display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
@@ -134,10 +140,13 @@ public class CapstoneMenu
 
     }
 
+    // Capstone -- [ View Creature By Id ] Menu Choice
     public void viewCreatureByIdMenu(){
         display("Enter the ID of the creature or press -1 to exit: ");
         int userInput = 0;
         try {
+
+            // ensure the input is in the int format
             userInput = scan.nextInt();
             scan.nextLine();
         }catch (InputMismatchException e) {
@@ -147,6 +156,8 @@ public class CapstoneMenu
         Creature c = null;
         if (userInput == -1) return;
         try {
+
+            // handle exceptions passed on by api and service
             c = service.viewCreatureByIdSrv(userInput);
         } catch (IOException e) {
             display("Un error occurred.");
@@ -160,6 +171,7 @@ public class CapstoneMenu
         if ((c != null)) {
 
 
+            // display in a nice format
             String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
 
             display("=".repeat(93));

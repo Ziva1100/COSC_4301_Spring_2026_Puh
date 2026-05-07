@@ -48,6 +48,7 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
             "c.removed FROM creatures c JOIN habitats h ON c.habitat_id = h.id", nativeQuery = true)
     List<CreaturesSummaryRequest> listAllCreatures();
 
+    // Capstone -- [ View Creature By Id ] Menu Choice
     @Query(value = "SELECT c.id, c.name, h.biome , c.species, c.danger_level AS dangerLevel, c.condition, " +
             "c.removed FROM creatures c JOIN habitats h ON c.habitat_id = h.id where c.id = :id", nativeQuery = true)
     CreaturesSummaryRequest getCreatureById(@Param("id") Long id);

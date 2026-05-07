@@ -9,6 +9,29 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+// The main menu:
+/*
+
+=====================================
+       NEON ARK CLI SYSTEM
+=====================================
+
+1. List all creatures
+2. View creature by ID
+3. Register new creature
+4. Rename creature
+5. Remove creature
+6. View creature observations/notes
+7. Find creatures by feeding time
+
+--- Admin Only ---
+8. View all system users
+
+0. Exit
+-------------------------------------
+Select an option:
+
+ */
 public class CapstoneMenu
 {
     private final Scanner scan = new Scanner(System.in);
@@ -73,6 +96,8 @@ public class CapstoneMenu
 
         }
     }
+
+    // hanlde the option number one for listing all the creatures
     public void listAllCreaturesMenu(){
         List<Creature> creatures = new ArrayList<>();
         try {
@@ -81,25 +106,23 @@ public class CapstoneMenu
             display("An issue occurred.");
         }
 
-            String format = "%-5s %-15s %-20s %-18s %-10s %-10s%n";
-
-            display("=".repeat(83));
-            display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION"));
-            display("=".repeat(83));
-
-            for (Creature c : creatures) {
-                display(String.format(format,
-                        c.getId(),
-                        c.getName(),
-                        c.getHabitat(),
-                        c.getSpecies(),
-                        c.getDangerLevel(),
-                        c.getCondition()
-                ));
-            }
-
-            display("=".repeat(83));
-            display("Total creatures: " + creatures.size());
+        String format = "%-5s %-15s %-20s %-18s %-10s %-10s %-8s%n";
+        display("=".repeat(93));
+        display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
+        display("=".repeat(93));
+        for (Creature c : creatures) {
+            display(String.format(format,
+                    c.getId(),
+                    c.getName(),
+                    c.getHabitat(),
+                    c.getSpecies(),
+                    c.getDangerLevel(),
+                    c.getCondition(),
+                    c.getRemoved()
+            ));
+        }
+        display("=".repeat(93));
+        display("Total creatures: " + creatures.size());
 
 
 

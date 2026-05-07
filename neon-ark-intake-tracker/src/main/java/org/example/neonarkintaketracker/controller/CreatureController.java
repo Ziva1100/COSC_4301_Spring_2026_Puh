@@ -53,11 +53,11 @@ public class CreatureController {
     //  Returns:      200 if OK and a JSON file
     //
     //**************************************************************
-    @GetMapping
-    public ResponseEntity<List<Creature>> getAllCreatures(){
-        List<Creature> creatures = service.getAllCreatures();
-        return ResponseEntity.ok(creatures);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Creature>> getAllCreatures(){
+//        List<Creature> creatures = service.getAllCreatures();
+//        return ResponseEntity.ok(creatures);
+//    }
 
     //***************************************************************
     //
@@ -106,7 +106,7 @@ public class CreatureController {
     }
 
     // Capstone -- [ List All Creatures ] Menu Choice
-    @GetMapping("/api/creatures")
+    @GetMapping()
     public ResponseEntity<List<CreaturesSummaryRequest>> getCreatureSummaries(){
         return ResponseEntity.ok(service.getAllCreatureSummary());
     }

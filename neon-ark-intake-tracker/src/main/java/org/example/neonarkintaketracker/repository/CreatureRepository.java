@@ -43,7 +43,7 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
     // also paging and sorting methods
 
     // Capstone -- [ List All Creatures ] Menu Choice
-    @Query(value = "SELECT c.id, c.name, c.species, c.danger_level, c.condition, h.biome " +
-            "FROM creatures c JOIN habitats h ON c.habitat_id = h.habitat_id", nativeQuery = true)
+    @Query(value = "SELECT c.id, c.name, h.biome , c.species, c.danger_level AS dangerLevel, c.condition, " +
+            "c.removed FROM creatures c JOIN habitats h ON c.habitat_id = h.id", nativeQuery = true)
     List<CreaturesSummaryRequest> listAllCreatures();
 }

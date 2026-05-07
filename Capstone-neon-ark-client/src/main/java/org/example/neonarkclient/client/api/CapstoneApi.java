@@ -1,5 +1,7 @@
 package org.example.neonarkclient.client.api;
 
+import java.io.IOException;
+
 public interface CapstoneApi {
-    String listAllCreaturesApi();
+    String listAllCreaturesApi() throws IOException, InterruptedException;
 }

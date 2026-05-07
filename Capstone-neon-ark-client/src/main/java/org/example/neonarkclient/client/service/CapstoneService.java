@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.neonarkclient.client.api.CapstoneApi;
 import org.example.neonarkclient.client.model.Creature;
 
+import java.io.IOException;
 import java.util.List;
 
 public class CapstoneService {
@@ -18,7 +19,7 @@ public class CapstoneService {
         this.clientApi = clientApi;
     }
 
-    public List<Creature> listAllCreaturesSrv() throws JsonProcessingException {
+    public List<Creature> listAllCreaturesSrv() throws IOException, InterruptedException {
         String creatureJson = clientApi.listAllCreaturesApi();
         return jsonMapper.readValue(creatureJson, new TypeReference<List<Creature>>(){});
     }

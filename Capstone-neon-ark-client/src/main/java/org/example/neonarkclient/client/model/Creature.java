@@ -2,6 +2,7 @@ package org.example.neonarkclient.client.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 
@@ -13,7 +14,7 @@ import lombok.*;
 public class Creature {
     Long id;
     String name;
-    String habitat;
+    String biome;
     String species;
     String dangerLevel;
     String Condition;

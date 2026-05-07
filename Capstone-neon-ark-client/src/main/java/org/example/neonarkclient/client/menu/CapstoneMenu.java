@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.neonarkclient.client.model.Creature;
 import org.example.neonarkclient.client.service.CapstoneService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -104,6 +105,10 @@ public class CapstoneMenu
             creatures =  service.listAllCreaturesSrv();
         }catch(JsonProcessingException e){
             display("An issue occurred.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
         String format = "%-5s %-15s %-20s %-18s %-10s %-10s %-8s%n";
@@ -114,7 +119,7 @@ public class CapstoneMenu
             display(String.format(format,
                     c.getId(),
                     c.getName(),
-                    c.getHabitat(),
+                    c.getBiome(),
                     c.getSpecies(),
                     c.getDangerLevel(),
                     c.getCondition(),

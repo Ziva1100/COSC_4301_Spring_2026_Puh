@@ -19,7 +19,7 @@ public class Creature {
     String biome;
     String species;
     String dangerLevel;
-    String Condition;
+    String condition;
     int removed;
 
 }

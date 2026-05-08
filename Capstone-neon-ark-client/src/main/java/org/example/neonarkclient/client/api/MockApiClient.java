@@ -1,5 +1,7 @@
 package org.example.neonarkclient.client.api;
 
+import org.example.neonarkclient.client.model.Creature;
+
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
@@ -46,6 +48,47 @@ public class MockApiClient implements CapstoneApi {
         } else {
             return "404 Creature with ID: " + id + " not found";
         }
+    }
+
+    // Mock API for registering new creature
+    // Capstone -- [ Register New Creature ] Menu Choice
+    public String registerNewCreatureApi(Creature creature) throws IOException, InterruptedException {
+
+        // simulate 400 bad request — validation failure
+        if (creature.getName() == null || creature.getName().isBlank())
+            return "400 Name cannot be blank";
+        if (creature.getSpecies() == null || creature.getSpecies().isBlank())
+            return "400 Species cannot be blank";
+        if (creature.getBiome() == null || creature.getBiome().isBlank())
+            return "400 Biome cannot be blank";
+        if (creature.getDangerLevel() == null || creature.getDangerLevel().isBlank())
+            return "400 Danger level cannot be blank";
+        if (creature.getCondition() == null || creature.getCondition().isBlank())
+            return "400 Condition cannot be blank";
+
+        // simulate 409 conflict — duplicate name
+        boolean nameExists = mockCreatures.values().stream()
+                .anyMatch(json -> json.contains("\"name\":\"" + creature.getName() + "\""));
+        if (nameExists)
+            return "409 A creature with the name '" + creature.getName() + "' already exists";
+
+        // simulate 201 created — generate a new id and add to mock map
+        Long newId = mockCreatures.keySet().stream().max(Long::compareTo).orElse(0L) + 1;
+
+        String newCreatureJson = String.format(
+                """
+                {"id":%d,"name":"%s","biome":"%s","species":"%s","dangerLevel":"%s","condition":"%s","removed":0}
+                """,
+                newId,
+                creature.getName(),
+                creature.getBiome(),
+                creature.getSpecies(),
+                creature.getDangerLevel(),
+                creature.getCondition()
+        );
+
+        mockCreatures.put(newId, newCreatureJson);
+        return newCreatureJson;
     }
 
 }

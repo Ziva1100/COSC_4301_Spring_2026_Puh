@@ -6,9 +6,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.neonarkclient.client.api.CapstoneApi;
 import org.example.neonarkclient.client.exceptions.NotFoundException;
+import org.example.neonarkclient.client.model.Biome;
+import org.example.neonarkclient.client.model.Condition;
 import org.example.neonarkclient.client.model.Creature;
+import org.example.neonarkclient.client.model.DangerLevel;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -46,8 +50,76 @@ public class CapstoneService {
         return jsonMapper.readValue(response, Creature.class);
     }
 
-    public void registerNewCreatureSrv(){
+    // Capstone -- [ Register New Creature ] Menu Choice
+    public Creature registerNewCreatureSrv(Creature creature) throws IOException, InterruptedException {
+        String response = clientApi.registerNewCreatureApi(creature);
+        if (response.startsWith("400")){
+            throw new IllegalArgumentException("A database constraint was violated.");
+        } else if (response.startsWith("409")) {
+            throw new IllegalArgumentException("This creature already exists.");
+        }
+        return jsonMapper.readValue(response, Creature.class);
+    }
 
+    // Add helper functions that will validate the input from the menu for
+    // registering new creature
+    // validate the name of the creature
+    public String validateCreatureName(String input) {
+        if (input == null || input.isBlank())
+            throw new IllegalArgumentException("First name cannot be blank.");
+        return input.trim();
+    }
+
+    // validate habitat / biome
+    public String validateBiome(String input){
+        if (input == null || input.isBlank())
+            throw new IllegalArgumentException("Habitat cannot be blank.");
+
+        try {
+           Biome biome = Biome.valueOf((input.toUpperCase().trim()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid habitat. Options: "
+                    + Arrays.toString(Biome.values()));
+        }
+
+        return input.toUpperCase().trim();
+    }
+
+    // validate species
+    public String validateSpecies(String input) {
+        if (input == null || input.isBlank())
+            throw new IllegalArgumentException("First name cannot be blank.");
+        return input.trim();
+    }
+
+    // validate dangerLevel
+    public String validateDangerLevel(String input){
+        if (input == null || input.isBlank())
+            throw new IllegalArgumentException("Habitat cannot be blank.");
+
+        try {
+            DangerLevel danger = DangerLevel.valueOf((input.toUpperCase().trim()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid danger level. Options: "
+                    + Arrays.toString(DangerLevel.values()));
+        }
+
+        return input.toUpperCase().trim();
+    }
+
+    // validate condition
+    public String validateCondition(String input){
+        if (input == null || input.isBlank())
+            throw new IllegalArgumentException("Habitat cannot be blank.");
+
+        try {
+            Condition con = Condition.valueOf((input.toUpperCase().trim()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid condition. Options: "
+                    + Arrays.toString(Condition.values()));
+        }
+
+        return input.toUpperCase().trim();
     }
 
     public void renameCreatureSrv(){

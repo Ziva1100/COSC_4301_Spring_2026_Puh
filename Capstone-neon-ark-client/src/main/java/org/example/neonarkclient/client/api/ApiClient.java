@@ -1,5 +1,7 @@
 package org.example.neonarkclient.client.api;
 
+import org.example.neonarkclient.client.model.Creature;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -52,5 +54,13 @@ public class ApiClient implements CapstoneApi {
         return response.body();
     }
 
+    // Mock API for registering new creature
+    // Capstone -- [ Register New Creature ] Menu Choice
+    public String registerNewCreatureApi(Creature creature) throws IOException, InterruptedException{
+        return null;
+    }
+
 }
+
+
 

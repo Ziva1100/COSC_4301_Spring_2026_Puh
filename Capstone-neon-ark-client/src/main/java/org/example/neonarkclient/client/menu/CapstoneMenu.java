@@ -176,7 +176,7 @@ public class CapstoneMenu
 
             display("=".repeat(93));
             display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
-            display("=".repeat(93));
+            display("-".repeat(93));
             display(String.format(format,
                     c.getId(),
                     c.getName(),
@@ -190,8 +190,115 @@ public class CapstoneMenu
             display(" ");
         }
     }
+
+    // Capstone -- [ Register new creature] Menu Choice
     public void registerNewCreatureMenu(){
-        service.registerNewCreatureSrv();
+
+        boolean canceled = false;
+        String name = "";
+        String biome = "";
+        String species = "";
+        String dangerLevel = "";
+        String condition = "";
+        int removed = 0;
+
+        display("Enter the creature properties or press -1 to come back to main menu.");
+
+        // NAME
+        while (!canceled) {
+            name = promptString("Creature name: ");
+            if (name.equals("-1")) { canceled = true; break; }
+            try {
+                name = service.validateCreatureName(name);
+                break;
+            } catch (IllegalArgumentException e) { display(e.getMessage()); }
+        }
+
+// BIOME
+        while (!canceled) {
+            display("Available biomes: FOREST, DESERT, OCEAN, AIR, OGRAVITY");
+            biome = promptString("Habitat: ");
+            if (biome.equals("-1")) { canceled = true; break; }
+            try {
+                biome = service.validateBiome(biome);
+                break;
+            } catch (IllegalArgumentException e) { display(e.getMessage()); }
+        }
+
+// SPECIES
+        while (!canceled) {
+            species = promptString("Species: ");
+            if (species.equals("-1")) { canceled = true; break; }
+            try {
+                species = service.validateSpecies(species);
+                break;
+            } catch (IllegalArgumentException e) { display(e.getMessage()); }
+        }
+
+// DANGER LEVEL
+        while (!canceled) {
+            display("Available danger levels: LOW, MEDIUM, HIGH");
+            dangerLevel = promptString("Danger level: ");
+            if (dangerLevel.equals("-1")) { canceled = true; break; }
+            try {
+                dangerLevel = service.validateDangerLevel(dangerLevel);
+                break;
+            } catch (IllegalArgumentException e) { display(e.getMessage()); }
+        }
+
+// CONDITION
+        while (!canceled) {
+            display("Available conditions: STABLE, CRITICAL, QUARANTINED");
+            condition = promptString("Condition: ");
+            if (condition.equals("-1")) { canceled = true; break; }
+            try {
+                condition = service.validateCondition(condition);
+                break;
+            } catch (IllegalArgumentException e) { display(e.getMessage()); }
+        }
+
+        Creature newCreature = Creature.builder()
+                .id(null)
+                .name(name)
+                .biome(biome)
+                .species(species)
+                .dangerLevel(dangerLevel)
+                .condition(condition)
+                .removed(0)
+                .build();
+
+        Creature response = null;
+        try {
+            response = service.registerNewCreatureSrv(newCreature);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            display(e.getMessage());
+        }
+        if ((response != null)) {
+
+
+            // display in a nice format
+            String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
+
+            display("=".repeat(93));
+            display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
+            display("-".repeat(93));
+            display(String.format(format,
+                    response.getId(),
+                    response.getName(),
+                    response.getBiome(),
+                    response.getSpecies(),
+                    response.getDangerLevel(),
+                    response.getCondition(),
+                    response.getRemoved()
+            ));
+        } else{
+            display(" ");
+        }
+
     }
 
     public void renameCreatureMenu(){

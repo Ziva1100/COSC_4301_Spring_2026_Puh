@@ -99,8 +99,8 @@ public class CreatureController {
     //
     //**************************************************************
     @PostMapping
-    public ResponseEntity<CreatureResponse> create(@Valid @RequestBody CreatureRequest req){
-        CreatureResponse created = service.createCreature(req);
+    public ResponseEntity<CreaturesSummaryRequest> create(@Valid @RequestBody CreatureRequest req){
+        CreaturesSummaryRequest created = service.createCreature(req);
 
         // return 201 for success
         return ResponseEntity.status(201).body(created);
@@ -111,6 +111,7 @@ public class CreatureController {
     public ResponseEntity<List<CreaturesSummaryRequest>> getCreatureSummaries(){
         return ResponseEntity.ok(service.getAllCreatureSummary());
     }
+
 
 
 

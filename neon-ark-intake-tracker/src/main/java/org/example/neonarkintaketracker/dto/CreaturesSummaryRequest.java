@@ -13,8 +13,7 @@ public record CreaturesSummaryRequest (
     String biome,
     String species,
     String dangerLevel,
-    String condition,
-    int removed
+    String condition
 
 )
         {}

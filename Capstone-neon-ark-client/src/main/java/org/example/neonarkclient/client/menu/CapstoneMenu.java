@@ -257,6 +257,7 @@ public class CapstoneMenu
             } catch (IllegalArgumentException e) { display(e.getMessage()); }
         }
 
+        // build the creature for sending it to the service
         Creature newCreature = Creature.builder()
                 .id(null)
                 .name(name)
@@ -267,6 +268,7 @@ public class CapstoneMenu
                 .removed(0)
                 .build();
 
+        // process the response and catch possible exceptions
         Creature response = null;
         try {
             response = service.registerNewCreatureSrv(newCreature);

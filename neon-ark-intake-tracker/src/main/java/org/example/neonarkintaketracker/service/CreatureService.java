@@ -87,7 +87,7 @@ public class CreatureService {
     //  Returns:      CreatureResponse DTO
     //
     //**************************************************************
-    public CreatureResponse createCreature(CreatureRequest req){
+    public CreaturesSummaryRequest createCreature(CreatureRequest req){
 
         // what client submits as a new creauture. other fieds
         // are field automatically
@@ -98,6 +98,7 @@ public class CreatureService {
         creature.setSpecies(req.species());
         creature.setDangerLevel(req.dangerLevel());
         creature.setCondition(req.condition());
+        creature.setRemoved(0);
 
         // find the correct habitatId and map it to the creauture creation
         Habitat habitat = habitatRepository.findById(req.habitatId())
@@ -114,15 +115,13 @@ public class CreatureService {
 
         // CreatureResponse fields: id, name, spieces, dangerLevel,
         // condition, createdAt
-        CreatureResponse res = new CreatureResponse(
+        CreaturesSummaryRequest res = new CreaturesSummaryRequest(
                 saved.getId(),
                 saved.getName(),
                 saved.getSpecies(),
                 saved.getDangerLevel(),
                 saved.getCondition(),
-                saved.getHabitat().getId(),
-                // ensure the type missmatch between LocalDateTime and Instant
-                saved.getCreatedAt().atZone(ZoneId.systemDefault()).toInstant()
+                saved.getHabitat().getBiome()
         );
 
         return res;

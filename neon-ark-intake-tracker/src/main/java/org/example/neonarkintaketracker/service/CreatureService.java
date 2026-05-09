@@ -89,6 +89,7 @@ public class CreatureService {
     //**************************************************************
     public CreaturesSummaryRequest createCreature(CreatureRequest req){
 
+
         // what client submits as a new creauture. other fieds
         // are field automatically
         Creature creature = new Creature();
@@ -101,9 +102,9 @@ public class CreatureService {
         creature.setRemoved(0);
 
         // find the correct habitatId and map it to the creauture creation
-        Habitat habitat = habitatRepository.findById(req.habitatId())
-                .orElseThrow(() -> new RuntimeException("Habitat ID not found: "
-                + req.habitatId()));
+        Habitat habitat = habitatRepository.findFirstByBiome(req.biome())
+                .orElseThrow(() -> new RuntimeException("Habitat biome not found: "
+                + req.biome()));
 
         creature.setHabitat(habitat);
 
@@ -114,14 +115,15 @@ public class CreatureService {
         Creature saved = repository.save(creature);
 
         // CreatureResponse fields: id, name, spieces, dangerLevel,
-        // condition, createdAt
+        // condition, removed
         CreaturesSummaryRequest res = new CreaturesSummaryRequest(
                 saved.getId(),
                 saved.getName(),
+                saved.getHabitat().getBiome(),
                 saved.getSpecies(),
                 saved.getDangerLevel(),
                 saved.getCondition(),
-                saved.getHabitat().getBiome()
+                saved.getRemoved()
         );
 
         return res;

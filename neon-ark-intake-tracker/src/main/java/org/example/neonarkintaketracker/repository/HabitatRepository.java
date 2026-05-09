@@ -21,7 +21,10 @@ package org.example.neonarkintaketracker.repository;
 
 import org.example.neonarkintaketracker.entity.Habitat;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 // simple CRUD with many default mathods
 @Repository
@@ -37,4 +40,9 @@ public interface HabitatRepository extends JpaRepository<Habitat, Long> {
     // delete(entity)      -> delete by passing the entity itself
 
     // also paging and sorting methods
+
+    // create a method to find the habitat by biome
+    // Capstone -- [ Register New Creature ] Menu Choice
+
+    Optional<Habitat> findFirstByBiome(@Param("biome") String biome);
 }

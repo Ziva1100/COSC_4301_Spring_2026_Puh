@@ -20,11 +20,13 @@
 package org.example.neonarkintaketracker.dto;
 
 // recieves data from the end user and sends it backend
+// modify to mirror the front end creature
 public record CreatureRequest (
     String name,
+    String biome,
     String species,
     String dangerLevel,
     String condition,
-    Long habitatId,
-    java.time.Instant createdAt
+    String habitatId,
+    int removed
 ) {}

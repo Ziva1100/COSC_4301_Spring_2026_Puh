@@ -4,8 +4,8 @@ package org.example.neonarkintaketracker.dto;
 
 
 // Capstone -- [ List All Creatures ] Menu Choice
-
-
+// Capstone -- [ View Creature By Id ] Menu Choice
+// Capstone -- [ Register New Creature ] Menu Choice
 public record CreaturesSummaryRequest (
 
     Long id,
@@ -13,7 +13,7 @@ public record CreaturesSummaryRequest (
     String biome,
     String species,
     String dangerLevel,
-    String condition
+    String condition,
 
-)
+    int removed)
         {}

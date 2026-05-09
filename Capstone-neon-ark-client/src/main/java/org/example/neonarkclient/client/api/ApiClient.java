@@ -1,5 +1,6 @@
 package org.example.neonarkclient.client.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.neonarkclient.client.model.Creature;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class ApiClient implements CapstoneApi {
 
     // connection to the local host that connects to backend server
     String url;
+    ObjectMapper jsonMapper = new ObjectMapper();
 
     // set by injection
     public ApiClient(String url) {
@@ -57,7 +59,31 @@ public class ApiClient implements CapstoneApi {
     // Mock API for registering new creature
     // Capstone -- [ Register New Creature ] Menu Choice
     public String registerNewCreatureApi(Creature creature) throws IOException, InterruptedException{
-        return null;
+
+        // turn the creature into a json string
+        String json = jsonMapper.writeValueAsString(creature);
+        System.out.println("RECEIVED JSON: " + creature);
+
+        // create it into a body to be sent over
+        HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(json);
+
+        // create a client and build the request to the backend server
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/api/creatures"))
+                .header("Content-Type", "application/json")
+                .POST(body)
+                .build();
+
+        // receive the response and handle it
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 400)
+            return "400 Creature violates database constraint.";
+
+        if (response.statusCode() == 409)
+            return "409 Creature already exists.";
+
+        return response.body();
     }
 
 }

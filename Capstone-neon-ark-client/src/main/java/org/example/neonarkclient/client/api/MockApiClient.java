@@ -91,4 +91,18 @@ public class MockApiClient implements CapstoneApi {
         return newCreatureJson;
     }
 
+    // Capstone -- [ rename creature] Menu Choice
+    // Mock API for renaming the creature
+    // no error returns because all the calidation is done in viewById
+    public String renameCreatureApi(Long id, String name) throws IOException, InterruptedException{
+        // pull the existing JSON string and replace the name value
+        String existing = mockCreatures.get(id);
+        String updated = existing.replaceAll("\"name\":\"[^\"]*\"", "\"name\":\"" + name + "\"");
+
+        // save updated string back to mock map
+        mockCreatures.put(id, updated);
+
+        return updated;
+    }
+
 }

@@ -122,9 +122,14 @@ public class CapstoneService {
         return input.toUpperCase().trim();
     }
 
-    public void renameCreatureSrv(){
+    // Capstone -- [ rename creature] Menu Choice
+    public Creature renameCreatureSrv(int id, String newName) throws IOException, InterruptedException {
+        String response = clientApi.renameCreatureApi((long)id, newName);
 
+        return jsonMapper.readValue(response, Creature.class);
     }
+
+
 
     public void viewCreatureNotesSrv(){
 

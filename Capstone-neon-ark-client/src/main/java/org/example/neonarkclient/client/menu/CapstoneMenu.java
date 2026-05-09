@@ -303,8 +303,60 @@ public class CapstoneMenu
 
     }
 
+    // Capstone -- [ rename creature] Menu Choice
     public void renameCreatureMenu(){
-        service.renameCreatureSrv();
+
+        // first get the id of the creature to be renamed and validate that it exists
+        display("Enter the ID of the creature or press -1 to exit: ");
+        int userInput = 0;
+        try {
+
+            // ensure the input is in the int format
+            userInput = scan.nextInt();
+            scan.nextLine();
+        }catch (InputMismatchException e) {
+            display("The answer has to be a number!");
+            scan.nextInt();
+        }
+
+        Creature c = null;
+        if (userInput == -1) return;
+        try {
+
+            // handle exceptions passed on by api and service
+            c = service.viewCreatureByIdSrv(userInput);
+        } catch (IOException e) {
+            display("Un error occurred.");
+        } catch (InterruptedException e) {
+            display("An error occurred");
+        } catch (NotFoundException e){
+            display(e.getMessage());
+        }
+
+        if (c != null){
+
+            // if the service returns an actual creature, proceed with renaming
+            String newName = promptString("Enter the creature's new name: ");
+            String confirmation = promptString("Press Y to confirm renaming: ");
+
+
+
+            Creature newCreature;
+
+            if(confirmation.equalsIgnoreCase("y")) {
+                try {
+                    newCreature = service.renameCreatureSrv(userInput, newName);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                display("The creature "+c.getName()+" was renamed to "+newCreature.getName());
+            }
+
+        }
+
     }
 
     public void viewCreatureNotesMenu(){

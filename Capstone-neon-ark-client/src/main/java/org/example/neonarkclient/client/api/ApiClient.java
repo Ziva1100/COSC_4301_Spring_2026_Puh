@@ -86,6 +86,10 @@ public class ApiClient implements CapstoneApi {
         return response.body();
     }
 
+    public String renameCreatureApi(Long id, String name) throws IOException, InterruptedException{
+        return null;
+    }
+
 }
 
 

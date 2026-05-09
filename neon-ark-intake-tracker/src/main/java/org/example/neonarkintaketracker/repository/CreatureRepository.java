@@ -20,6 +20,7 @@
 package org.example.neonarkintaketracker.repository;
 
 import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
+import org.example.neonarkintaketracker.dto.ObservationRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -54,4 +55,7 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
     CreaturesSummaryRequest getCreatureById(@Param("id") Long id);
 
     // Capstone -- [ View Observations ] Menu Choice
+    @Query(value = "SELECT c.name, o.date, o.category, o.observation " +
+            "FROM creatures c JOIN observations o ON c.id = o.creature_id", nativeQuery = true)
+    ObservationRequest getCreatureObservations(@Param("creature_id") Long id);
 }

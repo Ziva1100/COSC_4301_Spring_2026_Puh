@@ -64,16 +64,10 @@ public class CapstoneMenu
             display("");
             display("0. Exit");
             display("-------------------------------------");
-            System.out.print("Select an option: ");
+            System.out.print("");
 
             // hanlde the possible non-int response by the user
-            try {
-                userInput = scan.nextInt();
-                scan.nextLine();
-            }catch (InputMismatchException e) {
-                display("The answer has to be a number!");
-                scan.nextInt();
-            }
+            userInput = promptId("Select an option: ", "0");
 
             // pass the resposne to appropriate method
             switch (userInput) {
@@ -142,17 +136,7 @@ public class CapstoneMenu
 
     // Capstone -- [ View Creature By Id ] Menu Choice
     public void viewCreatureByIdMenu(){
-        display("Enter the ID of the creature or press -1 to exit: ");
-        int userInput = 0;
-        try {
-
-            // ensure the input is in the int format
-            userInput = scan.nextInt();
-            scan.nextLine();
-        }catch (InputMismatchException e) {
-            display("The answer has to be a number!");
-            scan.nextInt();
-        }
+        int userInput = promptId("Enter the ID of the creature or press -1 to exit: ", "-1");
         Creature c = null;
         if (userInput == -1) return;
         try {
@@ -307,17 +291,7 @@ public class CapstoneMenu
     public void renameCreatureMenu(){
 
         // first get the id of the creature to be renamed and validate that it exists
-        display("Enter the ID of the creature or press -1 to exit: ");
-        int userInput = 0;
-        try {
-
-            // ensure the input is in the int format
-            userInput = scan.nextInt();
-            scan.nextLine();
-        }catch (InputMismatchException e) {
-            display("The answer has to be a number!");
-            scan.nextInt();
-        }
+        int userInput = promptId("Enter the ID of the creature or press -1 to exit: ", "-1");
 
         Creature c = null;
         if (userInput == -1) return;
@@ -360,6 +334,7 @@ public class CapstoneMenu
     }
 
     public void viewCreatureNotesMenu(){
+
         service.viewCreatureNotesSrv();
     }
 
@@ -380,6 +355,21 @@ public class CapstoneMenu
         System.out.println(str);
         return scan.nextLine();
 
+    }
+
+    private int promptId(String message, String exitMessage) {
+        while (true) {
+            System.out.print(message);
+            String input = scan.nextLine().trim();
+
+            if (input.equals(exitMessage)) return Integer.parseInt(exitMessage);
+
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                display("The answer has to be a number. Try again or enter "+ exitMessage+" to exit.");
+            }
+        }
     }
 
 }

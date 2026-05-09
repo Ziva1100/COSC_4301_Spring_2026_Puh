@@ -32,6 +32,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -133,5 +134,33 @@ public class CreatureService {
     public List<CreaturesSummaryRequest> getAllCreatureSummary(){
         return repository.listAllCreatures();
     }
+
+    // Capstone -- [ List All Creatures ] Menu Choice
+    public CreaturesSummaryRequest renameCreature(Long id, String newName) {
+
+        // get the creature that is optional object so handle the null option
+        Creature creature = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Creature Not Found."));
+
+        // when found set the new name
+        creature.setName(newName);
+
+        // save the new creature and get the new saved creature for return
+        Creature saved = repository.save(creature);
+
+        // return new saved creature
+        return new CreaturesSummaryRequest(
+                saved.getId(),
+                saved.getName(),
+                saved.getHabitat().getBiome(),
+                saved.getSpecies(),
+                saved.getDangerLevel(),
+                saved.getCondition(),
+                saved.getRemoved()
+        );
+
+
+    }
+
 
 }

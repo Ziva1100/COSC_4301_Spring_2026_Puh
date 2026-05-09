@@ -86,8 +86,23 @@ public class ApiClient implements CapstoneApi {
         return response.body();
     }
 
+    // Capstone -- [ rename creature] Menu Choice
     public String renameCreatureApi(Long id, String name) throws IOException, InterruptedException{
-        return null;
+
+        String jsonBody = "{\"name\":\""+name+"\"}";
+        // recieve the HttpResponse from the controller
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/api/creatures/"+id+"/name"))
+                .header("Content-Type", "application/json")
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        // Pass the HttpResponse as a string to the server
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+
     }
 
 }

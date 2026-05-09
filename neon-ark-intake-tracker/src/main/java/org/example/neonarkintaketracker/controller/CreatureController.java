@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -112,8 +113,11 @@ public class CreatureController {
         return ResponseEntity.ok(service.getAllCreatureSummary());
     }
 
-
-
+    // Capstone -- [ rename creature] Menu Choice
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<CreaturesSummaryRequest> rename(@PathVariable Long id, @RequestBody Map<String, String> body){
+        return ResponseEntity.ok(service.renameCreature(id, body.get("name")));
+    }
 
 
 }

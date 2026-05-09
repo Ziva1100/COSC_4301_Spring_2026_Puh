@@ -340,7 +340,7 @@ public class CapstoneMenu
             String confirmation = promptString("Press Y to confirm renaming: ");
 
 
-
+            // Confirm the user wants to make that change
             Creature newCreature;
 
             if(confirmation.equalsIgnoreCase("y")) {
@@ -351,7 +351,7 @@ public class CapstoneMenu
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
+                // display the old and new name
                 display("The creature "+c.getName()+" was renamed to "+newCreature.getName());
             }
 

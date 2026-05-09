@@ -382,6 +382,7 @@ public class CapstoneMenu
             display("Total observations: " + observations.size());
         }
 
+
     }
 
     public void creatureFeedingTimeMenu(){

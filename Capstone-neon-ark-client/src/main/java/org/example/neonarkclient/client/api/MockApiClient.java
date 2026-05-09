@@ -105,4 +105,19 @@ public class MockApiClient implements CapstoneApi {
         return updated;
     }
 
+    public String viewCreatureNotesApi(long id) throws IOException, InterruptedException{
+        String creatureName = mockCreatures.get(id)
+                .replaceAll(".*\"name\":\"([^\"]+)\".*", "$1").trim();
+
+        return String.format("""
+            [
+              {"id":1,"creature":"%s","date":"2026-01-05","category":"MEDICAL","observation":"Showing signs of light sensitivity. Recommend blackout curtains."},
+              {"id":2,"creature":"%s","date":"2026-01-12","category":"BEHAVIOR","observation":"Pacing the perimeter repeatedly during night cycle."},
+              {"id":3,"creature":"%s","date":"2026-02-01","category":"SAFETY","observation":"Attempted to escape through ventilation shaft. Sealed and reinforced."},
+              {"id":4,"creature":"%s","date":"2026-02-14","category":"ACCOUNTABILITY","observation":"Feeding log updated. Consuming standard rations without issue."}
+            ]
+            """, creatureName, creatureName, creatureName, creatureName);
+    }
+
+
 }

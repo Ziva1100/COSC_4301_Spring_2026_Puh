@@ -6,7 +6,7 @@ public record ObservationRequest(
         Long id,
         String creatureName,
         LocalDate date,
-        String ategory,
+        String category,
         String observation
 ) {
 }

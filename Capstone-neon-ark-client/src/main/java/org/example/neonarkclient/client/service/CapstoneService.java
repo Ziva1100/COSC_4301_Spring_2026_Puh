@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.example.neonarkclient.client.api.CapstoneApi;
 import org.example.neonarkclient.client.exceptions.NotFoundException;
-import org.example.neonarkclient.client.model.Biome;
-import org.example.neonarkclient.client.model.Condition;
-import org.example.neonarkclient.client.model.Creature;
-import org.example.neonarkclient.client.model.DangerLevel;
+import org.example.neonarkclient.client.model.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,7 +19,9 @@ import java.util.List;
 // the service for the client handling logic of the menu choice
 public class CapstoneService {
     CapstoneApi clientApi;
-    ObjectMapper jsonMapper = new ObjectMapper();
+    ObjectMapper jsonMapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
 
     public CapstoneService(CapstoneApi clientApi) {
@@ -130,9 +132,10 @@ public class CapstoneService {
     }
 
 
-
-    public void viewCreatureNotesSrv(){
-
+    // Capstone -- [ View Observations ] Menu Choice
+    public List<Observation> viewCreatureNotesSrv(int id) throws IOException, InterruptedException {
+        String creatureJson = clientApi.viewCreatureNotesApi((long) id);
+        return jsonMapper.readValue(creatureJson, new TypeReference<List<Observation>>(){});
     }
 
     public void creatureFeedingTimeSrv(){

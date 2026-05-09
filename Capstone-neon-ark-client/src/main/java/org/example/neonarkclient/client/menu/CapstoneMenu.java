@@ -3,6 +3,7 @@ package org.example.neonarkclient.client.menu;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.neonarkclient.client.exceptions.NotFoundException;
 import org.example.neonarkclient.client.model.Creature;
+import org.example.neonarkclient.client.model.Observation;
 import org.example.neonarkclient.client.service.CapstoneService;
 
 import java.io.IOException;
@@ -75,9 +76,10 @@ public class CapstoneMenu
                 case 2 -> viewCreatureByIdMenu();
                 case 3 -> registerNewCreatureMenu();
                 case 4 -> renameCreatureMenu();
-                case 5 -> viewCreatureNotesMenu();
-                case 6 -> creatureFeedingTimeMenu();
-                case 7 -> viewUsersMenu();
+                case 5 -> removeCreature();
+                case 6 -> viewCreatureNotesMenu();
+                case 7 -> creatureFeedingTimeMenu();
+                case 8 -> viewUsersMenu();
                 case 0 -> {
                     // double check if the user wants to exit
                     display("Write Y to exit: ");
@@ -333,9 +335,53 @@ public class CapstoneMenu
 
     }
 
+    public void removeCreature(){}
+
+    // Capstone -- [ View Observations ] Menu Choice
     public void viewCreatureNotesMenu(){
 
-        service.viewCreatureNotesSrv();
+        List<Observation> observations = new ArrayList<>();
+
+        int id = promptId("Enter the creature id or press -1 to exit: ", "-1");
+
+        Creature creature = null;
+        try {
+            creature = service.viewCreatureByIdSrv(id);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (NotFoundException e){
+            display(e.getMessage());
+        }
+
+        if (creature != null) {
+
+            try {
+                observations = service.viewCreatureNotesSrv(id);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            String format = "%-5s %-15s %-20s %-18s %-50s ";
+            display("=".repeat(150));
+            display(String.format(format, "ID", "CREATURE", "DATE", "CATEGORY", "OBSERVATION"));
+            display("=".repeat(150));
+            for (Observation o : observations) {
+                display(String.format(format,
+                        o.getId(),
+                        o.getCreature(),
+                        o.getDate(),
+                        o.getCategory(),
+                        o.getObservation()
+                ));
+            }
+            display("=".repeat(93));
+            display("Total observations: " + observations.size());
+        }
+
     }
 
     public void creatureFeedingTimeMenu(){
@@ -347,16 +393,20 @@ public class CapstoneMenu
     }
 
 
+    // heper funciton to display somehting on the screen
     private void display(String str){
         System.out.println(str);
     }
 
+    // helper method to prompt the user for an input
     private String promptString(String str){
         System.out.println(str);
         return scan.nextLine();
 
     }
 
+    // helper funciton ensuring the integer can be parsed and doesn't exit the loop unti
+    // and itneger is correctly parsed
     private int promptId(String message, String exitMessage) {
         while (true) {
             System.out.print(message);

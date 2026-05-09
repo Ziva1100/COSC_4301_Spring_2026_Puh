@@ -105,6 +105,11 @@ public class ApiClient implements CapstoneApi {
 
     }
 
+    // Capstone -- [ View Observations ] Menu Choice
+    public String viewCreatureNotesApi(long id) throws IOException, InterruptedException {
+        return null;
+    }
+
 }
 
 

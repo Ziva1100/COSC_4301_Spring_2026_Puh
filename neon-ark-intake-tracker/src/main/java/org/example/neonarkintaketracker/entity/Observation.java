@@ -24,7 +24,7 @@ import java.time.LocalDate;
 
 // Capstone -- [ View Observations ] Menu Choice
 
-public class Observations {
+public class Observation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

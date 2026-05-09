@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record ObservationRequest(
         Long id,
-        String creatureName,
+        String name,
         LocalDate date,
         String category,
         String observation

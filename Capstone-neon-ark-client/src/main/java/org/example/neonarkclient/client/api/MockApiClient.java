@@ -104,7 +104,9 @@ public class MockApiClient implements CapstoneApi {
 
         return updated;
     }
-
+    // Capstone -- [ View Observations ] Menu Choice
+    // get fake observations in the json shape as the real ones
+    // 404 Not Found handeled by viewById
     public String viewCreatureNotesApi(long id) throws IOException, InterruptedException{
         String creatureName = mockCreatures.get(id)
                 .replaceAll(".*\"name\":\"([^\"]+)\".*", "$1").trim();

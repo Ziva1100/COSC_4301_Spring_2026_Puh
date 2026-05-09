@@ -22,8 +22,10 @@ package org.example.neonarkintaketracker.service;
 import org.example.neonarkintaketracker.dto.CreatureRequest;
 import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
+import org.example.neonarkintaketracker.dto.ObservationRequest;
 import org.example.neonarkintaketracker.entity.Creature;
 import org.example.neonarkintaketracker.entity.Habitat;
+import org.example.neonarkintaketracker.entity.Observation;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
 import org.example.neonarkintaketracker.repository.HabitatRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -159,6 +162,15 @@ public class CreatureService {
                 saved.getRemoved()
         );
 
+
+    }
+
+    // Capstone -- [ View Observations ] Menu Choice
+    // return all observations for this specific creature
+    public List<ObservationRequest> getObservations(Long id){
+        List<ObservationRequest> observations = new ArrayList<>();
+
+        return repository.getCreatureObservations(id);
 
     }
 

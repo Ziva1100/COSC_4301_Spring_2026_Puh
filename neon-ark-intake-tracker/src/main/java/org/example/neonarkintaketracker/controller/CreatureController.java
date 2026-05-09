@@ -19,11 +19,9 @@
 package org.example.neonarkintaketracker.controller;
 
 import org.example.neonarkintaketracker.dto.CreatureRequest;
-import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
-import org.example.neonarkintaketracker.entity.Creature;
+import org.example.neonarkintaketracker.dto.ObservationRequest;
 import org.example.neonarkintaketracker.service.CreatureService;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -117,6 +115,12 @@ public class CreatureController {
     @PatchMapping("/{id}/name")
     public ResponseEntity<CreaturesSummaryRequest> rename(@PathVariable Long id, @RequestBody Map<String, String> body){
         return ResponseEntity.ok(service.renameCreature(id, body.get("name")));
+    }
+
+    // Capstone -- [ View Observations ] Menu Choice
+    @GetMapping("/{id}/observations")
+    public ResponseEntity<List<ObservationRequest>> getObservationsById(@PathVariable Long id){
+        return ResponseEntity.ok(service.getObservations(id));
     }
 
 

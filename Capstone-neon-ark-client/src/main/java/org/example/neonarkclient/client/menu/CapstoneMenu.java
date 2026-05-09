@@ -372,7 +372,7 @@ public class CapstoneMenu
             for (Observation o : observations) {
                 display(String.format(format,
                         o.getId(),
-                        o.getCreature(),
+                        o.getName(),
                         o.getDate(),
                         o.getCategory(),
                         o.getObservation()

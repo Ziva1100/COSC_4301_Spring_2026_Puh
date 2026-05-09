@@ -107,7 +107,16 @@ public class ApiClient implements CapstoneApi {
 
     // Capstone -- [ View Observations ] Menu Choice
     public String viewCreatureNotesApi(long id) throws IOException, InterruptedException {
-        return null;
+        // recieve the HttpResponse from the controller
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/api/creatures/"+id+"/observations"))
+                .GET()
+                .build();
+
+        // Pass the HttpResponse as a string to the server
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 
 }

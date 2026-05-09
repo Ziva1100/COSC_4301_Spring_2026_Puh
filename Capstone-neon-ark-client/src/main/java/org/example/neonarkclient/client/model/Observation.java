@@ -16,8 +16,8 @@ import java.time.LocalDate;
 
 public class Observation {
     int id;
-    String creature;
+    String name;
     LocalDate date;
-    Category category;
+    String category;
     String observation;
 }

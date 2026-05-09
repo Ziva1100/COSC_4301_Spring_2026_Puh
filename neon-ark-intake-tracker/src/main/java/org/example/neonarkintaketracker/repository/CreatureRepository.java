@@ -55,7 +55,8 @@ public interface CreatureRepository extends JpaRepository<Creature, Long> {
     CreaturesSummaryRequest getCreatureById(@Param("id") Long id);
 
     // Capstone -- [ View Observations ] Menu Choice
-    @Query(value = "SELECT c.name, o.date, o.category, o.observation " +
-            "FROM creatures c JOIN observations o ON c.id = o.creature_id", nativeQuery = true)
-    ObservationRequest getCreatureObservations(@Param("creature_id") Long id);
+    @Query(value = "SELECT o.id, c.name, o.date, o.category, o.observation " +
+            "FROM creatures c JOIN observations o ON c.id = o.creature_id" +
+            " WHERE o.creature_id = :id", nativeQuery = true)
+    List<ObservationRequest> getCreatureObservations(@Param("id") Long id);
 }

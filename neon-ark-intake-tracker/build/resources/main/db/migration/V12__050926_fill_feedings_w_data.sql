@@ -1,0 +1,28 @@
+
+-- Insert feeding schedules for all 25 creatures (IDs 1-25)
+INSERT INTO feedings (creature_id, food, quantity, time, active) VALUES
+                                                                     (1,  'Raw phosphorescent fish',     '200g',  '06:00', 1),
+                                                                     (2,  'Phosphorescent moss',         '50g',   '07:30', 1),
+                                                                     (3,  'Crystal insects',             '100g',  '08:00', 1),
+                                                                     (4,  'Rainbow kelp',                '300g',  '06:30', 1),
+                                                                     (5,  'Superheated mineral rocks',   '500g',  '09:00', 1),
+                                                                     (6,  'Desert sand beetles',         '150g',  '07:00', 1),
+                                                                     (7,  'UV energy pellets',           '200g',  '10:00', 1),
+                                                                     (8,  'Heat crystal shards',         '100g',  '08:30', 1),
+                                                                     (9,  'Deep sea pressure fish',      '1kg',   '05:00', 1),
+                                                                     (10, 'Bioluminescent plankton',     '250g',  '06:00', 1),
+                                                                     (11, 'Algae colony supplement',     '400g',  '07:00', 1),
+                                                                     (12, 'Ocean current krill',         '300g',  '08:00', 1),
+                                                                     (13, 'Cloud vapor concentrate',     '100ml', '09:30', 1),
+                                                                     (14, 'Atmospheric nutrients',       '200ml', '07:30', 1),
+                                                                     (15, 'Electric eel strips',         '250g',  '06:00', 1),
+                                                                     (16, 'Storm charged minerals',      '300g',  '08:00', 1),
+                                                                     (17, 'Cosmic radiation pellets',    '50g',   '10:00', 1),
+                                                                     (18, 'Zero gravity nutrient fluid', '500ml', '05:30', 1),
+                                                                     (19, 'Stellar dust concentrate',    '75g',   '07:00', 1),
+                                                                     (20, 'Graviton energy cubes',       '200g',  '09:00', 1),
+                                                                     (21, 'Neon energy crystals',        '100g',  '08:30', 1),
+                                                                     (22, 'Light refraction minerals',   '250g',  '07:00', 1),
+                                                                     (23, 'Volcanic ash supplement',     '300g',  '06:00', 1),
+                                                                     (24, 'Sound wave nutrient gel',     '150g',  '09:30', 1),
+                                                                     (25, 'Deep void nutrient mass',     '2kg',   '05:00', 1);

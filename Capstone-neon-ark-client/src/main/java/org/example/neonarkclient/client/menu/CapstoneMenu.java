@@ -3,10 +3,12 @@ package org.example.neonarkclient.client.menu;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.neonarkclient.client.exceptions.NotFoundException;
 import org.example.neonarkclient.client.model.Creature;
+import org.example.neonarkclient.client.model.Feeding;
 import org.example.neonarkclient.client.model.Observation;
 import org.example.neonarkclient.client.service.CapstoneService;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -384,9 +386,27 @@ public class CapstoneMenu
 
 
     }
-
+    // Capstone -- [ Find Creatures by feeding time ] Menu Choice
     public void creatureFeedingTimeMenu(){
-        service.creatureFeedingTimeSrv();
+        display("Enter the hour and minutes in a 24h format.");
+        int hour = -1;
+        int minutes = -1;
+
+        // check the legality of the entries
+
+        LocalTime time = null;
+        while (true) {
+            hour = promptId("Enter the hour or press -1 to exit: ", "-1");
+            minutes = promptId("Enter the minutes or press -1 to exit: ","-1");
+            try {
+                time = service.parseTime(hour, minutes);
+                break;
+            } catch (IllegalArgumentException e) {
+                display(e.getMessage());
+            }
+        }
+
+        List<Feeding> feedings = service.creatureFeedingTimeSrv(time);
     }
 
     public void viewUsersMenu(){

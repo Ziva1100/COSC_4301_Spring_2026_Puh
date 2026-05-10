@@ -41,4 +41,7 @@ public class Feeding
     @Column(nullable = false)
     private LocalTime time;
 
+    @Column(nullable = false)
+    private int active;
+
 }

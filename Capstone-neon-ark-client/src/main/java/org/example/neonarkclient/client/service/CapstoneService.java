@@ -12,6 +12,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -138,8 +140,21 @@ public class CapstoneService {
         return jsonMapper.readValue(creatureJson, new TypeReference<List<Observation>>(){});
     }
 
-    public void creatureFeedingTimeSrv(){
+    public List<Feeding> creatureFeedingTimeSrv(LocalTime time){
 
+
+    }
+
+    public LocalTime parseTime(int h, int m){
+        if (h < 0 || h > 23){
+            throw new IllegalArgumentException("The hour has to be 0-23");
+        }
+        if (m < 0 || m >= 60){
+            throw new IllegalArgumentException("The minutes have to be 0 - 59");
+        }
+
+
+        return LocalTime.of(h,m);
     }
 
     public void viewUsersSrv(){

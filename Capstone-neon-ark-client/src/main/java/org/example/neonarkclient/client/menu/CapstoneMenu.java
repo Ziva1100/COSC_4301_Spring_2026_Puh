@@ -396,17 +396,56 @@ public class CapstoneMenu
 
         LocalTime time = null;
         while (true) {
-            hour = promptId("Enter the hour or press -1 to exit: ", "-1");
-            minutes = promptId("Enter the minutes or press -1 to exit: ","-1");
+            hour = promptId("Enter the hour as HH or press -1 to exit: ", "-1");
+            if (hour == -1) return;
             try {
-                time = service.parseTime(hour, minutes);
+                hour = service.validateHour(hour);
+            } catch (IllegalArgumentException e) {
+                display(e.getMessage());
+                continue;
+            }
+            minutes = promptId("Enter the minutes as MM or press -1 to exit: ","-1");
+            if (minutes == -1) return;
+            try {
+                minutes = service.validateMinute(minutes);
                 break;
             } catch (IllegalArgumentException e) {
                 display(e.getMessage());
             }
+
         }
 
-        List<Feeding> feedings = service.creatureFeedingTimeSrv(time);
+        time= LocalTime.of(hour, minutes);
+
+
+        // execute the service
+        List<Feeding> feedings = null;
+        try {
+            feedings = service.creatureFeedingTimeSrv(time);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(feedings == null){
+            display("There are no feedings at the given time.");
+        } else {
+            String format = "%-20s %-30s %-10s %-15s%n";
+            display("=".repeat(70));
+            display(String.format(format, "CREATURE", "FOOD", "QUANTITY", "TIME"));
+            display("=".repeat(70));
+            for (Feeding f : feedings) {
+                display(String.format(format,
+                        f.getName(),
+                        f.getFood(),
+                        f.getQuantity(),
+                        f.getTime()
+                ));
+            }
+            display("=".repeat(65));
+            display("Total feedings: " + feedings.size());
+        }
     }
 
     public void viewUsersMenu(){

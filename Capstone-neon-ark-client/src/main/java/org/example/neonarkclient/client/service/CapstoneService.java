@@ -140,21 +140,36 @@ public class CapstoneService {
         return jsonMapper.readValue(creatureJson, new TypeReference<List<Observation>>(){});
     }
 
-    public List<Feeding> creatureFeedingTimeSrv(LocalTime time){
+    // Capstone -- [ Find Creatures By Feeding Time ] Menu Choice
+    public List<Feeding> creatureFeedingTimeSrv(LocalTime time) throws IOException, InterruptedException {
+        String feedingJson = clientApi.creatureFeedingTimeApi(time);
 
+
+        if (feedingJson.startsWith("400")) {
+            throw new IllegalArgumentException("There was an issue with the time.");
+        }
+        return jsonMapper.readValue(feedingJson, new TypeReference<List<Feeding>>() {
+        });
 
     }
 
-    public LocalTime parseTime(int h, int m){
-        if (h < 0 || h > 23){
-            throw new IllegalArgumentException("The hour has to be 0-23");
+    // validate the hour
+    // Capstone -- [ Find Creatures By Feeding Time ] Menu Choice
+    public int validateHour(int h) {
+        if (h < 0 || h > 23) {
+            throw new IllegalArgumentException("The hour has to be 0-23.");
         }
-        if (m < 0 || m >= 60){
-            throw new IllegalArgumentException("The minutes have to be 0 - 59");
+        return h;
+    }
+
+    // validate the minutes
+    // Capstone -- [ Find Creatures By Feeding Time ] Menu Choice
+    public int validateMinute(int m) {
+        if (m < 0 || m >= 60) {
+            throw new IllegalArgumentException("The minutes have to be 0-59.");
         }
+        return m;
 
-
-        return LocalTime.of(h,m);
     }
 
     public void viewUsersSrv(){

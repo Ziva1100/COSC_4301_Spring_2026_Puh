@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalTime;
 
 // This class is an actual API client talking ot the backend springBoot server
 public class ApiClient implements CapstoneApi {
@@ -117,6 +118,10 @@ public class ApiClient implements CapstoneApi {
         // Pass the HttpResponse as a string to the server
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
+    }
+
+    public String creatureFeedingTimeApi(LocalTime time) throws IOException, InterruptedException {
+        return null;
     }
 
 }

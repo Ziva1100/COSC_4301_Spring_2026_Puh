@@ -4,6 +4,8 @@ import org.example.neonarkclient.client.model.Creature;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,6 +121,22 @@ public class MockApiClient implements CapstoneApi {
               {"id":4,"creature":"%s","date":"2026-02-14","category":"ACCOUNTABILITY","observation":"Feeding log updated. Consuming standard rations without issue."}
             ]
             """, creatureName, creatureName, creatureName, creatureName);
+    }
+
+    // Capstone -- [ Find Creatures By Feeding Time ] Menu Choice
+// Mock API that returns a list of feedings at a given time
+// 400 Bad Request if time format is invalid
+    public String creatureFeedingTimeApi(LocalTime time) throws IOException, InterruptedException {
+
+
+
+        return String.format("""
+            [
+              {"name":"Nyx","food":"Raw phosphorescent fish","quantity":"200g","time":"%s"},
+              {"name":"Lumina","food":"Phosphorescent moss","quantity":"50g","time":"%s"},
+              {"name":"Echo","food":"Crystal insects","quantity":"100g","time":"%s"}
+            ]
+            """, time, time, time);
     }
 
 

@@ -10,7 +10,7 @@ import org.example.neonarkclient.client.service.CapstoneService;
 public class Main {
     public static void main(String[] args) {
 
-        boolean useMock = true;
+        boolean useMock = false;
 
         CapstoneApi api = useMock
                 ? new MockApiClient()

@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 // This class is an actual API client talking ot the backend springBoot server
 public class ApiClient implements CapstoneApi {
@@ -121,7 +122,18 @@ public class ApiClient implements CapstoneApi {
     }
 
     public String creatureFeedingTimeApi(LocalTime time) throws IOException, InterruptedException {
-        return null;
+
+        String timeStr = time.format(DateTimeFormatter.ofPattern("HH:mm"));
+        // recieve the HttpResponse from the controller
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/api/feedings/time?time="+timeStr))
+                .GET()
+                .build();
+
+        // Pass the HttpResponse as a string to the server
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
 
 }

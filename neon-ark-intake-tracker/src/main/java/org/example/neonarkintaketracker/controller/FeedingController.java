@@ -26,13 +26,14 @@ public class FeedingController {
         this.service = service;
     }
 
+    // get the mapping for feedings
     @GetMapping("/time")
-    ResponseEntity<List<FeedingRequest>> getFeedingTimes(@RequestParam("time") String time)
+    public ResponseEntity<List<FeedingRequest>> getFeedingTimes(@RequestParam("time") String time)
 {
-        List<FeedingRequest> maybeFeeding = service.getFeedingTimesSrv(time);
+        List<FeedingRequest> feeding = service.getFeedingTimesSrv(time);
 
 
-        return ResponseEntity.ok(maybeFeeding.get());
+        return ResponseEntity.ok(feeding);
 
     }
 

@@ -428,8 +428,8 @@ public class CapstoneMenu
             throw new RuntimeException(e);
         }
 
-        if(feedings == null){
-            display("There are no feedings at the given time.");
+        if(feedings.isEmpty()){
+            display("\nThere are no feedings at the given time.\n");
         } else {
             String format = "%-20s %-30s %-10s %-15s%n";
             display("=".repeat(70));

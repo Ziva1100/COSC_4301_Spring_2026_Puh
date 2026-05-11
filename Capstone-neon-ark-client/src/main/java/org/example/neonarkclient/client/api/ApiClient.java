@@ -162,6 +162,13 @@ public class ApiClient implements CapstoneApi {
         return response.body();
 
     }
+
+    @Override
+    public String viewUsersApi(String username, String password) throws IOException, InterruptedException {
+        return "";
+    }
+
+
 }
 
 

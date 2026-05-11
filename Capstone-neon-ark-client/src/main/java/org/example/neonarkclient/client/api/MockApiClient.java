@@ -159,5 +159,90 @@ public class MockApiClient implements CapstoneApi {
         return updated;
     }
 
+    // Capstone -- [ View All System Users ] Menu Choice
+    // Mock API that returns a list of users
+    // 401 Unauthorized if credentials are incorrect
+    public String viewUsersApi(String username, String password) throws IOException, InterruptedException {
+        // simulate 401 — invalid credentials
+        if (username == null || password == null) {
+            return "401 Unauthorized — invalid credentials";
+        }
+
+        // valid users map — username -> {password, role}
+        Map<String, String[]> users = Map.of(
+                "admin",    new String[]{"admin123",   "ADMIN"},
+                "warden",   new String[]{"neonark123", "USER"},
+                "keeper",   new String[]{"keeper123",  "USER"}
+        );
+
+        // check if user exists and password matches
+        if (!users.containsKey(username) || !users.get(username)[0].equals(password)) {
+            return "401 Unauthorized — invalid credentials";
+        }
+
+        // check if user has admin role
+        if (!users.get(username)[1].equals("ADMIN")) {
+            return "403 Forbidden — admin access required";
+        }
+
+        // 200 — return user list
+        return """
+    [
+      {
+        "id": 1,
+        "firstName": "Elena",
+        "lastName": "Voss",
+        "idType": "BADGE",
+        "email": "elena.voss@neonark.com",
+        "role": "ADMIN",
+        "status": "ACTIVE",
+        "clearance": "ECLIPSE",
+        "startDate": "2022-03-15",
+        "endDate": null,
+        "dimension": "PRIME"
+      },
+      {
+        "id": 2,
+        "firstName": "Marcus",
+        "lastName": "Hale",
+        "idType": "BADGE",
+        "email": "marcus.hale@neonark.com",
+        "role": "WARDEN",
+        "status": "ACTIVE",
+        "clearance": "ALPHA",
+        "startDate": "2023-01-10",
+        "endDate": null,
+        "dimension": "PRIME"
+      },
+      {
+        "id": 3,
+        "firstName": "Sable",
+        "lastName": "Quinn",
+        "idType": "VISA",
+        "email": "sable.quinn@neonark.com",
+        "role": "KEEPER",
+        "status": "ONLEAVE",
+        "clearance": "OMEGA",
+        "startDate": "2023-06-01",
+        "endDate": "2026-06-01",
+        "dimension": "SHADOW"
+      },
+      {
+        "id": 4,
+        "firstName": "Orion",
+        "lastName": "Blake",
+        "idType": "PASSPORT",
+        "email": "orion.blake@neonark.com",
+        "role": "SUPERVISOR",
+        "status": "TERMINATED",
+        "clearance": "ALPHA",
+        "startDate": "2021-09-20",
+        "endDate": "2025-09-20",
+        "dimension": "VOID"
+      }
+    ]
+    """;
+    }
+
 
 }

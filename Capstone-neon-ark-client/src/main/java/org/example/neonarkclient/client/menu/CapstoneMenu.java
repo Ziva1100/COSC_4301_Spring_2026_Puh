@@ -6,6 +6,7 @@ import org.example.neonarkclient.client.exceptions.NotFoundException;
 import org.example.neonarkclient.client.model.Creature;
 import org.example.neonarkclient.client.model.Feeding;
 import org.example.neonarkclient.client.model.Observation;
+import org.example.neonarkclient.client.model.Warden;
 import org.example.neonarkclient.client.service.CapstoneService;
 
 import java.io.IOException;
@@ -488,8 +489,56 @@ public class CapstoneMenu
         }
     }
 
+    // Capstone -- [ View All System Users ] Menu Choice
     public void viewUsersMenu(){
-        service.viewUsersSrv();
+
+        // to get the informaiton, please sign in as
+        // username: admin
+        // password: admin123
+
+        // accept the username and password
+        String username = promptString("Enter your username: ");
+        String password = promptString("Enter your password: ");
+
+        List<Warden> wardens = new ArrayList<>();
+        try{
+            wardens = service.viewUsersSrv(username, password);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e){
+            display(e.getMessage());
+        }
+
+        if(!wardens.isEmpty()) {
+            System.out.printf("%-6s %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
+                    "ID", "FIRST NAME", "LAST NAME", "ID TYPE", "EMAIL", "ROLE",
+                    "STATUS", "CLEARANCE", "START DATE", "END DATE", "DIMENSION");
+
+            // divider
+            System.out.println("-".repeat(145));
+
+            // rows
+            for (Warden w : wardens) {
+                System.out.printf("%-6d %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
+                        w.getId(),
+                        w.getFirstName(),
+                        w.getLastName(),
+                        w.getIdType(),
+                        w.getEmail(),
+                        w.getRole(),
+                        w.getStatus(),
+                        w.getClearance(),
+                        w.getStartDate(),
+                        w.getEndDate() == null ? "N/A" : w.getEndDate(),
+                        w.getDimension());
+            }
+
+            System.out.println("-".repeat(145));
+        }
+
+
     }
 
 

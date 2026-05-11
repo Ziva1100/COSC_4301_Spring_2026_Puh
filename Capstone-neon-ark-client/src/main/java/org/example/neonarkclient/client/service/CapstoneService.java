@@ -187,7 +187,19 @@ public class CapstoneService {
         return jsonMapper.readValue(returnStr, Creature.class);
     }
 
-    public void viewUsersSrv(){
+    // Capstone -- [ View All System Users ] Menu Choice
+    public List<Warden> viewUsersSrv(String username, String password) throws IOException, InterruptedException{
+        String response = clientApi.viewUsersApi(username, password);
+
+        // handle the illegal access and no log in access error messages
+        if (response.startsWith("401"))
+            throw new IllegalStateException("Not logged in.");
+
+        if (response.startsWith("403"))
+            throw new IllegalStateException("Only ADMIN role can view the data.");
+
+        return jsonMapper.readValue(response, new TypeReference<List<Warden>>(){});
+
 
     }
 

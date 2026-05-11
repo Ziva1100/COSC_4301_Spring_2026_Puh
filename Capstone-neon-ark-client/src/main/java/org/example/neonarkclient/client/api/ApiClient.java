@@ -136,6 +136,11 @@ public class ApiClient implements CapstoneApi {
         return response.body();
     }
 
+    // Capstone -- [ Remove Creature ] Menu Choice
+    public String removeCreatureApi(Long id) throws IOException, InterruptedException {
+        return "";
+    }
+
 }
 
 

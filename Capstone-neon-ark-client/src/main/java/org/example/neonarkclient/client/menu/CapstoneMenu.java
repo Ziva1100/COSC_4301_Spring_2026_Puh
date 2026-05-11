@@ -1,6 +1,7 @@
 package org.example.neonarkclient.client.menu;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.example.neonarkclient.client.api.CapstoneApi;
 import org.example.neonarkclient.client.exceptions.NotFoundException;
 import org.example.neonarkclient.client.model.Creature;
 import org.example.neonarkclient.client.model.Feeding;
@@ -78,7 +79,7 @@ public class CapstoneMenu
                 case 2 -> viewCreatureByIdMenu();
                 case 3 -> registerNewCreatureMenu();
                 case 4 -> renameCreatureMenu();
-                case 5 -> removeCreature();
+                case 5 -> removeCreatureMenu();
                 case 6 -> viewCreatureNotesMenu();
                 case 7 -> creatureFeedingTimeMenu();
                 case 8 -> viewUsersMenu();
@@ -304,7 +305,7 @@ public class CapstoneMenu
             // handle exceptions passed on by api and service
             c = service.viewCreatureByIdSrv(userInput);
         } catch (IOException e) {
-            display("Un error occurred.");
+            display("An error occurred.");
         } catch (InterruptedException e) {
             display("An error occurred");
         } catch (NotFoundException e){
@@ -336,8 +337,47 @@ public class CapstoneMenu
         }
 
     }
+    // Capstone -- [ Remove Creature ] Menu Choice
+    public void removeCreatureMenu(){
+        int id = promptId("Enter ID of press -1 to exit: ", "-1");
+        Creature response = null;
+        try {
+            response = service.removeCreatureSrv(id);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e){
+            display(e.getMessage());;
+        }
 
-    public void removeCreature(){}
+        if ((response != null)) {
+
+
+            // display in a nice format
+            String format = "%-5s %-15s %-20s %-18s %-10s %-13s %-8s%n";
+
+            display("=".repeat(93));
+            display(String.format(format, "ID", "NAME", "HABITAT", "SPECIES", "DANGER", "CONDITION", "REMOVED"));
+            display("-".repeat(93));
+            display(String.format(format,
+                    response.getId(),
+                    response.getName(),
+                    response.getBiome(),
+                    response.getSpecies(),
+                    response.getDangerLevel(),
+                    response.getCondition(),
+                    response.getRemoved()
+            ));
+        } else{
+            display(" ");
+        }
+
+
+
+
+
+    }
 
     // Capstone -- [ View Observations ] Menu Choice
     public void viewCreatureNotesMenu(){

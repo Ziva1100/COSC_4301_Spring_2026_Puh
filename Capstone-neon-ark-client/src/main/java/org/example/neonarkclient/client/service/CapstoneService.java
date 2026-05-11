@@ -171,10 +171,26 @@ public class CapstoneService {
         return m;
 
     }
+    // Capstone -- [ Remove Creature ] Menu Choice
+    public Creature removeCreatureSrv(int id) throws IOException, InterruptedException {
+        String returnStr = clientApi.removeCreatureApi((long)id);
+
+        if(returnStr.startsWith("404"))
+            throw new IllegalArgumentException("The creature with id "+id+" not found.");
+
+        if(returnStr.startsWith("409")){
+            throw new IllegalArgumentException("The creature with an active schedule cannot be removed.");
+        }
+
+
+
+        return jsonMapper.readValue(returnStr, Creature.class);
+    }
 
     public void viewUsersSrv(){
 
     }
+
 
 
 

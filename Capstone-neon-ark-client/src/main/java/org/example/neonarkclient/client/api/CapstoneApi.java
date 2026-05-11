@@ -14,6 +14,7 @@ public interface CapstoneApi {
     String renameCreatureApi(Long id, String name) throws IOException, InterruptedException;
     String viewCreatureNotesApi(long id) throws IOException, InterruptedException;
     String creatureFeedingTimeApi(LocalTime time) throws IOException, InterruptedException;
+    String removeCreatureApi(Long id) throws IOException, InterruptedException;
 }
 
 

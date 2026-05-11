@@ -139,5 +139,25 @@ public class MockApiClient implements CapstoneApi {
             """, time, time, time);
     }
 
+    // Capstone -- [ Remove Creature ] Menu Choice
+    public String removeCreatureApi(Long id) throws IOException, InterruptedException {
+        // 404 — creature not found
+        if (!mockCreatures.containsKey(id)) {
+            return "404 Creature with ID: " + id + " not found";
+        }
+
+        // 409 — simulate active feeding conflict for creature ID 1
+        if (id == 1L) {
+            return "409 Cannot remove creature with active feeding schedule";
+        }
+
+        // soft remove — update the removed field to 1
+        String existing = mockCreatures.get(id);
+        String updated = existing.replaceAll("\"removed\":0", "\"removed\":1");
+        mockCreatures.put(id, updated);
+
+        return updated;
+    }
+
 
 }

@@ -123,5 +123,18 @@ public class CreatureController {
         return ResponseEntity.ok(service.getObservations(id));
     }
 
+    // Capstone -- [ Remove Creature ] Menu Choice
+    @PatchMapping("/{id}/softDelete")
+    public ResponseEntity<CreaturesSummaryRequest> softRemove(@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(service.softRemoveCreature(id));
+        }catch(IllegalStateException e){
+            return ResponseEntity.status(409).build();
+        }catch (RuntimeException e){
+            return ResponseEntity.status(404).build();
+
+        }
+    }
+
 
 }

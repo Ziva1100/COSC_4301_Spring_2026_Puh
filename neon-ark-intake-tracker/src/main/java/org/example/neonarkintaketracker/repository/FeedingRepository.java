@@ -34,4 +34,10 @@ public interface FeedingRepository extends JpaRepository<Feeding, Long> {
             "FROM creatures c JOIN feedings f ON c.id = f.creature_id " +
             "WHERE f.time = CAST(:time AS TIME)", nativeQuery = true)
     List<FeedingRequest> getFeedingTimes(@Param("time") LocalTime time);
+
+
+    // add to check if creature has any active feedins, If yes, don't allow the remove
+    @Query(value = "SELECT * FROM feedings WHERE id = :id AND active = 1", nativeQuery = true)
+    List<Feeding> findFeedingByCreatureId(@Param("id") Long id);
+
 }

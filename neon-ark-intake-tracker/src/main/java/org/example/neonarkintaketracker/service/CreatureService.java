@@ -24,9 +24,12 @@ import org.example.neonarkintaketracker.dto.CreatureResponse;
 import org.example.neonarkintaketracker.dto.CreaturesSummaryRequest;
 import org.example.neonarkintaketracker.dto.ObservationRequest;
 import org.example.neonarkintaketracker.entity.Creature;
+import org.example.neonarkintaketracker.entity.Feeding;
 import org.example.neonarkintaketracker.entity.Habitat;
 import org.example.neonarkintaketracker.entity.Observation;
 import org.example.neonarkintaketracker.repository.CreatureRepository;
+import org.example.neonarkintaketracker.repository.FeedingRepository;
+
 import org.example.neonarkintaketracker.repository.HabitatRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +45,15 @@ import java.util.Optional;
 public class CreatureService {
     private final CreatureRepository repository;
     private final HabitatRepository habitatRepository;
+    private final FeedingRepository feedingRepository;
 
-    public CreatureService(CreatureRepository repository, HabitatRepository habitatRepository) {
+    public CreatureService(CreatureRepository repository, HabitatRepository habitatRepository, FeedingRepository feedingRepository) {
 
         this.repository = repository;
         this.habitatRepository = habitatRepository;
+        this.feedingRepository = feedingRepository;
+
+
     }
 
     //***************************************************************
@@ -173,6 +180,39 @@ public class CreatureService {
         return repository.getCreatureObservations(id);
 
     }
+
+    // Capstone -- [ Remove Creature ] Menu Choice
+    public CreaturesSummaryRequest softRemoveCreature(Long id){
+
+        // check if feedings have any active schedules for this creature
+        List<Feeding> feedings = feedingRepository.findFeedingByCreatureId(id);
+
+        if (!feedings.isEmpty()){
+            throw new IllegalStateException("Cannot remove creature with active feeding schedule.");
+        }
+
+        // check if creature exists
+        Creature creature = repository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Creature not found "+id));
+
+        // soft remove the creature
+        creature.setRemoved(1);
+
+        // save the creature and return it
+        Creature saved = repository.save(creature);
+
+
+        return new CreaturesSummaryRequest(
+                saved.getId(),
+                saved.getName(),
+                saved.getHabitat().getBiome(),
+                saved.getSpecies(),
+                saved.getDangerLevel(),
+                saved.getCondition(),
+                saved.getRemoved());
+    }
+
+
 
 
 }

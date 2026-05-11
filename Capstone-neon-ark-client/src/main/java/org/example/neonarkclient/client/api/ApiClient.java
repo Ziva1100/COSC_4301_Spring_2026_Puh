@@ -29,7 +29,7 @@ public class ApiClient implements CapstoneApi {
         // recieve the HttpResponse from the controller
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/creatures"))
+                .uri(URI.create(url + "/api/creatures"))
                 .GET()
                 .build();
 
@@ -39,28 +39,28 @@ public class ApiClient implements CapstoneApi {
     }
 
     // Capstone -- [ View Creature By Id ] Menu Choice
-    public String getCreatureByIdApi(Long id) throws IOException, InterruptedException{
+    public String getCreatureByIdApi(Long id) throws IOException, InterruptedException {
 
         // recieve the HttpResponse from the controller
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/creatures/"+id))
+                .uri(URI.create(url + "/api/creatures/" + id))
                 .GET()
                 .build();
 
         // Pass the HttpResponse as a string to the server
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode() == 404){
+        if (response.statusCode() == 404) {
 
             // handle the 404 not found
-            return "404 Creature with ID: "+id+" not found";
+            return "404 Creature with ID: " + id + " not found";
         }
         return response.body();
     }
 
     // Mock API for registering new creature
     // Capstone -- [ Register New Creature ] Menu Choice
-    public String registerNewCreatureApi(Creature creature) throws IOException, InterruptedException{
+    public String registerNewCreatureApi(Creature creature) throws IOException, InterruptedException {
 
         // turn the creature into a json string
         String json = jsonMapper.writeValueAsString(creature);
@@ -72,7 +72,7 @@ public class ApiClient implements CapstoneApi {
         // create a client and build the request to the backend server
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/creatures"))
+                .uri(URI.create(url + "/api/creatures"))
                 .header("Content-Type", "application/json")
                 .POST(body)
                 .build();
@@ -89,13 +89,13 @@ public class ApiClient implements CapstoneApi {
     }
 
     // Capstone -- [ rename creature] Menu Choice
-    public String renameCreatureApi(Long id, String name) throws IOException, InterruptedException{
+    public String renameCreatureApi(Long id, String name) throws IOException, InterruptedException {
 
-        String jsonBody = "{\"name\":\""+name+"\"}";
+        String jsonBody = "{\"name\":\"" + name + "\"}";
         // recieve the HttpResponse from the controller
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/creatures/"+id+"/name"))
+                .uri(URI.create(url + "/api/creatures/" + id + "/name"))
                 .header("Content-Type", "application/json")
                 .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
@@ -112,7 +112,7 @@ public class ApiClient implements CapstoneApi {
         // recieve the HttpResponse from the controller
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/creatures/"+id+"/observations"))
+                .uri(URI.create(url + "/api/creatures/" + id + "/observations"))
                 .GET()
                 .build();
 
@@ -127,7 +127,7 @@ public class ApiClient implements CapstoneApi {
         // recieve the HttpResponse from the controller
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url+"/api/feedings/time?time="+timeStr))
+                .uri(URI.create(url + "/api/feedings/time?time=" + timeStr))
                 .GET()
                 .build();
 
@@ -138,10 +138,30 @@ public class ApiClient implements CapstoneApi {
 
     // Capstone -- [ Remove Creature ] Menu Choice
     public String removeCreatureApi(Long id) throws IOException, InterruptedException {
-        return "";
+
+        String jsonBody = "{\"removed\":\"1\"}";
+        // recieve the HttpResponse from the controller
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/api/creatures/" + id + "/softDelete"))
+                .header("Content-Type", "application/json")
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        // Pass the HttpResponse as a string to the server
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 404) {
+            // handle the 404 not found
+            return "404";
+        }
+        if (response.statusCode() == 409) {
+            // handle the 409 Conflict with feeding schedule
+            return "409";
+        }
+
+        return response.body();
+
     }
-
 }
-
 
 

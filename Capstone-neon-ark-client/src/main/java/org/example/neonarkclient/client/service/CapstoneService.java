@@ -191,12 +191,13 @@ public class CapstoneService {
     public List<Warden> viewUsersSrv(String username, String password) throws IOException, InterruptedException{
         String response = clientApi.viewUsersApi(username, password);
 
+
         // handle the illegal access and no log in access error messages
         if (response.startsWith("401"))
-            throw new IllegalStateException("Not logged in.");
+            throw new IllegalStateException("Incorrect Credentials.");
 
         if (response.startsWith("403"))
-            throw new IllegalStateException("Only ADMIN role can view the data.");
+            throw new IllegalStateException("Access Denied!");
 
         return jsonMapper.readValue(response, new TypeReference<List<Warden>>(){});
 

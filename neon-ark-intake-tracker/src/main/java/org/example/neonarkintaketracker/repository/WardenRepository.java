@@ -36,11 +36,13 @@ public interface WardenRepository extends JpaRepository<Warden, Long> {
     @Query(value = "SELECT * FROM wardens WHERE username = :username", nativeQuery = true)
     Optional<Warden> findByUsername(@Param("username") String username);
 
+    // the query kept throwing a mismatch between the query and warden request
+    // had to abondon it and placed the logic of joining tables in the service controlled by entities
     @Query(value = "SELECT " +
-            "    w.warden_id, w.first_name,  w.last_name, w.alternate_id, w.id_type,  w.email, r.role_name,\n" +
+            "    w.warden_id, w.first_name,  w.last_name, w.alternate_id, w.id_type,  w.email, r.role_name, " +
             "    c.clearance_name, w.start_date, d.dimension_name  " +
-            "FROM wardens w JOIN roles r ON w.role_id = r.role_id JOIN clearances c\n" +
-            "ON w.clearance_id = c.clearance_id JOIN dimensions d ON w.dimension_id = d.dimension_id\n",
+            "FROM wardens w JOIN roles r ON w.role_id = r.role_id JOIN clearances c " +
+            "ON w.clearance_id = c.clearance_id JOIN dimensions d ON w.dimension_id = d.dimension_id ",
     nativeQuery = true)
     List<WardenRequest> getAllWardens();
 }

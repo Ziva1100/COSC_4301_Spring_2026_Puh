@@ -340,7 +340,7 @@ public class CapstoneMenu
     }
     // Capstone -- [ Remove Creature ] Menu Choice
     public void removeCreatureMenu(){
-        int id = promptId("Enter ID of press -1 to exit: ", "-1");
+        int id = promptId("Enter ID or press -1 to exit: ", "-1");
         Creature response = null;
         try {
             response = service.removeCreatureSrv(id);
@@ -504,28 +504,28 @@ public class CapstoneMenu
         try{
             wardens = service.viewUsersSrv(username, password);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            display("Wrong Password.");
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            display("The connection was interrupted.");
         } catch (IllegalStateException e){
             display(e.getMessage());
         }
 
         if(!wardens.isEmpty()) {
-            System.out.printf("%-6s %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
-                    "ID", "FIRST NAME", "LAST NAME", "ID TYPE", "EMAIL", "ROLE",
-                    "STATUS", "CLEARANCE", "START DATE", "END DATE", "DIMENSION");
+            String format = "%-6s %-12s %-12s %-10s %-28s %-15s %-10s %-12s %-10s%n";
 
-            // divider
-            System.out.println("-".repeat(145));
+            System.out.printf(format,
+                    "ID", "FIRST NAME", "LAST NAME", "ALT ID", "EMAIL", "ROLE",
+                    "CLEARANCE", "START DATE", "DIMENSION");
 
-            // rows
+            System.out.println("-".repeat(120));
+
             for (Warden w : wardens) {
-                System.out.printf("%-6d %-12s %-12s %-10s %-28s %-15s %-12s %-10s %-12s %-12s %-10s%n",
-                        w.getId(),
+                System.out.printf(format,
+                        w.getWardenId(),
                         w.getFirstName(),
                         w.getLastName(),
-                        w.getIdType(),
+                        w.getAlternateId(),
                         w.getEmail(),
                         w.getRole(),
                         w.getClearance(),
@@ -533,7 +533,8 @@ public class CapstoneMenu
                         w.getDimension());
             }
 
-            System.out.println("-".repeat(145));
+            System.out.println("-".repeat(120));
+            System.out.println("Total wardens: " + wardens.size());
         }
     }
 

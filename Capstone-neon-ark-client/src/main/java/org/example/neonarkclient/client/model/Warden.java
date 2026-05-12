@@ -41,14 +41,15 @@ public class Warden {
        in_start_date DATE, in_lname VARCHAR DEFAULT NULL, in_end_date DATE DEFAULT NULL,
        in_dimension VARCHAR DEFAULT 'Earth')*/
 
+    private int wardenId;
     private String firstName;
     private String lastName;
-    private int id;
-    private IdType idType;
+    private int alternateId;
+    private String idType;
     private String email;
     private String role;
-    private Clearance clearance;
-    private LocalDate startDate;
+    private String clearance;
+    private String startDate;
     private String dimension;
 
 

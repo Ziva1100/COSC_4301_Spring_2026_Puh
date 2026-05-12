@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -44,7 +45,24 @@ public class WardenService {
             throw new ForbiddenException("Access Denied!");
 
         // if it all fits, return the list of wardens
-        return repository.getAllWardens();
+//        List<WardenRequest> returnWardens = repository.getAllWardens();
+
+        // had to modify and make query entity cotnroleld ebcause the query would not
+        // return a matching object between query result and wardenRequest dto
+        return repository.findAll().stream()
+                .map(w -> new WardenRequest(
+                        w.getWardenId().intValue(),
+                        w.getFirstName(),
+                        w.getLastName(),
+                        w.getAlternateId(),
+                        w.getIdType(),
+                        w.getEmail(),
+                        w.getRole().getRoleName(),
+                        w.getClearance().getClearanceName(),
+                        w.getStartDate().toString(),
+                        w.getDimension().getDimensionName()
+                ))
+                .collect(Collectors.toList());
 
 
     }

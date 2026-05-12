@@ -47,10 +47,8 @@ public class Warden {
     private IdType idType;
     private String email;
     private String role;
-    private Status status;
     private Clearance clearance;
     private LocalDate startDate;
-    private LocalDate endDate;
     private String dimension;
 
 

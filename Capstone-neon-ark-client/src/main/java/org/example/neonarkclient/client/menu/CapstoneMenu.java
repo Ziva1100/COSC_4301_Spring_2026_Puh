@@ -528,7 +528,6 @@ public class CapstoneMenu
                         w.getIdType(),
                         w.getEmail(),
                         w.getRole(),
-                        w.getStatus(),
                         w.getClearance(),
                         w.getStartDate(),
                         w.getEndDate() == null ? "N/A" : w.getEndDate(),
@@ -537,8 +536,6 @@ public class CapstoneMenu
 
             System.out.println("-".repeat(145));
         }
-
-
     }
 
 

@@ -530,7 +530,6 @@ public class CapstoneMenu
                         w.getRole(),
                         w.getClearance(),
                         w.getStartDate(),
-                        w.getEndDate() == null ? "N/A" : w.getEndDate(),
                         w.getDimension());
             }
 

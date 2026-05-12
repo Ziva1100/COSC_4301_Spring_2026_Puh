@@ -165,7 +165,21 @@ public class ApiClient implements CapstoneApi {
 
     @Override
     public String viewUsersApi(String username, String password) throws IOException, InterruptedException {
-        return "";
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url+"/api/wardens?username="+username+"&password="+password))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode()== 401)
+            return "401";
+        if (response.statusCode()==403)
+            return "403";
+
+        return response.body();
     }
 
 

@@ -7,6 +7,7 @@ package org.example.neonarkintaketracker.repository;
 
 import org.example.neonarkintaketracker.dto.WardenRequest;
 import org.example.neonarkintaketracker.entity.Warden;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface WardenRepository {
+public interface WardenRepository extends JpaRepository<Warden, Long> {
 
     // basic read functionality is automatic,
     // does not need extra method declarations

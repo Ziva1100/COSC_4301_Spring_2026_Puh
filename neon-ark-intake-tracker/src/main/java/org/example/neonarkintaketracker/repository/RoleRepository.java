@@ -1,5 +1,7 @@
 package org.example.neonarkintaketracker.repository;
 
+import org.example.neonarkintaketracker.entity.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Repository;
 // credentail confirmation
 
 // Capstone -- [ View All System Users ] Menu Choice
-public interface RoleRepository {
+public interface RoleRepository extends JpaRepository<Role, Long> {
     // basic read functionality is automatic,
     // does not need extra method declarations
     // methods:

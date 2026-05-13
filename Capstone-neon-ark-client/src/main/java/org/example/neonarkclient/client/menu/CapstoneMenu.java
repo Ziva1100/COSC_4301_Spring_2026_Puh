@@ -52,7 +52,7 @@ public class CapstoneMenu
         int userInput = 1;
         while(true) {
 
-            System.out.println("=========================================================");
+            System.out.println("\n\n=========================================================");
             System.out.println("        NEON ARK — CLI");
             System.out.println("=========================================================");
             display("");
